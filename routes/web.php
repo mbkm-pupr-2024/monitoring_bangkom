@@ -15,4 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('index');
+
+Route::get('/courses', function () {
+    return view('courses');
+})->name('add-course');
+
+Route::get('/courses/status', function () {
+    return view('courses');
+})->name('ongoing-course');
+
+Route::get('/courses/completed', function () {
+    return view('courses');
+})->name('completed-course');
