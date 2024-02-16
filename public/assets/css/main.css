@@ -914,10 +914,10 @@ h1, h2, h3, h4, h5, h6 {
     float: left;
     padding-left: 45px;
     line-height: 40px;
-    -webkit-transition: all .2s ease-in-out;
+    /* -webkit-transition: all .2s ease-in-out;
     -moz-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out; */
 }
 
 .app-sidebar .logo .logo-icon:hover {
@@ -4343,7 +4343,7 @@ body.modal-open {
 }
 
 .widget-popular-blog .widget-popular-blog-container .widget-popular-blog-image {
-    width: 120px;
+    width: 50px;
     border-radius: 10px;
 }
 
@@ -6366,7 +6366,7 @@ span.flatpickr-weekday {
 
 @media (min-width: 1199px) {
     .settings-security-two-factor {
-        max-width: 75%;
+        max-width: 100%;
     }
 }
 
@@ -6407,8 +6407,8 @@ span.flatpickr-weekday {
 }
 
 .app-auth-sign-in .app-auth-background {
-    background: url('../images/backgrounds/sign-in.svg') no-repeat;
-    background-size: 60%;
+    background: url('../images/backgrounds/logo.jpg') no-repeat;
+    background-size: 100%;
     background-position: center;
 }
 
@@ -6428,7 +6428,7 @@ span.flatpickr-weekday {
 .app-auth-container .logo a {
     display: flex;
     padding-left: 70px;
-    background: url('../images/neptune.png') no-repeat;
+    background: url('../images/logo.jpg') no-repeat;
     height: 50px;
     background-size: 50px;
     align-items: center;
