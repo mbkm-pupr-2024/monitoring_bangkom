@@ -31,34 +31,35 @@ Route::middleware('admin')->group(function () {
 
 
     Route::get('/sop-pelatihan', [DataPelatihanController::class, 'sopPelatihan'])->name('sop-pelatihan');
-    Route::get('/sop-pelatihan/tambah', [DataPelatihanController::class, 'sopPelatihan_tambah']);
-    Route::post('/sop-pelatihan/tambah', [DataPelatihanController::class, 'sopPelatihan_insert']);
-    Route::get('/sop-pelatihan/edit/{id}', [DataPelatihanController::class, 'sopPelatihan_edit'])->name('sop-pelatihan-edit');
-    Route::post('/sop-pelatihan/edit/{id}', [DataPelatihanController::class, 'sopPelatihan_update']);
-    Route::get('/sop-pelatihan/hapus/{id}', [DataPelatihanController::class, 'sopPelatihan_delete']);
+    // Route::get('/sop-pelatihan/tambah', [DataPelatihanController::class, 'sopPelatihan_tambah']);
+    // Route::post('/sop-pelatihan/tambah', [DataPelatihanController::class, 'sopPelatihan_insert']);
+    // Route::get('/sop-pelatihan/edit/{id}', [DataPelatihanController::class, 'sopPelatihan_edit'])->name('sop-pelatihan-edit');
+    // Route::post('/sop-pelatihan/edit/{id}', [DataPelatihanController::class, 'sopPelatihan_update']);
+    // Route::get('/sop-pelatihan/hapus/{id}', [DataPelatihanController::class, 'sopPelatihan_delete']);
 
 
-    Route::get('/kegiatan-pelatihan/tambah/{sop}', [DataPelatihanController::class, 'kegiatanPelatihan_tambah'])->name('kegiatanpelatihan-tambah');
-    Route::post('/kegiatan-pelatihan/tambah', [DataPelatihanController::class, 'kegiatanPelatihan_insert']);
-    Route::get('/kegiatan-pelatihan/edit/{id}', [DataPelatihanController::class, 'kegiatanPelatihan_edit'])->name('kegiatanpelatihan-edit');
-    Route::post('/kegiatan-pelatihan/edit/{id}', [DataPelatihanController::class, 'kegiatanPelatihan_update']);
-    Route::get('/kegiatan-pelatihan/hapus/{id}', [DataPelatihanController::class, 'kegiatanPelatihan_delete'])->name('kegiatanpelatihan-hapus');
+    // Route::get('/kegiatan-pelatihan/tambah/{sop}', [DataPelatihanController::class, 'kegiatanPelatihan_tambah'])->name('kegiatanpelatihan-tambah');
+    // Route::post('/kegiatan-pelatihan/tambah', [DataPelatihanController::class, 'kegiatanPelatihan_insert']);
+    // Route::get('/kegiatan-pelatihan/edit/{id}', [DataPelatihanController::class, 'kegiatanPelatihan_edit'])->name('kegiatanpelatihan-edit');
+    // Route::post('/kegiatan-pelatihan/edit/{id}', [DataPelatihanController::class, 'kegiatanPelatihan_update']);
+    // Route::get('/kegiatan-pelatihan/hapus/{id}', [DataPelatihanController::class, 'kegiatanPelatihan_delete'])->name('kegiatanpelatihan-hapus');
 
 
-    Route::get('/bidang-pelatihan', [DataPelatihanController::class, 'bidangPelatihan'])->name('bidang-pelatihan');
-    Route::get('/bidang-pelatihan/tambah', [DataPelatihanController::class, 'bidangPelatihan_tambah']);
-    Route::post('/bidang-pelatihan/tambah', [DataPelatihanController::class, 'bidangPelatihan_insert']);
-    Route::get('/bidang-pelatihan/edit/{id}', [DataPelatihanController::class, 'bidangPelatihan_edit']);
-    Route::post('/bidang-pelatihan/edit/{id}', [DataPelatihanController::class, 'bidangPelatihan_update']);
-    Route::get('/bidang-pelatihan/hapus/{id}', [DataPelatihanController::class, 'bidangPelatihan_delete']);
+    Route::get('/jadwal-pelatihan', [DataPelatihanController::class, 'jadwalPelatihan'])->name('jadwal-pelatihan');
+    Route::get('/jadwal-pelatihan/tambah', [DataPelatihanController::class, 'jadwalPelatihan_tambah']);
+    Route::post('/jadwal-pelatihan/tambah', [DataPelatihanController::class, 'jadwalPelatihan_insert']);
+    Route::get('/jadwal-pelatihan/edit/{id}', [DataPelatihanController::class, 'jadwalPelatihan_edit']);
+    Route::post('/jadwal-pelatihan/edit/{id}', [DataPelatihanController::class, 'jadwalPelatihan_update']);
+    Route::get('/jadwal-pelatihan/hapus/{id}', [DataPelatihanController::class, 'jadwalPelatihan_delete']);
     
-    Route::get('/pelatihan-tambah', [PelatihanController::class, 'pelatihan_tambah'])->name('pelatihan-tambah');
-    Route::post('/pelatihan-tambah', [PelatihanController::class, 'pelatihan_insert']);
+    // Route::get('/pelatihan-tambah', [PelatihanController::class, 'pelatihan_tambah'])->name('pelatihan-tambah');
+    // Route::post('/pelatihan-tambah', [PelatihanController::class, 'pelatihan_insert']);
     Route::get('/pelatihan/edit/{id}', [PelatihanController::class, 'pelatihan_edit'])->name('pelatihan-edit');
     Route::post('/pelatihan/edit/{id}', [PelatihanController::class, 'pelatihan_update']);
     Route::get('/pelatihan/hapus/{id}', [PelatihanController::class, 'pelatihan_delete'])->name('pelatihan-hapus');
 
     Route::get('/pelatihan/{id_pl}/ceklis-status/{id_kg}', [PelatihanController::class, 'pelatihan_ceklisStatus']);
-    Route::get('/pelatihan-selesai', [PelatihanController::class, 'pelatihan_selesai'])->name('pelatihan-selesai');
+    Route::get('/arsip-pelatihan', [PelatihanController::class, 'arsip_pelatihan'])->name('arsip-pelatihan');
+    Route::get('/cetak-surat', [PelatihanController::class, 'cetak_surat'])->name('cetak-surat');
 });
 

@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1>Data SOP Pelatihan</h1>
+                        <h1>SOP Pelatihan</h1>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <a class="btn btn-primary btn-sm mb-3" href="/sop-pelatihan/tambah">Tambah SOP Pelatihan</a>
+                            {{-- <a class="btn btn-primary btn-sm mb-3" href="/sop-pelatihan/tambah">Tambah SOP Pelatihan</a> --}}
                             <div class="example-container">
                                 
                                 <div class="example-content">
@@ -64,56 +64,12 @@
                                     @endphp
                                     <div class="tab-content" id="pills-tabContent">
                                         @foreach ($sopKegiatan as $sopC)
-                                        <script>
-                                            function sop_edit_button_{{ $index_sop }}() {
-                                                Swal.fire({
-                                                title: "Konfirmasi Pengeditan",
-                                                text: "Apakah Anda yakin ingin mengubah data ini? ",
-                                                icon: "warning",
-                                                showCancelButton: true,
-                                                confirmButtonColor: "#3085d6",
-                                                cancelButtonText: "Batal",
-                                                cancelButtonColor: "#d33",
-                                                confirmButtonText: "Edit"
-                                                }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    window.location.href = "/sop-pelatihan/edit/{{ $sopC[0]->sop_pelatihan->id }}";
-                                                }
-                                                });
-                                            }
-                                            function sop_hapus_button_{{ $index_sop }}() {
-                                                Swal.fire({
-                                                title: "Konfirmasi Penghapusan",
-                                                text: "Apakah Anda yakin ingin menghapus data ini? ",
-                                                icon: "warning",
-                                                showCancelButton: true,
-                                                confirmButtonColor: "#3085d6",
-                                                cancelButtonText: "Batal",
-                                                cancelButtonColor: "#d33",
-                                                confirmButtonText: "Hapus"
-                                                }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    window.location.href = "/sop-pelatihan/hapus/{{ $sopC[0]->sop_pelatihan->id }}";
-                                                }
-                                                });
-                                            }
-                                        </script>
                                             @if ($index_sop==1)
                                                 <div class="tab-pane fade show active" id="pills-{{ $sopC[0]->id }}" role="tabpanel" aria-labelledby="pills-{{ $sopC[0]->id }}-tab">
                                             @else
                                                 <div class="tab-pane fade" id="pills-{{ $sopC[0]->id }}" role="tabpanel" aria-labelledby="pills-{{ $sopC[0]->id }}-tab">
                                             @endif
                                             <div class="settings-security-two-factor">
-                                                <a class="nav-link dropdown-toggle btn btn-primary btn-sm float-end" type="button" href="#" id="addDropdownLink" role="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </a>
-                                                <ul class="dropdown-menu" aria-labelledby="addDropdownLink">
-                                                    
-                                                    <li><a class="dropdown-item" style="cursor: pointer;" onclick="sop_edit_button_{{ $index_sop }}();">Edit SOP Pelatihan</a></li>
-                                                    <li><a class="dropdown-item" style="cursor: pointer;" onclick="sop_hapus_button_{{ $index_sop }}();">Hapus SOP Pelatihan</a></li>
-                                                    <li><a class="dropdown-item" style="cursor: pointer;" href="/kegiatan-pelatihan/tambah/{{ $sopC[0]->sop_pelatihan->id }}">Tambah Kegiatan</a></li>
-                                                </ul>
                                                 <h5><u>Detail</u></h5> 
                                                 <p><b>Nomor SOP:</b> {{ $sopC[0]->sop_pelatihan->id }}</p>
                                                 <p><b>Judul SOP:</b> {{ $sopC[0]->sop_pelatihan->sop}}</p>
@@ -126,41 +82,6 @@
                                                     <h3>Rincian Kegiatan</h3>
                                                     @foreach ($sopC as $kegiatan)
 
-                                                    <script>
-                                                        function kegiatan_edit_button_{{ $kegiatan->id }}() {
-                                                            Swal.fire({
-                                                            title: "Konfirmasi Pengeditan",
-                                                            text: "Apakah Anda yakin ingin mengubah data ini? ",
-                                                            icon: "warning",
-                                                            showCancelButton: true,
-                                                            confirmButtonColor: "#3085d6",
-                                                            cancelButtonText: "Batal",
-                                                            cancelButtonColor: "#d33",
-                                                            confirmButtonText: "Edit"
-                                                            }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                window.location.href = "kegiatan-pelatihan/edit/{{ $kegiatan->id }}";
-                                                            }
-                                                            });
-                                                        }
-                                                        function kegiatan_hapus_button_{{ $kegiatan->id }}() {
-                                                            Swal.fire({
-                                                            title: "Konfirmasi Penghapusan",
-                                                            text: "Apakah Anda yakin ingin menghapus data ini? ",
-                                                            icon: "warning",
-                                                            showCancelButton: true,
-                                                            confirmButtonColor: "#3085d6",
-                                                            cancelButtonText: "Batal",
-                                                            cancelButtonColor: "#d33",
-                                                            confirmButtonText: "Hapus"
-                                                            }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                window.location.href = "kegiatan-pelatihan/hapus/{{ $kegiatan->id }}";
-                                                            }
-                                                            });
-                                                        }
-                                                    </script>
-
                                                     @if ($nomor_kegiatan==1)
                                                     <div class="accordion accordion-separated" id="accordionSeparated{{ $kegiatan->id }}">
                                                         <div class="accordion-item">
@@ -171,8 +92,6 @@
                                                             </h2>
                                                             <div id="collapseSeparated{{ $kegiatan->id }}" class="accordion-collapse show" aria-labelledby="headingSeparated{{ $kegiatan->id }}" data-bs-parent="#accordionSeparated{{ $kegiatan->id }}">
                                                                 <div class="accordion-body">
-                                                                    <a onclick="kegiatan_hapus_button_{{ $kegiatan->id }}();" type="button" class="btn btn-danger btn-sm float-end"><i class="material-icons">delete</i></a> 
-                                                                    <a onclick="kegiatan_edit_button_{{ $kegiatan->id }}();" type="button" class="btn btn-warning btn-sm float-end"><i class="material-icons">edit</i></a>
                                                                     {{ $kegiatan->deskripsi }}
                                                                 </div>
                                                             </div>
@@ -188,8 +107,6 @@
                                                             </h2>
                                                             <div id="collapseSeparated{{ $kegiatan->id }}" class="accordion-collapse collapse" aria-labelledby="headingSeparated{{ $kegiatan->id }}" data-bs-parent="#accordionSeparated{{ $kegiatan->id }}">
                                                                 <div class="accordion-body">
-                                                                    <a onclick="kegiatan_hapus_button_{{ $kegiatan->id }}();" type="button" class="btn btn-danger btn-sm float-end"><i class="material-icons">delete</i></a> 
-                                                                    <a onclick="kegiatan_edit_button_{{ $kegiatan->id }}();" type="button" class="btn btn-warning btn-sm float-end"><i class="material-icons">edit</i></a>
                                                                     {{ $kegiatan->deskripsi }}
                                                                 </div>
                                                                 

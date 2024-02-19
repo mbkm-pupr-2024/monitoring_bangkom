@@ -34,27 +34,30 @@
     </ul>
     <ul class="accordion-menu">
       <li class="sidebar-title">
-        Manajemen SOP Pelatihan
+        Manajemen Pelatihan
       </li>
       <li class="{{ (Route::currentRouteName() == 'sop-pelatihan') ? 'active-page' : '' }}">
         <a href="{{ route('sop-pelatihan') }}"><i class="material-icons-two-tone">storage</i>SOP Pelatihan</a>
       </li>
-      <li class="{{ (Route::currentRouteName() == 'bidang-pelatihan') ? 'active-page' : '' }}">
-        <a href="{{ route('bidang-pelatihan') }}"><i class="material-icons-two-tone">work</i>Bidang Pelatihan</a>
+      <li class="{{ (Route::currentRouteName() == 'jadwal-pelatihan') ? 'active-page' : '' }}">
+        <a href="{{ route('jadwal-pelatihan') }}"><i class="material-icons-two-tone">today</i>Jadwal Pelatihan</a>
       </li>
     </ul>
     <ul class="accordion-menu">
       <li class="sidebar-title">
         Menu Pelatihan
       </li>
-      <li class="{{ (Route::currentRouteName() == 'pelatihan-tambah') ? 'active-page' : '' }}">
+      {{-- <li class="{{ (Route::currentRouteName() == 'pelatihan-tambah') ? 'active-page' : '' }}">
         <a href="{{ route('pelatihan-tambah') }}"><i class="material-icons-two-tone">nature_people</i>Tambah Pelatihan</a>
-      </li>
+      </li> --}}
       <li class="{{ (Route::currentRouteName() == 'pelatihan-berlangsung') ? 'active-page' : '' }}">
         <a href="{{ route('pelatihan-berlangsung') }}"><i class="material-icons-two-tone">assessment</i>Sedang Berlangsung</a>
       </li>
-      <li class="{{ (Route::currentRouteName() == 'pelatihan-selesai') ? 'active-page' : '' }}">
-        <a href="{{ route('pelatihan-selesai') }}"><i class="material-icons-two-tone">verified</i>Pelatihan Selesai</a>
+      <li class="{{ (Route::currentRouteName() == 'arsip-pelatihan') ? 'active-page' : '' }}">
+        <a href="{{ route('arsip-pelatihan') }}"><i class="material-icons-two-tone">verified</i>Arsip Pelatihan</a>
+      </li>
+      <li class="{{ (Route::currentRouteName() == 'cetak-surat') ? 'active-page' : '' }}">
+        <a href="{{ route('cetak-surat') }}"><i class="material-icons-two-tone">file_download</i>Cetak Surat</a>
       </li>
     </ul>
     <ul class="accordion-menu">

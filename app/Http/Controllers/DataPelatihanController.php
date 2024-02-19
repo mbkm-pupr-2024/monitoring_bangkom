@@ -130,10 +130,10 @@ class DataPelatihanController extends Controller
         return redirect('/sop-pelatihan')->with(['success' => 'Data Kegiatan Pelatihan berhasil dihapus', 'popUp_title' => 'Deleted!']);
     }
 
-    public function bidangPelatihan()
+    public function jadwalPelatihan()
     {
         $bidang = BidangPelatihanModel::orderBy('id')->get();
-        return view('bidangPelatihan',['bidangs' => $bidang]);
+        return view('jadwalPelatihan',['bidangs' => $bidang]);
     }
     public function bidangPelatihan_tambah()
     {

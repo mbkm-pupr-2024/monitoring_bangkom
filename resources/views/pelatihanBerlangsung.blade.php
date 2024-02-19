@@ -33,9 +33,13 @@
             </div>
             <div class="row">
                 @foreach ($pelatihans as $pelatihan)
-                <div class="col-xl-4">
+                <div class="col-12">
                     <div class="card widget widget-popular-blog">
                         <div class="card-body">
+                            @auth('admin')
+                            <a onclick="hapus_button_{{ $pelatihan->id }}();" class="btn btn-danger btn-sm m-1 float-end"><i class="material-icons-outlined">delete</i></a>
+                            <a onclick="edit_button_{{ $pelatihan->id }}();" class="btn btn-warning btn-sm m-1 float-end"><i class="material-icons-outlined" sty>edit</i></a> 
+                            @endauth
                             <div class="widget-popular-blog-container">
                                 <div class="widget-popular-blog-image">
                                     <img src="{{ asset('assets/images/jenis_pelatihan/' . $pelatihan->bidangPelatihan->gambar) }}" alt="{{ $pelatihan->pelatihan }}">
@@ -91,10 +95,7 @@
                                     });
                                 }
                             </script>
-                            @auth('admin')
-                            <a onclick="edit_button_{{ $pelatihan->id }}();" class="btn btn-warning btn-sm float-left"><i class="material-icons-outlined" sty>edit</i></a>
-                            <a onclick="hapus_button_{{ $pelatihan->id }}();" class="btn btn-danger btn-sm float-left"><i class="material-icons-outlined">delete</i></a>
-                            @endauth
+                            
                             <a href="/pelatihan/status/{{ $pelatihan->id }}" class="btn btn-primary btn-sm float-end">Cek Status</a>
                         </div>
                     </div>

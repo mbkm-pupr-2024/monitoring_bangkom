@@ -134,14 +134,18 @@ class PelatihanController extends Controller
 
         return redirect()->back()->with('success', 'Data Pelatihan berhasil diubah')->with('popUp_title','Updated!');
     }
-    public function pelatihan_selesai()
+    public function arsip_pelatihan()
     {
         $pelatihan = PelatihanModel::with('bidangPelatihan')
         ->whereHas('status', function ($query) {
             $query->where('status', 'Selesai');
         })->get();
 
-        return view('pelatihanSelesai', ['pelatihans' => $pelatihan]);
+        return view('arsipPelatihan', ['pelatihans' => $pelatihan]);
+    }
+    public function cetak_surat()
+    {
+        return view('cetakSurat');
     }
 
 }

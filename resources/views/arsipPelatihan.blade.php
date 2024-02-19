@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1>Pelatihan Selesai</h1>
+                        <h1>Arsip Pelatihan</h1>
                     </div>
                 </div>
             </div>
@@ -27,9 +27,11 @@
             @endif
             <div class="row">
                 @foreach ($pelatihans as $pelatihan)
-                <div class="col-xl-4">
+                <div class="col-12">
                     <div class="card widget widget-popular-blog">
+                        
                         <div class="card-body">
+                            <span class="badge badge-style-light rounded-pill badge-success float-end">Selesai</span>
                             <div class="widget-popular-blog-container">
                                 <div class="widget-popular-blog-image">
                                     <img src="{{ asset('assets/images/jenis_pelatihan/' . $pelatihan->bidangPelatihan->gambar) }}" alt="{{ $pelatihan->pelatihan }}">
