@@ -10,7 +10,7 @@
   <h1>User Profile</h1>
 
 
-  <h2>Posts</h2>
+  <h2>Daftar Peserta</h2>
   <ul>
     <table>
       @foreach($data as $item)
