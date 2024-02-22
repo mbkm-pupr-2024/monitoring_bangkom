@@ -43,14 +43,14 @@
                                         @php
                                             $nomor = 1;
                                         @endphp
-                                        @foreach ($sopKegiatan as $sop)
+                                        @foreach ($sopKegiatan as $sopK)
                                         @if ($nomor==1)
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="pills-{{ $sop[0]->sop_pelatihan->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sop[0]->id }}" type="button" role="tab" aria-controls="pills-{{ $sop[0]->id }}" aria-selected="true">{{ '#'.$nomor }}</button>
+                                                <button class="nav-link active" id="pills-{{ $sopK[0]->sop->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sopK[0]->id }}" type="button" role="tab" aria-controls="pills-{{ $sopK[0]->id }}" aria-selected="true">{{ '#'.$nomor }}</button>
                                             </li>
                                         @else
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="pills-{{ $sop[0]->sop_pelatihan->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sop[0]->id }}" type="button" role="tab" aria-controls="pills-{{ $sop[0]->id }}" aria-selected="true">{{ '#'.$nomor }}</button>
+                                                <button class="nav-link" id="pills-{{ $sopK[0]->sop->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sopK[0]->id }}" type="button" role="tab" aria-controls="pills-{{ $sopK[0]->id }}" aria-selected="true">{{ '#'.$nomor }}</button>
                                             </li>
                                         @endif
                                         @php
@@ -71,8 +71,8 @@
                                             @endif
                                             <div class="settings-security-two-factor">
                                                 <h5><u>Detail</u></h5> 
-                                                <p><b>Nomor SOP:</b> {{ $sopC[0]->sop_pelatihan->id }}</p>
-                                                <p><b>Judul SOP:</b> {{ $sopC[0]->sop_pelatihan->sop}}</p>
+                                                <p><b>Nomor SOP:</b> {{ $sopC[0]->sop->nomor }}</p>
+                                                <p><b>Judul SOP:</b> {{ $sopC[0]->sop->judul}}</p>
                                                 
                                             </div>
                                                 @php
@@ -87,7 +87,7 @@
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header" id="headingSeparated{{ $kegiatan->id }}">
                                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeparated{{ $kegiatan->id }}" aria-expanded="true" aria-controls="collapsSeparated{{ $kegiatan->id }}">
-                                                                    {{ $nomor_kegiatan }}. {{ $kegiatan->kegiatan }}
+                                                                    {{ $nomor_kegiatan }}. {{ $kegiatan->nama }}
                                                                 </button>
                                                             </h2>
                                                             <div id="collapseSeparated{{ $kegiatan->id }}" class="accordion-collapse show" aria-labelledby="headingSeparated{{ $kegiatan->id }}" data-bs-parent="#accordionSeparated{{ $kegiatan->id }}">
@@ -102,7 +102,7 @@
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header" id="headingSeparated{{ $kegiatan->id }}">
                                                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeparated{{ $kegiatan->id }}" aria-expanded="false" aria-controls="collapsSeparated{{ $kegiatan->id }}">
-                                                                    {{ $nomor_kegiatan }}. {{ $kegiatan->kegiatan }}
+                                                                    {{ $nomor_kegiatan }}. {{ $kegiatan->nama }}
                                                                 </button>
                                                             </h2>
                                                             <div id="collapseSeparated{{ $kegiatan->id }}" class="accordion-collapse collapse" aria-labelledby="headingSeparated{{ $kegiatan->id }}" data-bs-parent="#accordionSeparated{{ $kegiatan->id }}">

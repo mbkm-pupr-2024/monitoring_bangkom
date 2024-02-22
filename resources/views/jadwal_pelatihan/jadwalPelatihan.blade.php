@@ -36,25 +36,54 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <a href="/bidang-pelatihan/tambah" class="btn btn-primary btn-sm float-end mb-5"><i class="material-icons-outlined">add</i> Tambah Jadwal Pelatihan</a>
+                                <a href="/jadwal-pelatihan/tambah" class="btn btn-primary btn-sm float-end mb-5"><i class="material-icons-outlined">add</i> Tambah Jadwal Pelatihan</a>
                             </div>
                         <div class="row">
                         <table id="datatable1" class="display" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>No</th>
+                                    <th>Nama Pelatihan</th>
+                                    <th>Jenis Pelatihan</th>
                                     <th>Bidang Pelatihan</th>
+                                    <th>Model Pelatihan</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Tanggal Selesai</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($bidangs as $bidang)
+                                @foreach ($jadwals as $jadwal)
+                                @php
+                                    $no = 1;
+                                @endphp
                                 <tr>
-                                    <td>{{ $bidang->id }}</td>
-                                    <td>{{ $bidang->bidang_pelatihan }}</td>
+                                    <td>{{ $no }}</td>
+                                    <td>{{ $jadwal->nama }}</td>
+                                    <td>{{ $jadwal->jenis_pelatihan->nama }}</td>
+                                    <td>{{ $jadwal->bidang_pelatihan->nama }}</td>
+                                    <td>{{ $jadwal->model_pelatihan->nama }}</td>
+                                    <td>{{ $jadwal->tanggal_mulai }}</td>
+                                    <td>{{ $jadwal->tanggal_selesai }}</td>
                                     <td>
                                         <script>
-                                            function edit_button_{{ $bidang->id }}() {
+                                            function mulai_button_{{ $jadwal->id }}() {
+                                                Swal.fire({
+                                                title: "Konfirmasi Pelaksanaan",
+                                                text: "Apakah Anda yakin ingin memulai pelatihan ini? ",
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonText: "Batal",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Mulai"
+                                                }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    window.location.href = "/jadwal-pelatihan/mulai/{{ $jadwal->id }}";
+                                                }
+                                                });
+                                            }
+                                            function edit_button_{{ $jadwal->id }}() {
                                                 Swal.fire({
                                                 title: "Konfirmasi Pengeditan",
                                                 text: "Apakah Anda yakin ingin mengubah data ini? ",
@@ -66,11 +95,11 @@
                                                 confirmButtonText: "Edit"
                                                 }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    window.location.href = "/bidang-pelatihan/edit/{{ $bidang->id }}";
+                                                    window.location.href = "/jadwal-pelatihan/edit/{{ $jadwal->id }}";
                                                 }
                                                 });
                                             }
-                                            function hapus_button_{{ $bidang->id }}() {
+                                            function hapus_button_{{ $jadwal->id }}() {
                                                 Swal.fire({
                                                 title: "Konfirmasi Penghapusan",
                                                 text: "Apakah Anda yakin ingin menghapus data ini? ",
@@ -82,23 +111,32 @@
                                                 confirmButtonText: "Hapus"
                                                 }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    window.location.href = "/bidang-pelatihan/hapus/{{ $bidang->id }}";
+                                                    window.location.href = "/jadwal-pelatihan/hapus/{{ $jadwal->id }}";
                                                 }
                                                 });
                                             }
                                         </script>
-                                        <a onclick="edit_button_{{ $bidang->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>edit</i></a> 
-                                        <a onclick="hapus_button_{{ $bidang->id }}();" class="btn btn-danger btn-sm"><i class="material-icons-outlined center" sty>delete</i></a>
+                                        <a onclick="mulai_button_{{ $jadwal->id }}();" class="btn btn-primary btn-sm"><i class="material-icons-outlined center" sty>add_box</i></a> 
+                                        <a onclick="edit_button_{{ $jadwal->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>edit</i></a> 
+                                        <a onclick="hapus_button_{{ $jadwal->id }}();" class="btn btn-danger btn-sm"><i class="material-icons-outlined center" sty>delete</i></a>
                                     </td>
                                 </tr>
+                                @php
+                                    $no++;
+                                @endphp
                                 @endforeach
                             </tbody>
-                            <tfoot>
+                            {{-- <tfoot>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>No</th>
+                                    <th>Nama Pelatihan</th>
+                                    <th>Jenis Pelatihan</th>
                                     <th>Bidang Pelatihan</th>
+                                    <th>Model Pelatihan</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Tanggal Selesai</th>
                                 </tr>
-                            </tfoot>
+                            </tfoot> --}}
                         </table>
                     </div>
                 </div>

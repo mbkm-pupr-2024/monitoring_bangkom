@@ -11,17 +11,17 @@ class DetilStatusModel extends Model
 
     protected $table = 'detil_status';
     protected $keyType = 'string';
-    protected $fillable = ['id', 'status', 'kegiatan'];
+    protected $fillable = ['id', 'id_status', 'id_kegiatan_sop'];
     public $incrementing = false;
     public $timestamps = true;
     
     public function status()
     {
-        return $this->belongsTo(StatusModel::class, 'status', 'id');
+        return $this->belongsTo(StatusModel::class, 'id_status', 'id');
     }
 
-    public function kegiatan()
+    public function kegiatan_sop()
     {
-        return $this->belongsTo(KegiatanModel::class, 'kegiatan', 'id');
+        return $this->belongsTo(KegiatanSopModel::class, 'id_kegiatan_sop', 'id');
     }
 }

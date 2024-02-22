@@ -27,7 +27,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-container bg-primary">
                             <li class="breadcrumb-item"><a href="#">Perlatihan Berlangsung</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{ $pelatihan->pelatihan }}</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{ $pelatihan->nama }}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Status Pelatihan</li>
                         </ol>
                     </nav>
@@ -40,7 +40,7 @@
                             <div class="col-xl-4 col-xxl-3">
                                 <div class="todo-menu">
                                     <h5 class="todo-menu-title">Status</h5>
-                                    @if ($status->status == 'Selesai')
+                                    @if ($status->ket_status == 'Selesai')
                                         <span class="badge badge-success float-end" >Selesai</span>
                                     @else
                                         <span class="badge badge-info float-end" >Sedang berlangsung</span>
@@ -55,21 +55,21 @@
                                         @if ($detil_status->isEmpty())
                                             @if ($no_sop == 1)
                                                 <li class="nav-item" role="presentation">
-                                                    <a class="nav-link active" id="pills-{{ $sop[0]->sop_pelatihan->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sop[0]['id'] }}" type="button" role="tab" aria-controls="pills-{{ $sop[0]['id'] }}" aria-selected="true">
-                                                        <i class="material-icons-outlined">{{ $sop[0]->sop_pelatihan->icon}}</i>{{ $sop[0]->sop_pelatihan->sop}}
+                                                    <a class="nav-link active" id="pills-{{ $sop[0]->sop->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sop[0]['id'] }}" type="button" role="tab" aria-controls="pills-{{ $sop[0]['id'] }}" aria-selected="true">
+                                                        <i class="material-icons-outlined">{{ $sop[0]->sop->icon}}</i>{{ $sop[0]->sop->judul}}
                                                     </a>
                                                 </li>
                                             @else
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="pills-{{ $sop[0]->sop_pelatihan->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sop[0]['id'] }}" type="button" role="tab" aria-controls="pills-{{ $sop[0]['id'] }}" aria-selected="true">
-                                                    <i class="material-icons-outlined">{{ $sop[0]->sop_pelatihan->icon}}</i>{{ $sop[0]->sop_pelatihan->sop}}
+                                                <a class="nav-link" id="pills-{{ $sop[0]->sop->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sop[0]['id'] }}" type="button" role="tab" aria-controls="pills-{{ $sop[0]['id'] }}" aria-selected="true">
+                                                    <i class="material-icons-outlined">{{ $sop[0]->sop->icon}}</i>{{ $sop[0]->sop->judul}}
                                                 </a>
                                             </li>
                                             @endif
                                         @else
                                             <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="pills-{{ $sop[0]->sop_pelatihan->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sop[0]['id'] }}" type="button" role="tab" aria-controls="pills-{{ $sop[0]['id'] }}" aria-selected="true">
-                                                    <i class="material-icons-outlined">{{ $sop[0]->sop_pelatihan->icon}}</i>{{ $sop[0]->sop_pelatihan->sop}}
+                                                <a class="nav-link" id="pills-{{ $sop[0]->sop->id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ $sop[0]['id'] }}" type="button" role="tab" aria-controls="pills-{{ $sop[0]['id'] }}" aria-selected="true">
+                                                    <i class="material-icons-outlined">{{ $sop[0]->sop->icon}}</i>{{ $sop[0]->sop->judul}}
                                                 </a>
                                             </li>
                                         @endif
@@ -107,16 +107,16 @@
                                         @foreach ($kegiatans as $kegiatan)
                                             <li class="todo-item">
                                                 <div class="todo-item-content">
-                                                    <span class="todo-item-title">{{ $no_kegiatan . '. '  .$kegiatan->kegiatan }}
+                                                    <span class="todo-item-title">{{ $no_kegiatan . '. '  .$kegiatan->nama }}
                                                     </span>
                                                     <span class="todo-item-subtitle">{{ $kegiatan->deskripsi }}</span>
                                                 </div>
-                                                @if ($detil_status->contains('kegiatan', $kegiatan->id))
+                                                @if ($detil_status->contains('id_kegiatan_sop', $kegiatan->id))
                                                     <div class="widget-stats-icon widget-stats-icon-warning">
                                                         <i class="large material-icons-outlined text-success font-weight-bold">task_alt</i>
                                                     </div>
                                                     @php
-                                                        $last_pills_tab = $kegiatans[0]->sop_pelatihan->id;
+                                                        $last_pills_tab = $kegiatans[0]->sop->id;
                                                         $last_pills_content = $kegiatans[0]['id'];
                                                         $last_done_event++;
                                                     @endphp
