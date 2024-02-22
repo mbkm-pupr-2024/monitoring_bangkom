@@ -141,7 +141,7 @@
                                                                 });
                                                             }
                                                         </script>
-                                                        <a onclick="ceklis_button_{{ $kegiatan->id }}()" class="todo-item-done" style="cursor: pointer;"><i class="material-icons-outlined no-m">done</i></a>
+                                                        <a onclick="ceklis_button_{{ $kegiatan->id }}()" class="todo-item-done" style="cursor: pointer;"><i class="material-icons-outlined no-m rounded bg-success text-white">done</i></a>
                                                     </div>
                                                     @endauth
                                                 @endif

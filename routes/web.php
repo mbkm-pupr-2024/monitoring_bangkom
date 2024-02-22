@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelatihanController;
 use App\Http\Controllers\DataPelatihanController;
+use App\Http\Controllers\SuratController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,10 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/pelatihan/{id_pl}/ceklis-status/{id_kg}', [PelatihanController::class, 'pelatihan_ceklisStatus']);
     Route::get('/arsip-pelatihan', [PelatihanController::class, 'arsip_pelatihan'])->name('arsip-pelatihan');
-    Route::get('/cetak-surat', [PelatihanController::class, 'cetak_surat'])->name('cetak-surat');
 });
+Route::get('/cetak-surat', [SuratController::class, 'index'])->name('cetak-surat');
+Route::get('/cetak-surat/{id}', [SuratController::class, 'report_progress'])->name('cetak-surat-download');
+
+Route::get('/excell', [SuratController::class, 'excel']);
+Route::post('/excell', [SuratController::class, 'import'])->name('upload-excel');
 
