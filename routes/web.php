@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelatihanController;
-use App\Http\Controllers\DataPelatihanController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\ManajemenDataController;
 
