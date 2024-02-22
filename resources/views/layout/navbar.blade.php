@@ -65,17 +65,17 @@
                 <li class="nav-item">
                   <a class="nav-link hide-sidebar-toggle-button" href="#"><i class="material-icons">first_page</i></a>
                 </li>
-                {{-- <li class="nav-item dropdown hidden-on-mobile">
+                <li class="nav-item dropdown hidden-on-mobile">
                   <a class="nav-link dropdown-toggle" href="#" id="addDropdownLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="material-icons">more_horiz</i>
+                    <i class="material-icons">add</i>
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="addDropdownLink">
-                    <li><a class="dropdown-item" href="#">Manage SOP Pelatihan</a></li>
-                    <li><a class="dropdown-item" href="#">Manage Kegiatan Pelatihan</a></li>
-                    <li><a class="dropdown-item" href="#">Manage Bidang Pelatihan</a></li>
+                    <li><a class="dropdown-item" href="/kelola-jenis-pelatihan">Kelola Jenis Pelatihan</a></li>
+                    <li><a class="dropdown-item" href="/kelola-bidang-pelatihan">Kelola Bidang Pelatihan</a></li>
+                    <li><a class="dropdown-item" href="/kelola-model-pelatihan">Kelola Model Pelatihan</a></li>
                   </ul>
-                </li> --}}
+                </li>
               </ul>
             </div>
             

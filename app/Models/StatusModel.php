@@ -13,17 +13,17 @@ class StatusModel extends Model
     protected $table = 'status';
     protected $keyType = 'string';
     protected $fillable = [
-        'id', 'status', 'pelatihan'];
+        'id', 'ket_status', 'id_pelatihan'];
     public $incrementing = false;
     public $timestamps = true;
     
     public function pelatihan()
     {
-        return $this->belongsTo(PelatihanModel::class, 'pelatihan', 'id');
+        return $this->belongsTo(PelatihanModel::class, 'id_pelatihan', 'id');
     }
 
     public function detil_status()
     {
-        return $this->hasMany(DetilStatusModel::class, 'status', 'id');
+        return $this->hasMany(DetilStatusModel::class, 'id_status', 'id');
     }
 }

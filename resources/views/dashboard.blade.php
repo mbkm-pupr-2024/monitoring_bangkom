@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="widget-stats-content flex-fill">
                                     <span class="widget-stats-title">Sedang Berlangsung</span>
-                                    <span class="widget-stats-amount">{{ $jml_berlangsung }}</span>
+                                    {{-- <span class="widget-stats-amount">{{ $jml_berlangsung }}</span> --}}
                                     {{-- <span class="widget-stats-info">790 unique this month</span> --}}
                                 </div>
                                 <div class="widget-stats-indicator">
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="widget-stats-content flex-fill">
                                     <span class="widget-stats-title">Selesai</span>
-                                    <span class="widget-stats-amount">{{ $jml_selesai }}</span>
+                                    {{-- <span class="widget-stats-amount">{{ $jml_selesai }}</span> --}}
                                 </div>
                                 <div class="widget-stats-indicator">
                                     <a href="/pelatihan-selesai" type="button" class="btn btn-primary">Lihat</a>

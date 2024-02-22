@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('sop', function (Blueprint $table) {
             $table->string('id')->primary();
+            $table->string('nomor');
+            $table->string('judul');
             $table->string('icon');
-            $table->string('sop');
             $table->timestamps();
         });
     }

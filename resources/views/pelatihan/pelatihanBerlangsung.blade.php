@@ -38,46 +38,49 @@
                         <div class="card-body">
                             @auth('admin')
                             <a onclick="hapus_button_{{ $pelatihan->id }}();" class="btn btn-danger btn-sm m-1 float-end"><i class="material-icons-outlined">delete</i></a>
-                            <a onclick="edit_button_{{ $pelatihan->id }}();" class="btn btn-warning btn-sm m-1 float-end"><i class="material-icons-outlined" sty>edit</i></a> 
                             @endauth
                             <div class="widget-popular-blog-container">
                                 <div class="widget-popular-blog-image">
-                                    <img src="{{ asset('assets/images/jenis_pelatihan/' . $pelatihan->bidangPelatihan->gambar) }}" alt="{{ $pelatihan->pelatihan }}">
+                                    <img src="{{ asset('assets/images/bidang_pelatihan/' . $pelatihan->bidang_pelatihan->gambar) }}" alt="{{ $pelatihan->nama }}">
                                 </div>
                                 <div class="widget-popular-blog-content ps-4">
                                     <span class="widget-popular-blog-title">
-                                        {{ $pelatihan->pelatihan }}
+                                        {{ $pelatihan->nama }}
                                     </span>
                                     <span class="widget-popular-blog-title text-black-50">
-                                        {{ $pelatihan->bidangPelatihan->bidang_pelatihan }}
+                                            <i class="material-icons">schedule</i>
+                                            {{ date('d F Y', strtotime($pelatihan->tanggal_mulai)) }} - {{ date('d F Y', strtotime($pelatihan->tanggal_selesai)) }}
                                     </span>
                                 </div>
                             </div>
+                            <br>
                             <div class="widget-popular-blog-container">
-                                <span class="">
-                                    <i class="material-icons">schedule</i>
-                                    {{ date('d F Y', strtotime($pelatihan->tanggal_mulai)) }} - {{ date('d F Y', strtotime($pelatihan->tanggal_selesai)) }}
+                                <span>
+                                    <b>Jenis pelatihan: </b>{{ $pelatihan->jenis_pelatihan->nama }}
                                 </span>
                             </div>
+                            <div class="widget-popular-blog-container">
+                                <span class="">
+                                    <b>Bidang pelatihan: </b>{{ $pelatihan->bidang_pelatihan->nama }}
+                                </span>
+                            </div>
+                            <div class="widget-popular-blog-container">
+                                <span class="">
+                                    <b>Model pelatihan: </b>{{ $pelatihan->model_pelatihan->nama }}
+                                </span>
+                            </div>
+                            <br>
+                            <p>
+                                @if (isset($status_terakhir[$pelatihan->id]))
+                                    <b>Status:</b> {{ $status_terakhir[$pelatihan->id] }}
+                                @else
+                                    <b>Status:</b> Belum ada progres
+                                @endif
+                            </p>
+
                         </div>
                         <div class="card-footer">
                             <script>
-                                function edit_button_{{ $pelatihan->id }}() {
-                                    Swal.fire({
-                                    title: "Konfirmasi Pengeditan",
-                                    text: "Apakah Anda yakin ingin mengubah data ini? ",
-                                    icon: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#3085d6",
-                                    cancelButtonText: "Batal",
-                                    cancelButtonColor: "#d33",
-                                    confirmButtonText: "Edit"
-                                    }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        window.location.href = "/pelatihan/edit/{{ $pelatihan->id }}";
-                                    }
-                                    });
-                                }
                                 function hapus_button_{{ $pelatihan->id }}() {
                                     Swal.fire({
                                     title: "Konfirmasi Penghapusan",

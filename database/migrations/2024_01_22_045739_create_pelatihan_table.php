@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('pelatihan', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('pelatihan');
-            $table->string('bidang_pelatihan')->references('id')->on('bidang_pelatihan');
+            $table->string('nama');
+            $table->string('id_jenis')->references('id')->on('jenis_pelatihan');
+            $table->string('id_bidang')->references('id')->on('bidang_pelatihan');
+            $table->string('id_model')->references('id')->on('model_pelatihan');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
+            $table->year('tahun_periode');
             $table->timestamps();
         });
     }

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\KegiatanSopModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SopModel extends Model
 {
@@ -11,12 +12,12 @@ class SopModel extends Model
 
     protected $table = 'sop';
     protected $keyType = 'string';
-    protected $fillable = ['id', 'sop', 'icon'];
+    protected $fillable = ['id', 'nama', 'icon'];
     public $incrementing = false;
     public $timestamps = true;
     
-    public function kegiatan()
+    public function kegiatan_sop()
     {
-        return $this->hasMany(KegiatanModel::class, 'sop', 'id');
+        return $this->hasMany(KegiatanSopModel::class, 'id_sop', 'id');
     }
 }

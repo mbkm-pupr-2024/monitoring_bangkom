@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('detil_status', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('status')->references('id')->on('status');
-            $table->string('kegiatan')->references('id')->on('kegiatan');
+            $table->string('id_status')->references('id')->on('status');
+            $table->string('id_kegiatan_sop')->references('id')->on('kegiatan_sop');
             $table->timestamps();
         });
     }

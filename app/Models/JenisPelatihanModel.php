@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BidangPelatihanModel extends Model
+class JenisPelatihanModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'bidang_pelatihan';
+    protected $table = 'jenis_pelatihan';
 
     protected $keyType = 'string';
     public $incrementing = false;
@@ -19,11 +19,10 @@ class BidangPelatihanModel extends Model
     protected $fillable = [
         'id',
         'nama',
-        'gambar',
     ];
     
     public function pelatihan()
     {
-        return $this->hasMany(PelatihanModel::class, 'id_bidang', 'id');
+        return $this->hasMany(PelatihanModel::class, 'id_jenis', 'id');
     }
 }

@@ -34,14 +34,14 @@
                             <span class="badge badge-style-light rounded-pill badge-success float-end">Selesai</span>
                             <div class="widget-popular-blog-container">
                                 <div class="widget-popular-blog-image">
-                                    <img src="{{ asset('assets/images/jenis_pelatihan/' . $pelatihan->bidangPelatihan->gambar) }}" alt="{{ $pelatihan->pelatihan }}">
+                                    <img src="{{ asset('assets/images/bidang_pelatihan/' . $pelatihan->bidang_pelatihan->gambar) }}" alt="{{ $pelatihan->nama }}">
                                 </div>
                                 <div class="widget-popular-blog-content ps-4">
                                     <span class="widget-popular-blog-title">
-                                        {{ $pelatihan->pelatihan }}
+                                        {{ $pelatihan->nama }}
                                     </span>
                                     <span class="widget-popular-blog-title text-black-50">
-                                        {{ $pelatihan->bidangPelatihan->bidang_pelatihan }}
+                                        {{ $pelatihan->bidang_pelatihan->nama }}
                                     </span>
                                 </div>
                             </div>
