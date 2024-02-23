@@ -47,7 +47,7 @@
           @foreach($sop_kegiatans as $sop_kegiatan)
             <li>
               <h4 style="margin-bottom: 1px;">{{ $sop_kegiatan[0]->sop->judul }}</h4>
-              <!-- <table width="90%">
+              <table width="90%">
                 @foreach ($sop_kegiatan as $kegiatan )
                 <tr>
                   <td width="400px">{{ $kegiatan->nama }}</td>
@@ -61,10 +61,10 @@
                   </td>
                 </tr>
                 @endforeach
-              </table> -->
+              </table>
 
               <!-- Model 2 -->
-              <table width="90%">
+              <!-- <table width="90%">
                 @foreach ($sop_kegiatan as $kegiatan )
                   @if ($detil_status->contains('id_kegiatan_sop', $kegiatan->id))
                     <tr>
@@ -74,7 +74,7 @@
                     </tr>
                   @endif
                 @endforeach
-              </table>
+              </table> -->
             </li>
           @endforeach
         </ul>
