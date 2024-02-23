@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Imports\UserImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\KegiatanSopModel;
+use App\Models\PelatihanModel;
+use App\Models\StatusModel;
+use App\Models\DetilStatusModel;
+
 
 class SuratController extends Controller
 {
@@ -16,19 +21,27 @@ class SuratController extends Controller
 
     public function report_progress($id)
     {
-        $data = DB::table('status')
-        ->select('*')
-        ->join('detil_status','status.id','=','detil_status.status')
-        ->join('kegiatan','kegiatan.id','=','detil_status.kegiatan')
-        ->join('pelatihan','pelatihan.id','=','status.pelatihan')
-        ->join('sop','sop.id','=','kegiatan.sop')
-        ->where('pelatihan.id','=',$id)
-        ->get();
+        // $data = DB::table('status')
+        // ->select('sop.id', 'sop.icon as icon', 'kegiatan_sop.nama as sop', 'judul')
+        // ->join('detil_status','status.id','=','detil_status.id_status')
+        // ->join('kegiatan_sop','kegiatan_sop.id','=','detil_status.id_kegiatan_sop')
+        // ->join('pelatihan','pelatihan.id','=','status.id_pelatihan')
+        // ->join('sop','sop.id','=','kegiatan_sop.id_sop')
+        // ->where('pelatihan.id','=',$id)
+        // // ->groupBy('sop.id')
+        // ->get();
 
-        // dd($data);
+        $status = StatusModel::where('id_pelatihan', $id)->first();
+        $detil_status = DetilStatusModel::where('id_status', $status->id)->get();
+        $sopKegiatan = KegiatanSopModel::with('sop')->get()->groupBy('id_sop');
+        $pelatihan = PelatihanModel::find($id);
+        // dd($detil_status);
+
+        // dd($detil_status);
         // return view('pelatihan_status', ['sopKegiatan' => $sopKegiatan,'pelatihan' => $pelatihan,'status' => $status, 'detil_status' => $detil_status]);
         return view('surat.report', [
-            'data' => $data,
+            'sop_kegiatans' => $sopKegiatan,
+            'detil_status' => $detil_status,
         ]);
     }
 

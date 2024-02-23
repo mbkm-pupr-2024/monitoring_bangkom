@@ -39,197 +39,44 @@
         <p style="margin-top: 5px;">Nomor: 234/Un.03/B.II/KM.02.4/08/2022</p>
       </div>
       <div class="isi-surat">
+        @php
+          $pointer = 0;
+        @endphp
         <p>Progres pelaksanaan pelatihan :</p>
         <ul>
-          <li>
-            @if ($data[0]->icon == 'schedule')
-            <h4 style="margin-bottom: 1px;">{{ $data[0]->sop }}</h4>
-            @endif
-            <table width="90%">
-              @for ($i=0; $i<count($data); $i++) <tr>
-                @if ($data[$i]->icon == 'schedule')
-                <td width=" 400px">{{ $data[$i]->kegiatan }}
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-                </tr>
-                @endif
-                @endfor
-            </table>
-          </li>
-          @if (isset($data[8]) && $data[8]->icon == 'contact_mail')
-          <li>
-            <h4 style="margin-bottom: 1px;">{{ $data[8]->sop }}</h4>
-            <table width="90%">
-              @for ($i=0; $i<count($data); $i++) 
-                @if ($data[$i]->icon == 'contact_mail')
+          @foreach($sop_kegiatans as $sop_kegiatan)
+            <li>
+              <h4 style="margin-bottom: 1px;">{{ $sop_kegiatan[0]->sop->judul }}</h4>
+              <!-- <table width="90%">
+                @foreach ($sop_kegiatan as $kegiatan )
                 <tr>
-                  <td width=" 400px">{{ $data[$i]->kegiatan }}
-                  </td>
+                  <td width="400px">{{ $kegiatan->nama }}</td>
                   <td>:</td>
-                  <td style="text-align: right;">[ ✔ ]</td>
-                </tr>
-                @endif
-              @endfor
-            </table>
-          </li>
-          @endif
-          @if (isset($data[17]) && $data[17]->icon == 'person_pin')
-          <li>
-            <h4 style="margin-bottom: 1px;">{{ $data[17]->sop }}</h4>
-            <table width="90%">
-              @for ($i=0; $i<count($data); $i++) 
-                @if ($data[$i]->icon == 'person_pin')
-                <tr>
-                  <td width=" 400px">{{ $data[$i]->kegiatan }}
+                  <td style="text-align: right;">
+                    @if ($detil_status->contains('id_kegiatan_sop', $kegiatan->id))
+                      [ ✔ ]
+                    @else
+                      [ X ]
+                    @endif
                   </td>
-                  <td>:</td>
-                  <td style="text-align: right;">[ ✔ ]</td>
                 </tr>
-                @endif
-              @endfor
-            </table>
-          </li>
-          @endif
-          <!-- <li>
-            <h4 style="margin-bottom: 1px;">Konfirmasi Pengajar Pengembangan Kompetensi</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-              <tr>
-                <td>Penetepan jadwal rapat persiapan pelatihan</td>
-                <td>:</td>
-                <td style="text-align: right;">[ X ]</td>
-              </tr>
-            </table>
-          </li>
-          <li>
-            <h4 style="margin-bottom: 1px;">Konfirmasi Peserta Pengembangan Kompetensi</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-            </table>
-          </li>
-          <li>
-            <h4 style="margin-bottom: 1px;">Pelaksanaan Pembukaan/Penutupan Pelatihan</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-              <tr>
-                <td>Penetepan jadwal rapat persiapan pelatihan</td>
-                <td>:</td>
-                <td style="text-align: right;">[ X ]</td>
-              </tr>
-            </table>
-          </li>
-          <li>
-            <h4 style="margin-bottom: 1px;">Pengelolaan Piket (Pemantauan Kegiatan Belajar Mengajar)</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-              <tr>
-                <td>Penetepan jadwal rapat persiapan pelatihan</td>
-                <td>:</td>
-                <td style="text-align: right;">[ X ]</td>
-              </tr>
-            </table>
-          </li>
-          <li>
-            <h4 style="margin-bottom: 1px;">Pelaksanaan Monitoring dan Evaluasi Pelatihan (e-Pelatihan)</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-              <tr>
-                <td>Penetepan jadwal rapat persiapan pelatihan</td>
-                <td>:</td>
-                <td style="text-align: right;">[ X ]</td>
-              </tr>
-            </table>
-          </li>
-          <li>
-            <h4 style="margin-bottom: 1px;">Rapat Evaluasi Kelulusan</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-              <tr>
-                <td>Penetepan jadwal rapat persiapan pelatihan</td>
-                <td>:</td>
-                <td style="text-align: right;">[ X ]</td>
-              </tr>
-            </table>
-          </li>
-          <li>
-            <h4 style="margin-bottom: 1px;">Penyusunan Laporan Pelatihan</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-              <tr>
-                <td>Penetepan jadwal rapat persiapan pelatihan</td>
-                <td>:</td>
-                <td style="text-align: right;">[ X ]</td>
-              </tr>
-            </table>
-          </li>
-          <li>
-            <h4 style="margin-bottom: 1px;">Penerbitan Sertifikat Pelatihan</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-              <tr>
-                <td>Penetepan jadwal rapat persiapan pelatihan</td>
-                <td>:</td>
-                <td style="text-align: right;">[ X ]</td>
-              </tr>
-            </table>
-          </li>
-          <li>
-            <h4 style="margin-bottom: 1px;">Penyusunan Surat Pengembalian Peserta</h4>
-            <table width="90%">
-              <tr>
-                <td width=" 400px">Penetapan peserta, pengajar, dan jadwal pelatihan
-                </td>
-                <td>:</td>
-                <td style="text-align: right;">[ ✔ ]</td>
-              </tr>
-              <tr>
-                <td>Penetepan jadwal rapat persiapan pelatihan</td>
-                <td>:</td>
-                <td style="text-align: right;">[ X ]</td>
-              </tr>
-            </table>
-          </li> -->
+                @endforeach
+              </table> -->
+
+              <!-- Model 2 -->
+              <table width="90%">
+                @foreach ($sop_kegiatan as $kegiatan )
+                  @if ($detil_status->contains('id_kegiatan_sop', $kegiatan->id))
+                    <tr>
+                      <td width="400px">{{ $kegiatan->nama }}</td>
+                      <td>:</td>
+                      <td style="text-align: right;">[ ✔ ]</td>
+                    </tr>
+                  @endif
+                @endforeach
+              </table>
+            </li>
+          @endforeach
         </ul>
         <p>Adalah benar sebagai mahasiswa Universitas Trunojoyo Madura pada semester <strong>
             Sehubungan dengan pengajuan cuti mahasiswa tersebut, maka diberikan ijin cuti/menunda
