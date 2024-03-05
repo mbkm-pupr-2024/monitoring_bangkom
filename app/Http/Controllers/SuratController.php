@@ -6,31 +6,121 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Imports\UserImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\KegiatanSopModel;
+use App\Models\PelatihanModel;
+use App\Models\StatusModel;
+use App\Models\DetilStatusModel;
+
 
 class SuratController extends Controller
 {
     public function index()
     {
-        return view('surat.index');
-    }
-
-    public function report_progress($id)
-    {
-        $data = DB::table('status')
-        ->select('*')
-        ->join('detil_status','status.id','=','detil_status.status')
-        ->join('kegiatan','kegiatan.id','=','detil_status.kegiatan')
-        ->join('pelatihan','pelatihan.id','=','status.pelatihan')
-        ->join('sop','sop.id','=','kegiatan.sop')
-        ->where('pelatihan.id','=',$id)
+        $pelatihans = PelatihanModel::with('jenis_pelatihan', 'bidang_pelatihan', 'model_pelatihan')
+        ->whereHas('status', function ($query) {
+            $query->where('ket_status', 'Sedang berlangsung');
+        })
+        ->orderBy('created_at', 'desc')
         ->get();
 
-        // dd($data);
+        return view('surat.cetakSurat', ['pelatihans' => $pelatihans]);
+    }
+    public function cetakSurat_menu($id_pelatihan)
+    {
+        $pelatihan = PelatihanModel::find($id_pelatihan);
+
+        return view('surat.cetakSurat_menu', ['pelatihan' => $pelatihan]);
+    }
+
+    public function progress_pelatihan($id)
+    {
+        // $data = DB::table('status')
+        // ->select('sop.id', 'sop.icon as icon', 'kegiatan_sop.nama as sop', 'judul')
+        // ->join('detil_status','status.id','=','detil_status.id_status')
+        // ->join('kegiatan_sop','kegiatan_sop.id','=','detil_status.id_kegiatan_sop')
+        // ->join('pelatihan','pelatihan.id','=','status.id_pelatihan')
+        // ->join('sop','sop.id','=','kegiatan_sop.id_sop')
+        // ->where('pelatihan.id','=',$id)
+        // // ->groupBy('sop.id')
+        // ->get();
+
+        $status = StatusModel::where('id_pelatihan', $id)->first();
+        $detil_status = DetilStatusModel::where('id_status', $status->id)->get();
+        $sopKegiatan = KegiatanSopModel::with('sop')->get()->groupBy('id_sop');
+        $pelatihan = PelatihanModel::find($id);
+        // dd($detil_status);
+
+        // dd($detil_status);
         // return view('pelatihan_status', ['sopKegiatan' => $sopKegiatan,'pelatihan' => $pelatihan,'status' => $status, 'detil_status' => $detil_status]);
-        return view('surat.report', [
-            'data' => $data,
+        return view('surat.progres_pelatihan', [
+            'sop_kegiatans' => $sopKegiatan,
+            'detil_status' => $detil_status,
         ]);
     }
+
+    public function pemanggilan_peserta($id_pelatihan)
+    {
+        $pelatihan = PelatihanModel::find($id_pelatihan);
+
+        return view('surat.pemanggilan_peserta', [
+            'pelatihan' => $pelatihan,
+        ]);
+    }
+
+    public function pengembalian_peserta($id_pelatihan)
+    {
+        $pelatihan = PelatihanModel::find($id_pelatihan);
+
+        return view('surat.pengembalian_peserta', [
+            'pelatihan' => $pelatihan,
+        ]);
+    }
+
+    public function keputusan_pelatihan($id_pelatihan)
+    {
+        $pelatihan = PelatihanModel::find($id_pelatihan);
+
+        return view('surat.keputusan_pelatihan', [
+            'pelatihan' => $pelatihan,
+        ]);
+    }
+
+    public function kehadiran_pembukaan($id_pelatihan)
+    {
+        $pelatihan = PelatihanModel::find($id_pelatihan);
+
+        return view('surat.kehadiran_pembukaan', [
+            'pelatihan' => $pelatihan,
+        ]);
+    }
+
+    public function kehadiran_penutupan($id_pelatihan)
+    {
+        $pelatihan = PelatihanModel::find($id_pelatihan);
+
+        return view('surat.kehadiran_penutupan', [
+            'pelatihan' => $pelatihan,
+        ]);
+    }
+
+    public function sambutan_pembukaan($id_pelatihan)
+    {
+        $pelatihan = PelatihanModel::find($id_pelatihan);
+
+        return view('surat.sambutan_pembukaan', [
+            'pelatihan' => $pelatihan,
+        ]);
+    }
+
+    public function sambutan_penutupan($id_pelatihan)
+    {
+        $pelatihan = PelatihanModel::find($id_pelatihan);
+
+        return view('surat.sambutan_penutupan', [
+            'pelatihan' => $pelatihan,
+        ]);
+    }
+
 
     public function excel() {
         // Excel::import(new UserImport, public_path('\assets\excel\book1.xlsx'));
@@ -50,12 +140,15 @@ class SuratController extends Controller
         $data = Excel::toCollection(new UserImport, $file);
         $data = $data[0]->map(function($row) {
             return [
-                'nama' => $row[0],
-                'sekolah' => $row[1],
-                'tanun' => $row[2],
+                'no' => $row[0],
+                'nama' => $row[1],
+                'nip' => $row[2],
+                'jabatan' => $row[3],
+                'unit_kerja' => $row[4],
+                'keterangan' => $row[5],
             ];
         });
-        // dd($data);
+        dd($data);
 
         // $import = new UserImport; // Sesuaikan dengan nama class impor Anda
         // Excel::import($import, $file);

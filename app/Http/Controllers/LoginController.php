@@ -18,7 +18,6 @@ class LoginController extends Controller
 
     public function signin(Request $request)
     {
-        
         $request->validate([
             'username' => 'required',
             'password'=> 'required' 
@@ -30,7 +29,7 @@ class LoginController extends Controller
         }
         else
         {
-            return redirect('/login')->with('error', 'Invalid username or password');
+            return redirect('/login')->with('error', 'Invalid username or password')->withInput($request->except('password'));
         }
     }
     public function logout(Request $request)

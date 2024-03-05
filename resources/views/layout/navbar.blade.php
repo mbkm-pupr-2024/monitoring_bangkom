@@ -63,7 +63,12 @@
             <div class="navbar-nav" id="navbarNav">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link hide-sidebar-toggle-button" href="#"><i class="material-icons">first_page</i></a>
+                  @if (auth('admin')->check())
+                    <a class="nav-link hide-sidebar-toggle-button" href="#"><i class="material-icons">first_page</i></a>
+                  @else
+                    <a class="nav-link hide-sidebar-toggle-button" href="#"><i class="material-icons">first_page</i></a>
+                  @endif
+                  
                 </li>
                 <li class="nav-item dropdown hidden-on-mobile">
                   <a class="nav-link dropdown-toggle" href="#" id="addDropdownLink" role="button"
@@ -79,8 +84,8 @@
               </ul>
             </div>
             
-            <div class="d-flex">
-              <ul class="navbar-nav">
+            {{-- <div class="d-flex"> --}}
+              {{-- <ul class="navbar-nav"> --}}
                {{-- <li class="nav-item">
                   <a class="nav-link toggle-search" href="/search"><i class="material-icons">search</i></a>
                 </li>
@@ -166,7 +171,7 @@
                   <a class="nav-link" href="/logout"><i class="material-icons">subdirectory_arrow_right</i></a>
                 </li> --}}
               </ul>
-            </div>
+            {{-- </div> --}}
           </div>
         </nav>
       </div>
@@ -185,6 +190,7 @@
     <script src="{{ asset('assets/plugins/highlight/highlight.pack.js') }}"></script>
 
     <script src="{{ asset('assets/js/main.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main_tammu.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
     @section('script')

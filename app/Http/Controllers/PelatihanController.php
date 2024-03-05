@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SopModel;
 use App\Models\StatusModel;
 use Illuminate\Http\Request;
 use App\Models\PelatihanModel;
@@ -46,7 +47,7 @@ class PelatihanController extends Controller
             $lastNumber = intval(substr($lastRecordPelatihan->id, 1));
             $numberPelatihan = ($lastNumber < 99999) ? $lastNumber + 1 : 1;
         }
-        $newIdPelatihan = 'P' . str_pad($numberPelatihan, 5, '0', STR_PAD_LEFT);
+        $newIdPelatihan = 'p' . str_pad($numberPelatihan, 5, '0', STR_PAD_LEFT);
 
         $request->merge(['id' => $newIdPelatihan]);
 
@@ -58,7 +59,7 @@ class PelatihanController extends Controller
             $lastNumber = intval(substr($lastRecordStatus->id, 1));
             $numberStatus = ($lastNumber < 99999) ? $lastNumber + 1 : 1;
         }
-        $newIdStatus = 'S' . str_pad($numberStatus, 5, '0', STR_PAD_LEFT);
+        $newIdStatus = 's' . str_pad($numberStatus, 5, '0', STR_PAD_LEFT);
 
         StatusModel::create([
             'id' => $newIdStatus,
@@ -134,21 +135,22 @@ class PelatihanController extends Controller
         return view('pelatihan.pelatihanBerlangsung', ['pelatihans' => $pelatihans, 'status_terakhir' => $status_terakhir]);
     }
     public function pelatihan_delete($id){
+        $status = StatusModel::where('id_pelatihan', $id)->first();
+        DetilStatusModel::where('id_status', $status->id)->delete();
         StatusModel::where('id_pelatihan', $id)->delete();
-        DetilStatusModel::where('id_status', $id)->delete();
         PelatihanModel::find($id)->delete();
 
-        return redirect('/pelatihan-berlangsung')->with(['success' => 'Jadwal pelatihan berhasil dihapus', 'popUp_title' => 'Deleted!']);
+        return redirect('/pelatihan-berlangsung')->with(['success' => 'Pelatihan berhasil dihapus', 'popUp_title' => 'Deleted!']);
     }
 
-    public function pelatihan_status($id)
+    public function pelatihan_kelolaStatus($id)
     {
         $status = StatusModel::where('id_pelatihan', $id)->first();
         $detil_status = DetilStatusModel::where('id_status', $status->id)->get();
         $sopKegiatan = KegiatanSopModel::with('sop')->get()->groupBy('id_sop');
         $pelatihan = PelatihanModel::find($id);
         // dd($detil_status);
-        return view('pelatihan.pelatihan_status', ['sopKegiatan' => $sopKegiatan,'pelatihan' => $pelatihan,'status' => $status, 'detil_status' => $detil_status]);
+        return view('pelatihan.pelatihanStatus_kelola', ['sopKegiatan' => $sopKegiatan,'pelatihan' => $pelatihan,'status' => $status, 'detil_status' => $detil_status]);
     }
     public function pelatihan_ceklisStatus($id_pl, $id_kg)
     {
@@ -163,7 +165,7 @@ class PelatihanController extends Controller
                 $lastNumber = intval(substr($lastRecord->id, 2));
                 $number = ($lastNumber < 99999) ? $lastNumber + 1 : 1;
             }
-            $newId = 'DS' . str_pad($number, 5, '0', STR_PAD_LEFT);
+            $newId = 'ds' . str_pad($number, 5, '0', STR_PAD_LEFT);
 
             DetilStatusModel::create([
                 'id' => $newId,
@@ -193,11 +195,73 @@ class PelatihanController extends Controller
             $query->where('ket_status', 'Selesai');
         })->get();
 
-        return view('pelatihan.arsipPelatihan', ['pelatihans' => $pelatihan]);
+        return view('pelatihan.pelatihanArsip', ['pelatihans' => $pelatihan]);
     }
     public function cetak_surat()
     {
         return view('cetakSurat');
+    }
+
+
+    public function pelatihan_cekStatus($id)
+    {
+        $status = StatusModel::where('id_pelatihan', $id)->first();
+        $detil_status = DetilStatusModel::with('kegiatan_sop')->where('id_status', $status->id)->get();
+        $pelatihan = PelatihanModel::find($id);
+        $sops = SopModel::all();
+        $sops_kegiatan = SopModel::all();
+        
+        $count_per_sop = [];
+        foreach ($sops as $sop){
+            $count_per_sop[$sop->id] = 0;
+        }
+        foreach ($detil_status as $detil){
+            $count_per_sop[$detil->kegiatan_sop->id_sop]++;
+        }
+        $status_per_sop = [];
+        foreach ($count_per_sop as $sop => $count) {
+            $kegiatanCount = KegiatanSopModel::where('id_sop', $sop)->count();
+        
+            if ($count == $kegiatanCount)
+                $status_per_sop[$sop] = 'yes';
+            else if ($count == 0)
+                $status_per_sop[$sop] = 'no';
+            else
+                $status_per_sop[$sop] = 'process';
+        }
+        // dd($status_per_sop);
+   
+        // $status_per_sop = DetilStatusModel::join('kegiatan_sop', 'detil_status.id_kegiatan_sop', '=', 'kegiatan_sop.id')
+        // ->join('sop', 'kegiatan_sop.id_sop', '=', 'sop.id')
+        // ->where('detil_status.id_status', '=', $status->id)
+        // ->select('sop.id')
+        // ->groupBy('sop.id')
+        // ->get();
+
+
+        // $pelatihans = PelatihanModel::with('jenis_pelatihan', 'bidang_pelatihan', 'model_pelatihan')
+        // ->whereHas('status', function ($query) {
+        //     $query->where('ket_status', 'Sedang berlangsung');
+        // })
+        // ->orderBy('created_at', 'desc')
+        // ->get();
+
+        // $status_terakhir = DetilStatusModel::whereIn('id_status', function ($query) {
+        //     $query->select(DB::raw('MAX(id_status)'))
+        //         ->from('detil_status')
+        //         ->groupBy('id_status');
+        // })
+        // ->leftJoin('status', 'detil_status.id_status', '=', 'status.id')
+        // ->leftJoin('kegiatan_sop', 'detil_status.id_kegiatan_sop', '=', 'kegiatan_sop.id')
+        // ->whereIn('status.id_pelatihan', $pelatihans->pluck('id'))
+        // ->select('detil_status.id_kegiatan_sop', 'status.id_pelatihan', 'kegiatan_sop.nama') 
+        // ->get()
+        // ->keyBy('id_pelatihan')
+        // ->map(function ($item) {
+        //     return $item->nama;
+        // });
+
+        return view('pelatihan.pelatihanStatus_cek', ['sops' => $sops_kegiatan,'pelatihan' => $pelatihan,'status' => $status, 'detil_status' => $detil_status,'status_per_sop'=>$status_per_sop]);
     }
 
 }

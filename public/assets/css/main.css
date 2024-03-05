@@ -6408,13 +6408,13 @@ span.flatpickr-weekday {
 
 .app-auth-sign-in .app-auth-background {
     background: url('../images/backgrounds/logo.jpg') no-repeat;
-    background-size: 100%;
+    background-size: cover;
     background-position: center;
 }
 
 
 .app-auth-sign-up .app-auth-background {
-    background: url('../images/backgrounds/sign-up.svg') no-repeat;
+    background: url('../images/backgrounds/logo.jpg') no-repeat;
     background-size: 60%;
     background-position: center;
 }

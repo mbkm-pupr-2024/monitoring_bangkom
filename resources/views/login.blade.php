@@ -39,16 +39,24 @@
             </div>
             <p class="auth-description">Silahkan login menggunakan akun Anda untuk melanjutkan menuju dashboard atau <a href="/pelatihan-berlangsung">Akses sebagai tamu</a></p>
 
+            
+
             <form method="POST" action="/login">
                 @csrf
+                @if(Session::has('error'))
+                    <div class="alert alert-danger alert-sm">
+                        <i class="material-icons-outlined align-middle">error</i>  {{ Session::get('error') }} 
+                    </div>
+                @endif
+
                 <div class="auth-credentials m-b-xxl">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control m-b-md" id="username" placeholder="username" name="username">
+                    <input type="text" class="form-control m-b-md" id="username" placeholder="username" name="username" value="{{ old('username') }}">
 
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" name="password">
+                    <input type="password" class="form-control" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" value="{{ old('password') }}">
                 </div>
-
+                
                 <div class="auth-submit">
                     <button type="submit" class="btn btn-primary float-end">Sign In</button>
                 </div>

@@ -53,10 +53,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($jadwals as $jadwal)
                                 @php
                                     $no = 1;
                                 @endphp
+                                @foreach ($jadwals as $jadwal)
                                 <tr>
                                     <td>{{ $no }}</td>
                                     <td>{{ $jadwal->nama }}</td>

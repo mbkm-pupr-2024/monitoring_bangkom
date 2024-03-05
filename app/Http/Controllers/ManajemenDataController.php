@@ -157,7 +157,7 @@ class ManajemenDataController extends Controller
             $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
         }
         // Format ulang ID dengan 'JP' diikuti oleh angka yang telah diincrement
-        $newId = 'JP' . str_pad($number, 3, '0', STR_PAD_LEFT);
+        $newId = 'jp' . str_pad($number, 3, '0', STR_PAD_LEFT);
 
         // Tambahkan ID yang telah diincrement ke dalam request
         $request->merge(['id' => $newId]);
@@ -222,7 +222,7 @@ class ManajemenDataController extends Controller
             $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
         }
         // Format ulang ID dengan 'BP' diikuti oleh angka yang telah diincrement
-        $newId = 'BP' . str_pad($number, 3, '0', STR_PAD_LEFT);
+        $newId = 'bp' . str_pad($number, 3, '0', STR_PAD_LEFT);
 
         // Tambahkan ID yang telah diincrement ke dalam request
         $requestData = $request->all();
@@ -261,7 +261,7 @@ class ManajemenDataController extends Controller
             $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
         }
         // Format ulang ID dengan 'BP' diikuti oleh angka yang telah diincrement
-        $newId = 'BP' . str_pad($number, 3, '0', STR_PAD_LEFT);
+        $newId = 'bp' . str_pad($number, 3, '0', STR_PAD_LEFT);
 
         // Tambahkan ID yang telah diincrement ke dalam request
         $requestData = $request->all();
@@ -307,7 +307,7 @@ class ManajemenDataController extends Controller
             $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
         }
         // Format ulang ID dengan 'JP' diikuti oleh angka yang telah diincrement
-        $newId = 'MP' . str_pad($number, 3, '0', STR_PAD_LEFT);
+        $newId = 'mp' . str_pad($number, 3, '0', STR_PAD_LEFT);
 
         // Tambahkan ID yang telah diincrement ke dalam request
         $request->merge(['id' => $newId]);

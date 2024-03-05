@@ -19,12 +19,15 @@ use App\Http\Controllers\ManajemenDataController;
 */
 Route::redirect('/', '/login');
 Route::middleware('tamu')->group(function () {
-    Route::get('/login', [LoginController::class, 'login'])->name('login');   
+    // Route::get('/home', [PelatihanController::class, 'pelatihan-berlangsung'])->name('home');  
+    Route::get('/login', [LoginController::class, 'login'])->name('login');  
     Route::post('/login', [LoginController::class, 'signin']);
+    
 });
 
 Route::get('/pelatihan-berlangsung', [PelatihanController::class, 'pelatihan_berlangsung'])->name('pelatihan-berlangsung');
-Route::get('/pelatihan/status/{id}', [PelatihanController::class, 'pelatihan_status'])->name('pelatihan-status');
+Route::get('/pelatihan/cek-status/{id}', [PelatihanController::class, 'pelatihan_cekStatus'])->name('pelatihan-cekStatus');
+Route::get('/pelatihan/kelola-status/{id}', [PelatihanController::class, 'pelatihan_kelolaStatus'])->name('pelatihan-kelolaStatus');
 
 Route::middleware('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -69,12 +72,26 @@ Route::middleware('admin')->group(function () {
     Route::get('/jadwal-pelatihan/hapus/{id}', [PelatihanController::class, 'jadwalPelatihan_delete']);
     
     Route::get('/pelatihan/hapus/{id}', [PelatihanController::class, 'pelatihan_delete'])->name('pelatihan-hapus');
+    
 
     Route::get('/pelatihan/{id_pl}/ceklis-status/{id_kg}', [PelatihanController::class, 'pelatihan_ceklisStatus']);
+    Route::get('/cetak-progres/pelatihan-{id}', [SuratController::class, 'progress_pelatihan'])->name('cetak-progres-pelatihan');
     Route::get('/arsip-pelatihan', [PelatihanController::class, 'arsip_pelatihan'])->name('arsip-pelatihan');
+
+
+    Route::get('/cetak-surat', [SuratController::class, 'index'])->name('cetak-surat');
+    Route::get('/cetak-surat/pelatihan-{id_pelatihan}', [SuratController::class, 'cetakSurat_menu'])->name('cetak-surat-menu');
+    Route::get('/cetak-surat/pemanggilan-peserta/pelatihan-{id_pelatihan}', [SuratController::class, 'pemanggilan_peserta'])->name('cetak-surat-pemanggilan-peserta');
+    Route::get('/cetak-surat/pengembalian-peserta/pelatihan-{id_pelatihan}', [SuratController::class, 'pengembalian_peserta'])->name('cetak-surat-pengembalian-peserta');
+    Route::get('/cetak-surat/keputusan-pelatihan/pelatihan-{id_pelatihan}', [SuratController::class, 'keputusan_pelatihan'])->name('cetak-surat-keputusan-pelatihan');
+    Route::get('/cetak-surat/permohonan-kehadiran-pembukaan/pelatihan-{id_pelatihan}', [SuratController::class, 'kehadiran_pembukaan'])->name('cetak-surat-permohonan-kehadiran-pembukaan');
+    Route::get('/cetak-surat/permohonan-kehadiran-penutupan/pelatihan-{id_pelatihan}', [SuratController::class, 'kehadiran_penutupan'])->name('cetak-surat-permohonan-kehadiran-penutupan');
+    Route::get('/cetak-surat/permohonan-sambutan-pembukaan/pelatihan-{id_pelatihan}', [SuratController::class, 'sambutan_pembukaan'])->name('cetak-surat-permohonan-sambutan-pembukaan');
+    Route::get('/cetak-surat/permohonan-sambutan-penutupan/pelatihan-{id_pelatihan}', [SuratController::class, 'sambutan_penutupan'])->name('cetak-surat-permohonan-sambutan-penutupan');
 });
-Route::get('/cetak-surat', [SuratController::class, 'index'])->name('cetak-surat');
-Route::get('/cetak-surat/{id}', [SuratController::class, 'report_progress'])->name('cetak-surat-download');
+
+
+
 
 Route::get('/excell', [SuratController::class, 'excel']);
 Route::post('/excell', [SuratController::class, 'import'])->name('upload-excel');

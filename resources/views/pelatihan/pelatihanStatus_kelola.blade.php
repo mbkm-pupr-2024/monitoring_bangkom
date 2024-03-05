@@ -35,11 +35,13 @@
             </div>
             <div class="row">
                 <div class="col">
+                    <a href="/cetak-progres/pelatihan-{{$pelatihan->id}}" class="btn btn-primary d-block m-b-lg">Cetak progres pelatihan</a>
                     <div class="card todo-container">
                         <div class="row">
                             <div class="col-xl-4 col-xxl-3">
                                 <div class="todo-menu">
                                     <h5 class="todo-menu-title">Status</h5>
+                                    
                                     @if ($status->ket_status == 'Selesai')
                                         <span class="badge badge-success float-end" >Selesai</span>
                                     @else

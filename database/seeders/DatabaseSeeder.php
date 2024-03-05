@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         DB::table('sop')->insert([
             'id'=> 'SOP03',
             'nomor'=> 'BPSDM-5.2.5_CFM.01.SOP.IK.SM03',
-            'icon' => 'perm_contact_calender',
+            'icon' => 'people_outline',
             'judul' => 'Konfirmasi Peserta Pengembangan Kompetensi',
             'created_at' => now(),
             'updated_at' => now(),
