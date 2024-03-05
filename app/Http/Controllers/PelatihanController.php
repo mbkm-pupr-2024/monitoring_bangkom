@@ -129,10 +129,36 @@ class PelatihanController extends Controller
         ->map(function ($item) {
             return $item->nama;
         });
-    
-        // dd($status_terakhir);
 
-        return view('pelatihan.pelatihanBerlangsung', ['pelatihans' => $pelatihans, 'status_terakhir' => $status_terakhir]);
+        // $detil_status = DetilStatusModel::with('kegiatan_sop')->where('id_status', $status->id)->get();
+        // $sops = SopModel::all();
+        $sops_kegiatan = SopModel::all();
+
+        foreach($pelatihans as $pelatihan){
+            $status = StatusModel::where('id_pelatihan', $pelatihan->id)->first();
+            $detil_status = DetilStatusModel::with('kegiatan_sop')->where('id_status', $status->id)->get();
+            $count_per_sop = [];
+            foreach (SopModel::all() as $sop){
+                $count_per_sop[$sop->id] = 0;
+            }
+            foreach ($detil_status as $detil){
+                $count_per_sop[$detil->kegiatan_sop->id_sop]++;
+            }
+            $status_per_sop = [];
+            foreach ($count_per_sop as $sop => $count) {
+                $kegiatanCount = KegiatanSopModel::where('id_sop', $sop)->count();
+            
+                if ($count == $kegiatanCount)
+                    $status_per_sop[$sop] = 'yes';
+                else if ($count == 0)
+                    $status_per_sop[$sop] = 'no';
+                else
+                    $status_per_sop[$sop] = 'process';
+            }
+            $pelatihan_progres[$pelatihan->id] = $status_per_sop;
+        }
+
+        return view('pelatihan.pelatihanBerlangsung', ['pelatihans' => $pelatihans, 'status_terakhir' => $status_terakhir,'pelatihan_progres'=>$pelatihan_progres,'sops'=>$sops_kegiatan]);
     }
     public function pelatihan_delete($id){
         $status = StatusModel::where('id_pelatihan', $id)->first();
@@ -230,36 +256,6 @@ class PelatihanController extends Controller
                 $status_per_sop[$sop] = 'process';
         }
         // dd($status_per_sop);
-   
-        // $status_per_sop = DetilStatusModel::join('kegiatan_sop', 'detil_status.id_kegiatan_sop', '=', 'kegiatan_sop.id')
-        // ->join('sop', 'kegiatan_sop.id_sop', '=', 'sop.id')
-        // ->where('detil_status.id_status', '=', $status->id)
-        // ->select('sop.id')
-        // ->groupBy('sop.id')
-        // ->get();
-
-
-        // $pelatihans = PelatihanModel::with('jenis_pelatihan', 'bidang_pelatihan', 'model_pelatihan')
-        // ->whereHas('status', function ($query) {
-        //     $query->where('ket_status', 'Sedang berlangsung');
-        // })
-        // ->orderBy('created_at', 'desc')
-        // ->get();
-
-        // $status_terakhir = DetilStatusModel::whereIn('id_status', function ($query) {
-        //     $query->select(DB::raw('MAX(id_status)'))
-        //         ->from('detil_status')
-        //         ->groupBy('id_status');
-        // })
-        // ->leftJoin('status', 'detil_status.id_status', '=', 'status.id')
-        // ->leftJoin('kegiatan_sop', 'detil_status.id_kegiatan_sop', '=', 'kegiatan_sop.id')
-        // ->whereIn('status.id_pelatihan', $pelatihans->pluck('id'))
-        // ->select('detil_status.id_kegiatan_sop', 'status.id_pelatihan', 'kegiatan_sop.nama') 
-        // ->get()
-        // ->keyBy('id_pelatihan')
-        // ->map(function ($item) {
-        //     return $item->nama;
-        // });
 
         return view('pelatihan.pelatihanStatus_cek', ['sops' => $sops_kegiatan,'pelatihan' => $pelatihan,'status' => $status, 'detil_status' => $detil_status,'status_per_sop'=>$status_per_sop]);
     }

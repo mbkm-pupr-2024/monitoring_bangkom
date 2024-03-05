@@ -3,6 +3,8 @@
 @section('style')
 <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/css/timeline.css') }}">
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 @endsection
 
 @section('sidebar')
@@ -84,6 +86,55 @@
                                         @endif
                                     </p>
 
+
+                                    @php
+                                        $no = 1;
+                                    @endphp
+                                    <div class="main-timeline">
+                                        <ul class="ul-timeline">
+                                            @foreach ($sops as $sop)
+                                                @if ($no == 1)
+                                                    <li class="li-timeline">
+                                                        <i class="material-icons-outlined icon-timeline uil-timeline">{{ $sop->icon}}</i>
+                                                        @if ($pelatihan_progres[$pelatihan->id][$sop->id] == 'yes')
+                                                            <div class="progress-timeline first-timeline active">
+                                                                <i class="material-icons">check</i>
+                                                        @elseif ($pelatihan_progres[$pelatihan->id][$sop->id] == 'process')
+                                                            <div class="progress-timeline first-timeline active">
+                                                                <i class="material-icons">sync</i>
+                                                        @else
+                                                            <div class="progress-timeline first-timeline">
+                                                                <p class="p-timeline">{{ $no }}</p>
+                                                        @endif
+                                                            <i class="uil-timeline uil-check"></i>
+                                                        </div>
+                                                        <p class="text-timeline">{{ $sop->judul }}</p>
+                                                    </li>
+                                                @else
+                                                <li class="li-timeline">
+                                                    <i class="material-icons-outlined icon-timeline uil-timeline">{{ $sop->icon}}</i>
+                                                    @if ($pelatihan_progres[$pelatihan->id][$sop->id] == 'yes')
+                                                        <div class="progress-timeline {{ $sop->id }}-timeline active">
+                                                            <i class="material-icons">check</i>
+                                                    @elseif ($pelatihan_progres[$pelatihan->id][$sop->id] == 'process')
+                                                        <div class="progress-timeline {{ $sop->id }}-timeline active">
+                                                            <i class="material-icons">sync</i>
+                                                    @else
+                                                        <div class="progress-timeline {{ $sop->id }}-timeline">
+                                                            <p class="p-timeline">{{ $no }}</p>
+                                                    @endif
+                                                            <i class="uil-timeline uil-check"></i>
+                                                        </div>
+                                                    <p class="text-timeline">{{ $sop->judul }}</p>
+                                                </li>
+                                                @endif
+                                                
+                                                @php
+                                                    $no++;
+                                                @endphp
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <script>
@@ -104,7 +155,7 @@
                                             });
                                         }
                                     </script>
-                                    <a href="/pelatihan/cek-status/{{ $pelatihan->id }}" class="btn btn-primary btn-sm float-end">Cek Status</a>
+                                    <a href="/pelatihan/kelola-status/{{ $pelatihan->id }}" class="btn btn-primary btn-sm float-end">Kelola Status</a>
                                 </div>
                             </div>
                         </div>
