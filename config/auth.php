@@ -44,6 +44,15 @@ return [
             'driver' => 'session',
             'provider' => 'admins'
         ],
+        'supervisi' => [
+            'driver' => 'session',
+            'provider' => 'supervises'
+        ],
+        'petugas' => [
+            'driver' => 'session',
+            'provider' => 'petugases'
+        ],
+
     ],
 
     /*
@@ -69,6 +78,14 @@ return [
             'model' => App\Models\UserModel::class,
         ],
         'admins' => [
+            'driver' => 'eloquent',
+            'model' =>  App\Models\UserModel::class,
+        ],
+        'supervises' => [
+            'driver' => 'eloquent',
+            'model' =>  App\Models\UserModel::class,
+        ],
+        'petugases' => [
             'driver' => 'eloquent',
             'model' =>  App\Models\UserModel::class,
         ],

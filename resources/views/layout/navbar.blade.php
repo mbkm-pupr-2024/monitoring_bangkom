@@ -7,6 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="admin,dashboard">
   <meta name="author" content="stacks">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
   <!-- Title -->
@@ -49,7 +52,7 @@
 
 <body>
   <div class="app align-content-stretch d-flex flex-wrap">
-    @yield('sidebar')
+    @include('layout.sidebar')
     <div class="app-container">
     {{-- <div class="search">
         <form>
@@ -63,13 +66,14 @@
             <div class="navbar-nav" id="navbarNav">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  @if (auth('admin')->check())
+                  @if (Auth::check())
                     <a class="nav-link hide-sidebar-toggle-button" href="#"><i class="material-icons">first_page</i></a>
                   @else
                     <a class="nav-link hide-sidebar-toggle-button" href="#"><i class="material-icons">first_page</i></a>
                   @endif
                   
                 </li>
+                @can('admin')
                 <li class="nav-item dropdown hidden-on-mobile">
                   <a class="nav-link dropdown-toggle" href="#" id="addDropdownLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -81,6 +85,7 @@
                     <li><a class="dropdown-item" href="/kelola-model-pelatihan">Kelola Model Pelatihan</a></li>
                   </ul>
                 </li>
+                @endcan
               </ul>
             </div>
             
@@ -175,6 +180,25 @@
           </div>
         </nav>
       </div>
+      @if(Session::has('success'))
+        <script>
+            Swal.fire({
+                title:'{{ Session::get('popUp_title') }}',
+                text: '{{ Session::get('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+      @endif
+      @if (Session::has('error'))
+        <script>
+          Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "{{ Session::get('error') }}",
+        });
+        </script>
+      @endif
       @section('content')
       @show
     </div>
@@ -193,7 +217,25 @@
     <script src="{{ asset('assets/js/main_tammu.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
+    
     @section('script')
+    {{-- <script>
+      window.addEventListener('pageshow', function(event) {
+          // Jika pengguna menggunakan tombol "Back" di browser
+          if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+              // Redirect ke route yang menangani permintaan kembali
+              window.location.href = '/handle-back-action';
+          }
+      });
+    </script> --}}
+    {{-- <script>
+      // Cek apakah parameter timestamp ada dalam URL
+      if (window.location.href.includes('timestamp')) {
+          // Reload halaman
+          window.location.reload();
+      }
+  </script> --}}
+  
     @show
   </div>
 </body>

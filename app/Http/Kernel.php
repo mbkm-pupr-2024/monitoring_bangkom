@@ -70,7 +70,10 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'tamu' => \App\Http\Middleware\TamuMiddleware::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        
+        'supervisi' => \App\Http\Middleware\SupervisiMiddleware::class,
+        'petugas' => \App\Http\Middleware\PetugasMiddleware::class,
+        'revalidate' => \App\Http\Middleware\RevalidateBackHistory::class,
+        'all-role' => \App\Http\Middleware\AllRoleMiddleware::class,
     ];
     
 }

@@ -3,31 +3,17 @@
 @section('style')
 @endsection
 
-@section('sidebar')
-@include('layout.sidebar')
-@endsection
-
 @section('content')
 
 <div class="app-content">
-    @if(Session::has('success'))
-        <script>
-            Swal.fire({
-                title: '{{ Session::get('popUp_title') }}',
-                text: '{{ Session::get('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
     <div class="content-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-container bg-primary">
-                            <li class="breadcrumb-item"><a href="#">Perlatihan Berlangsung</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{ $pelatihan->nama }}</a></li>
+                            <li class="breadcrumb-item"><a href="/pelatihan-berlangsung">Perlatihan Berlangsung</a></li>
+                            <li class="breadcrumb-item"><a>{{ $pelatihan->nama }}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Status Pelatihan</li>
                         </ol>
                     </nav>

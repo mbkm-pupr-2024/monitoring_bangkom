@@ -7,46 +7,93 @@
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 @endsection
 
-@section('sidebar')
-@include('layout.sidebar')
-@endsection
-
 @section('content')
-@if(Session::has('success'))
-        <script>
-            Swal.fire({
-                // title:'Success!',
-                title:'{{ Session::get('popUp_title') }}',
-                text: '{{ Session::get('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>
+@if (!function_exists('tanggal_indo'))
+    @php
+    function tanggal_indo($tanggal){
+        $bulan = array (
+        1 =>'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+        );
+        $pecahkan = explode('-', $tanggal);
+
+        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+    }
+
+    function rentang_tgl($tgl_mulai, $tgl_selesai){
+        $tgl_mulai = tanggal_indo($tgl_mulai);
+        $tgl_selesai = tanggal_indo($tgl_selesai);
+        $tgl_mulai_pecah = explode(' ', $tgl_mulai);
+        $tgl_selesai_pecah = explode(' ', $tgl_selesai);
+        if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
+            return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+        }
+        return $tgl_mulai . ' s.d ' . $tgl_selesai;
+    }
+
+    function hari_indo($tanggal){
+        if (date('l', strtotime($tanggal)) == 'Sunday') {
+            return 'Minggu';
+        } elseif (date('l', strtotime($tanggal)) == 'Monday') {
+            return 'Senin';
+        } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
+            return 'Selasa';
+        } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
+            return 'Rabu';
+        } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
+            return 'Kamis';
+        } elseif (date('l', strtotime($tanggal)) == 'Friday') {
+            return 'Jumat';
+        } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
+            return 'Sabtu';
+        }
+        return date('l', strtotime($tanggal));
+    }
+    @endphp
 @endif
 <div class="app-content">
     <div class="content-wrapper">
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col">
                     <div class="page-description">
                         <h1>Pelatihan Sedang Berlangsung</h1>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="row mb-3">
-                <div class="col">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Cari Pelatihan...">
-                </div>
+                <form action="/pelatihan-berlangsung">
+                    <div class="row">
+                        <div class="col-10">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Cari Pelatihan..." name="querypelatihan" value="{{ (isset($querypelatihan)) ? $querypelatihan : '' }}">
+                        </div>
+                        <div class="col-2 my-auto">
+                            <input style="width: 100%" type="submit" class="btn button btn-info" value="Cari">
+                        </div>
+                    </div>
+                </form>
             </div>
+                      
             <div class="row">
                 @if (!$pelatihans->isEmpty())
                     @foreach ($pelatihans as $pelatihan)
                         <div class="col-12">
                             <div class="card widget widget-popular-blog">
                                 <div class="card-body">
-                                    @auth('admin')
+                                    @can('admin')
                                     <a onclick="hapus_button_{{ $pelatihan->id }}();" class="btn btn-danger btn-sm m-1 float-end"><i class="material-icons-outlined">delete</i></a>
-                                    @endauth
+                                    @endcan
+                                    
                                     <div class="widget-popular-blog-container">
                                         <div class="widget-popular-blog-image">
                                             <img src="{{ asset('assets/images/bidang_pelatihan/' . $pelatihan->bidang_pelatihan->gambar) }}" alt="{{ $pelatihan->nama }}">
@@ -56,8 +103,8 @@
                                                 {{ $pelatihan->nama }}
                                             </span>
                                             <span class="widget-popular-blog-title text-black-50">
-                                                    <i class="material-icons">schedule</i>
-                                                    {{ date('d F Y', strtotime($pelatihan->tanggal_mulai)) }} - {{ date('d F Y', strtotime($pelatihan->tanggal_selesai)) }}
+                                                    <i class="material-icons" style="vertical-align: middle">schedule</i>
+                                                    {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }}
                                             </span>
                                         </div>
                                     </div>
@@ -78,54 +125,56 @@
                                         </span>
                                     </div>
                                     <br>
-                                    <p>
+                                    {{-- <p>
                                         @if (isset($status_terakhir[$pelatihan->id]))
                                             <b>Status:</b> {{ $status_terakhir[$pelatihan->id] }}
                                         @else
                                             <b>Status:</b> Belum ada progres
                                         @endif
-                                    </p>
+                                    </p> --}}
 
 
                                     @php
                                         $no = 1;
                                     @endphp
+                                    
+
                                     <div class="main-timeline">
                                         <ul class="ul-timeline">
-                                            @foreach ($sops as $sop)
+                                            @foreach ($tahapans as $tahapan)
                                                 @if ($no == 1)
                                                     <li class="li-timeline">
-                                                        <i class="material-icons-outlined icon-timeline uil-timeline">{{ $sop->icon}}</i>
-                                                        @if ($pelatihan_progres[$pelatihan->id][$sop->id] == 'yes')
-                                                            <div class="progress-timeline first-timeline active">
+                                                        <i class="material-icons-outlined icon-timeline uil-timeline">{{ $tahapan->icon}}</i>
+                                                        @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
+                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline active">
                                                                 <i class="material-icons">check</i>
-                                                        @elseif ($pelatihan_progres[$pelatihan->id][$sop->id] == 'process')
-                                                            <div class="progress-timeline first-timeline active">
+                                                        @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
+                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline active">
                                                                 <i class="material-icons">sync</i>
                                                         @else
-                                                            <div class="progress-timeline first-timeline">
+                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline">
                                                                 <p class="p-timeline">{{ $no }}</p>
                                                         @endif
-                                                            <i class="uil-timeline uil-check"></i>
-                                                        </div>
-                                                        <p class="text-timeline">{{ $sop->judul }}</p>
+                                                            </a>
+                                                            {{-- <i class="uil-timeline uil-check"></i> --}}
+                                                        <p class="text-timeline">{{ $tahapan->judul }}</p>
                                                     </li>
                                                 @else
                                                 <li class="li-timeline">
-                                                    <i class="material-icons-outlined icon-timeline uil-timeline">{{ $sop->icon}}</i>
-                                                    @if ($pelatihan_progres[$pelatihan->id][$sop->id] == 'yes')
-                                                        <div class="progress-timeline {{ $sop->id }}-timeline active">
+                                                    <i class="material-icons-outlined icon-timeline uil-timeline">{{ $tahapan->icon}}</i>
+                                                    @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
+                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline active">
                                                             <i class="material-icons">check</i>
-                                                    @elseif ($pelatihan_progres[$pelatihan->id][$sop->id] == 'process')
-                                                        <div class="progress-timeline {{ $sop->id }}-timeline active">
+                                                    @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
+                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline active">
                                                             <i class="material-icons">sync</i>
                                                     @else
-                                                        <div class="progress-timeline {{ $sop->id }}-timeline">
+                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline">
                                                             <p class="p-timeline">{{ $no }}</p>
                                                     @endif
-                                                            <i class="uil-timeline uil-check"></i>
-                                                        </div>
-                                                    <p class="text-timeline">{{ $sop->judul }}</p>
+                                                            {{-- <i class="uil-timeline uil-check"></i> --}}
+                                                        </a>
+                                                    <p class="text-timeline">{{ $tahapan->judul }}</p>
                                                 </li>
                                                 @endif
                                                 
@@ -155,7 +204,9 @@
                                             });
                                         }
                                     </script>
-                                    <a href="/pelatihan/kelola-status/{{ $pelatihan->id }}" class="btn btn-primary btn-sm float-end">Kelola Status</a>
+                                    {{-- @if (Auth::check())
+                                        <a href="/pelatihan/kelola-status/{{ $pelatihan->id }}" class="btn btn-primary btn-sm float-end">Kelola Status</a>
+                                    @endif --}}
                                 </div>
                             </div>
                         </div>
@@ -185,4 +236,21 @@
         });
     });
 </script>
+{{-- <script>
+    function cariPelatihan() {
+        var keyword = document.getElementById('searchInput').value.toLowerCase();
+        var pelatihanCards = document.getElementsByClassName('card widget widget-popular-blog');
+    
+        for (var i = 0; i < pelatihanCards.length; i++) {
+            var cardContent = pelatihanCards[i].querySelector('.widget-popular-blog-content');
+            var pelatihanText = cardContent.innerText.toLowerCase();
+            
+            if (pelatihanText.includes(keyword)) {
+                pelatihanCards[i].style.display = 'block'; // Menampilkan card jika keyword cocok
+            } else {
+                pelatihanCards[i].style.display = 'none'; // Menyembunyikan card jika keyword tidak cocok
+            }
+        }
+    }
+    </script>   --}}
 @endsection

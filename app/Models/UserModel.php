@@ -11,8 +11,21 @@ class UserModel extends Authenticatable
 
     protected $table = 'user';
     protected $guarded = ['id'];
-    protected $fillable=['username', 'password'];
+    protected $fillable=['role','nip','nama_lengkap','username', 'password'];
     protected $keyType = 'string';
     public $incrementing = false;
     public $timestamps = true;
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    public function isSupervisi()
+    {
+        return $this->role === 'supervisi';
+    }
+    public function isPetugas()
+    {
+        return $this->role === 'petugas';
+    }
 }

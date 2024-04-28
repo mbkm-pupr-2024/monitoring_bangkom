@@ -18,7 +18,6 @@ class UserImport implements ToCollection
     */
     public function collection(Collection $collection)
     {
-    //   dd($collection);
       return $collection;
     }
 }

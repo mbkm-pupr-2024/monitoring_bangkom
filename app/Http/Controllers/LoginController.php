@@ -19,28 +19,51 @@ class LoginController extends Controller
     public function signin(Request $request)
     {
         $request->validate([
-            'username' => 'required',
+            'nip' => 'required',
             'password'=> 'required' 
         ]);
-        if (Auth::guard('admin')->attempt($request->only('username','password'))) {
+        // $request->validate([
+        //     'nip' => 'required',
+        //     'password'=> 'required' 
+        // ], [
+        //     'nip.required' => 'NIP is required',
+        //     'password.required' => 'Password is required',
+        // ]);
+        if (Auth::attempt($request->only('nip','password'))) {
+            if (Auth::user()->role == 'admin') {
+                Auth::guard('admin')->login(Auth::user());
+            }
+            else if (Auth::user()->role == 'supervisi') {
+                Auth::guard('supervisi')->login(Auth::user());
+            }
+            else if (Auth::user()->role == 'petugas') {
+                Auth::guard('petugas')->login(Auth::user());
+            }
+            // dd(Auth('petugas')->check());
+            
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard')->with('success', 'Anda berhasil login');
+            return redirect()->route('pelatihan-berlangsung')->with('success', 'Anda berhasil login');
         }
         else
         {
-            return redirect('/login')->with('error', 'Invalid username or password')->withInput($request->except('password'));
+            return redirect('/login')->with('error', 'Invalid nip or password')->withInput($request->except('password'));
         }
     }
     public function logout(Request $request)
     {
-        Auth::logout();
 
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
+        } elseif (Auth::guard('supervisi')->check()) {
+            Auth::guard('supervisi')->logout();
+        } elseif (Auth::guard('petugas')->check()) {
+            Auth::guard('petugas')->logout();
+        }
+    
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        // dd(session()->all());
-        
-        return redirect('/login');
+    
+        return redirect('/login')->with('success', 'Anda berhasil logout');
     }
 
 }

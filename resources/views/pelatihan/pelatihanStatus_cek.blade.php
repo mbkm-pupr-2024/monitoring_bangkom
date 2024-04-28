@@ -1,14 +1,8 @@
 @extends('layout.navbar')
 
 @section('style')
-{{-- <link href="{{ asset('assets/css/timeline.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"> --}}
 <link rel="stylesheet" href="{{ asset('assets/css/timeline.css') }}">
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-@endsection
-
-@section('sidebar')
-@include('layout.sidebar')
 @endsection
 
 @section('content')

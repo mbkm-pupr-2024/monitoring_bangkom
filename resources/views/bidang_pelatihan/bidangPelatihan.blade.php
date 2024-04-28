@@ -4,23 +4,9 @@
 <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet">
 @endsection
 
-@section('sidebar')
-@include('layout.sidebar')
-@endsection
-
 @section('content')
 
 <div class="app-content">
-    @if(Session::has('success'))
-        <script>
-            Swal.fire({
-                title: '{{ Session::get('popUp_title') }}',
-                text: '{{ Session::get('success') }}',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
     <div class="content-wrapper">
         <div class="container">
             <div class="row">

@@ -7,6 +7,11 @@
     <meta name="description" content="Responsive Admin Dashboard Template">
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- Title -->
     <title>Login</title>
@@ -29,6 +34,25 @@
     <link rel="icon" type="image/jpg" sizes="16x16" href="{{ asset('assets/images/logo.jpg') }}" />
 </head>
 <body>
+    @if(Session::has('success'))
+        <script>
+            Swal.fire({
+                title:'{{ Session::get('popUp_title') }}',
+                text: '{{ Session::get('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+      @endif
+      @if (Session::has('error'))
+        <script>
+          Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "{{ Session::get('error') }}",
+        });
+        </script>
+      @endif
     <div class="app app-auth-sign-in align-content-stretch d-flex flex-wrap justify-content-end">
         <div class="app-auth-background">
 
@@ -37,21 +61,16 @@
             <div class="logo">
                 <h2>Monitoring Bangkom</h2>
             </div>
-            <p class="auth-description">Silahkan login menggunakan akun Anda untuk melanjutkan menuju dashboard atau <a href="/pelatihan-berlangsung">Akses sebagai tamu</a></p>
+            <p class="auth-description">Silahkan login menggunakan akun Anda untuk melanjutkan menuju dashboard atau <a href="/pelatihan-berlangsung/slide-show">Akses sebagai tamu</a></p>
 
             
 
             <form method="POST" action="/login">
                 @csrf
-                @if(Session::has('error'))
-                    <div class="alert alert-danger alert-sm">
-                        <i class="material-icons-outlined align-middle">error</i>  {{ Session::get('error') }} 
-                    </div>
-                @endif
 
                 <div class="auth-credentials m-b-xxl">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control m-b-md" id="username" placeholder="username" name="username" value="{{ old('username') }}">
+                    <label for="nip" class="form-label">NIP</label>
+                    <input type="text" class="form-control m-b-md" id="nip" placeholder="nip" name="nip" value="{{ old('username') }}">
 
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" value="{{ old('password') }}">

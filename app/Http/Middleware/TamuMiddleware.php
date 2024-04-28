@@ -16,9 +16,9 @@ class TamuMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('admin')->check()) {
-            return $next($request);
+        if (Auth::check()){
+            return redirect()->back()->with('error', 'Anda sudah login');
         }
-        return redirect()->back();
+        return $next($request);
     }
 }

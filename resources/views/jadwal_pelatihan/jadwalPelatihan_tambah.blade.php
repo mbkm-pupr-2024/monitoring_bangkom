@@ -5,10 +5,6 @@
 <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet">
 @endsection
 
-@section('sidebar')
-@include('layout.sidebar')
-@endsection
-
 @section('content')
 <div class="app-content">
     <div class="content-wrapper">
@@ -68,7 +64,7 @@
                                     </div>
                                     <div class="mb-4">
                                         <label for="tahun_periode" class="form-label">Tahun Periode</label>
-                                        <input id="tahun_periode" class="form-control" type="number" name="tahun_periode">
+                                        <input id="tahun_periode" class="form-control" type="number" name="tahun_periode" value="{{ date('Y') }}">
                                     </div>
                                     <div class="mb-4">
                                         <button class="btn btn-success float-end" type="submit">Tambah</button>

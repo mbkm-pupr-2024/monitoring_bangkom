@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('detil_status', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('id_status')->references('id')->on('status');
-            $table->string('id_kegiatan_sop')->references('id')->on('kegiatan_sop');
+            $table->string('id_kegiatan_tahapan')->references('id')->on('kegiatan_tahapan');
+            $table->string('file');
+            $table->string('keterangan');
+            $table->text('komentar')->nullable();
             $table->timestamps();
         });
     }

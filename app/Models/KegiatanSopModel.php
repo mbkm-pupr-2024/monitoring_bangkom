@@ -19,9 +19,4 @@ class KegiatanSopModel extends Model
     {
         return $this->belongsTo(SopModel::class, 'id_sop', 'id');
     }
-
-    public function detil_status()
-    {
-        return $this->hasMany(DetilStatusModel::class, 'id_kegiatan_sop', 'id');
-    }
 }

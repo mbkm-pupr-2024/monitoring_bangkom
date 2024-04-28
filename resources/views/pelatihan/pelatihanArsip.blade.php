@@ -5,26 +5,90 @@
 <link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet">
 @endsection
 
-@section('sidebar')
-@include('layout.sidebar')
-@endsection
-
 @section('content')
+@if (!function_exists('tanggal_indo'))
+@php
+function tanggal_indo($tanggal){
+    $bulan = array (
+    1 =>'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+    );
+    $pecahkan = explode('-', $tanggal);
+
+    return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+}
+
+function rentang_tgl($tgl_mulai, $tgl_selesai){
+    $tgl_mulai = tanggal_indo($tgl_mulai);
+    $tgl_selesai = tanggal_indo($tgl_selesai);
+    $tgl_mulai_pecah = explode(' ', $tgl_mulai);
+    $tgl_selesai_pecah = explode(' ', $tgl_selesai);
+    if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
+        return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+    }
+    return $tgl_mulai . ' s.d ' . $tgl_selesai;
+}
+
+function hari_indo($tanggal){
+    if (date('l', strtotime($tanggal)) == 'Sunday') {
+        return 'Minggu';
+    } elseif (date('l', strtotime($tanggal)) == 'Monday') {
+        return 'Senin';
+    } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
+        return 'Selasa';
+    } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
+        return 'Rabu';
+    } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
+        return 'Kamis';
+    } elseif (date('l', strtotime($tanggal)) == 'Friday') {
+        return 'Jumat';
+    } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
+        return 'Sabtu';
+    }
+    return date('l', strtotime($tanggal));
+}
+@endphp
+@endif
 <div class="app-content">
     <div class="content-wrapper">
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col">
                     <div class="page-description">
                         <h1>Arsip Pelatihan</h1>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             @if(session()->has('success'))
                 <div class="alert alert-success">
                     {{ session()->get('success') }}
                 </div>
             @endif
+            <div class="row mb-3">
+                <form action="/arsip-pelatihan">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Cari pelatihan..." name="querypelatihan" value="{{ old('querypelatihan') }}">
+                        </div>
+                        <div class="col-4">
+                            <input type="number" id="searchInput" class="form-control" placeholder="Tahun periode..." name="queryperiode" value="{{ old('queryperiode', date('Y')) }}">
+                        </div>
+                        <div class="col-2 my-auto">
+                            <input type="submit" class="btn button btn-info" value="Cari" style="width: 100%">
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="row">
                 @if (!$pelatihans->isEmpty())
                     @foreach ($pelatihans as $pelatihan)
@@ -41,15 +105,10 @@
                                             {{ $pelatihan->nama }}
                                         </span>
                                         <span class="widget-popular-blog-title text-black-50">
-                                            {{ $pelatihan->bidang_pelatihan->nama }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="widget-popular-blog-container">
-                                    <span class="">
-                                        <i class="material-icons">schedule</i>
-                                        {{ date('d F Y', strtotime($pelatihan->tanggal_mulai)) }} - {{ date('d F Y', strtotime($pelatihan->tanggal_selesai)) }}
+                                            <i class="material-icons" style="vertical-align: middle">schedule</i>
+                                            {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }}
                                     </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-footer">

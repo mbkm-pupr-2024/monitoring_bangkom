@@ -11,7 +11,7 @@ class DetilStatusModel extends Model
 
     protected $table = 'detil_status';
     protected $keyType = 'string';
-    protected $fillable = ['id', 'id_status', 'id_kegiatan_sop'];
+    protected $fillable = ['id', 'id_status', 'id_kegiatan_tahapan','file','keterangan','komentar'];
     public $incrementing = false;
     public $timestamps = true;
     
@@ -20,8 +20,8 @@ class DetilStatusModel extends Model
         return $this->belongsTo(StatusModel::class, 'id_status', 'id');
     }
 
-    public function kegiatan_sop()
+    public function kegiatan_tahapan()
     {
-        return $this->belongsTo(KegiatanSopModel::class, 'id_kegiatan_sop', 'id');
+        return $this->belongsTo(KegiatanTahapanModel::class, 'id_kegiatan_tahapan', 'id');
     }
 }

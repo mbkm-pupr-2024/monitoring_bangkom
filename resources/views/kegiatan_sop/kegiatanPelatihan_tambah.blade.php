@@ -4,10 +4,6 @@
 <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
 @endsection
 
-@section('sidebar')
-@include('layout.sidebar')
-@endsection
-
 @section('content')
 <div class="app-content">
     <div class="content-wrapper">

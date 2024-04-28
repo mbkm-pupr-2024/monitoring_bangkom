@@ -1,4 +1,4 @@
-@if (auth('admin')->check())
+@if (Auth::check())
 <div class="app-sidebar">
   <div class="logo">
     {{-- <a href="/dashboard" class="logo-icon"><span class="logo-text">Monitoring Bangkom</span></a> --}}
@@ -6,16 +6,16 @@
       <a href="/dashboard">
         <img src="{{ asset('assets/images/logo.jpg') }}" width="50">
         <span class="activity-indicator"></span>
-        <span class="user-info-text">{{ ucwords(auth()->guard('admin')->user()->username) }}<br><span class="user-state-info">Admin</span></span>
+        <span class="user-info-text">{{ ucwords(Auth::user()->username) }}<br><span class="user-state-info">{{ (Auth::user()->role) }}</span></span>
       </a>
     </div>
   </div>    
   <div class="app-menu">
-    <ul class="accordion-menu">
+    {{-- <ul class="accordion-menu">
       <li class="{{ (Route::currentRouteName() == 'dashboard') ? 'active-page' : '' }}">
         <a href="{{ route('dashboard') }}"><i class="material-icons-two-tone">dashboard</i>Dashboard</a>
       </li>
-    </ul>
+    </ul> --}}
     <ul class="accordion-menu">
       <li class="sidebar-title">
         Manajemen Pelatihan
@@ -31,17 +31,28 @@
       <li class="sidebar-title">
         Menu Pelatihan
       </li>
-      {{-- <li class="{{ (Route::currentRouteName() == 'pelatihan-tambah') ? 'active-page' : '' }}">
-        <a href="{{ route('pelatihan-tambah') }}"><i class="material-icons-two-tone">nature_people</i>Tambah Pelatihan</a>
-      </li> --}}
       <li class="{{ (Route::currentRouteName() == 'pelatihan-berlangsung') ? 'active-page' : '' }}">
         <a href="{{ route('pelatihan-berlangsung') }}"><i class="material-icons-two-tone">assessment</i>Sedang Berlangsung</a>
       </li>
-      <li class="{{ (Route::currentRouteName() == 'arsip-pelatihan') ? 'active-page' : '' }}">
+      {{-- <li class="{{ (Route::currentRouteName() == 'arsip-pelatihan') ? 'active-page' : '' }}">
         <a href="{{ route('arsip-pelatihan') }}"><i class="material-icons-two-tone">verified</i>Arsip Pelatihan</a>
-      </li>
-      <li class="{{ (Route::currentRouteName() == 'cetak-surat') ? 'active-page' : '' }}">
-        <a href="{{ route('cetak-surat') }}"><i class="material-icons-two-tone">file_download</i>Cetak Surat</a>
+      </li> --}}
+
+      @can('petugas')
+        <li class="{{ (Route::currentRouteName() == 'status-dokumen') ? 'active-page' : '' }}">
+          <a href="{{ route('status-dokumen') }}"><i class="material-icons-two-tone">description</i>Status Dokumen</a>
+        </li>
+      @elsecan('supervisi')
+        <li class="{{ (Route::currentRouteName() == 'tinjau-dokumen') ? 'active-page' : '' }}">
+          <a href="{{ route('tinjau-dokumen') }}"><i class="material-icons-two-tone">folder_open</i>Tinjau Dokumen</a>
+        </li>
+      @elsecan('admin')
+        {{-- <li class="{{ (Route::currentRouteName() == 'kelola-dokumen') ? 'active-page' : '' }}">
+          <a href="{{ route('kelola-dokumen') }}"><i class="material-icons-two-tone">folder</i>Kelola Dokumen</a>
+        </li> --}}
+      @endcan
+      <li class="{{ (Route::currentRouteName() == 'arsip-dokumen') ? 'active-page' : '' }}">
+          <a href="{{ route('arsip-dokumen') }}"><i class="material-icons-two-tone">folder</i>Arsip Dokumen</a>
       </li>
     </ul>
     <ul class="accordion-menu">

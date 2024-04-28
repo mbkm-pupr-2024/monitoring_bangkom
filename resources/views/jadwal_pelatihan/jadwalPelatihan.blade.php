@@ -4,12 +4,60 @@
 <link href="{{ asset('assets/plugins/datatables/datatables.min.css') }}" rel="stylesheet">
 @endsection
 
-@section('sidebar')
-@include('layout.sidebar')
-@endsection
-
 @section('content')
+@if (!function_exists('tanggal_indo'))
+@php
+function tanggal_indo($tanggal){
+    $bulan = array (
+    1 =>'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+    );
+    $pecahkan = explode('-', $tanggal);
 
+    return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+}
+
+function rentang_tgl($tgl_mulai, $tgl_selesai){
+    $tgl_mulai = tanggal_indo($tgl_mulai);
+    $tgl_selesai = tanggal_indo($tgl_selesai);
+    $tgl_mulai_pecah = explode(' ', $tgl_mulai);
+    $tgl_selesai_pecah = explode(' ', $tgl_selesai);
+    if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
+        return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+    }
+    return $tgl_mulai . ' s.d ' . $tgl_selesai;
+}
+
+function hari_indo($tanggal){
+    if (date('l', strtotime($tanggal)) == 'Sunday') {
+        return 'Minggu';
+    } elseif (date('l', strtotime($tanggal)) == 'Monday') {
+        return 'Senin';
+    } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
+        return 'Selasa';
+    } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
+        return 'Rabu';
+    } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
+        return 'Kamis';
+    } elseif (date('l', strtotime($tanggal)) == 'Friday') {
+        return 'Jumat';
+    } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
+        return 'Sabtu';
+    }
+    return date('l', strtotime($tanggal));
+}
+@endphp
+@endif
 <div class="app-content">
     @if(Session::has('success'))
         <script>
@@ -23,33 +71,36 @@
     @endif
     <div class="content-wrapper">
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col">
                     <div class="page-description">
                         <h1>Jadwal Pelatihan</h1>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row">
                 <div class="card">
                     <div class="card-body">
+                        {{-- <h4><u>Jadwal Pelatihan</u></h4> --}}
                         <div class="row">
-                            <div class="col">
-                                <a href="/jadwal-pelatihan/tambah" class="btn btn-primary btn-sm float-end mb-5"><i class="material-icons-outlined">add</i> Tambah Jadwal Pelatihan</a>
-                            </div>
+                            @can('admin')
+                                <div class="col">
+                                    <a href="/jadwal-pelatihan/tambah" class="btn btn-primary btn-sm float-end mb-5"><i class="material-icons-outlined">add</i> Tambah Jadwal Pelatihan</a>
+                                </div>
+                            @endcan
+                        </div>
                         <div class="row">
                         <table id="datatable1" class="display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Pelatihan</th>
-                                    <th>Jenis Pelatihan</th>
                                     <th>Bidang Pelatihan</th>
-                                    <th>Model Pelatihan</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Tanggal Selesai</th>
-                                    <th>Action</th>
+                                    <th>Tanggal</th>
+                                    @can('admin')
+                                        <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,11 +111,9 @@
                                 <tr>
                                     <td>{{ $no }}</td>
                                     <td>{{ $jadwal->nama }}</td>
-                                    <td>{{ $jadwal->jenis_pelatihan->nama }}</td>
                                     <td>{{ $jadwal->bidang_pelatihan->nama }}</td>
-                                    <td>{{ $jadwal->model_pelatihan->nama }}</td>
-                                    <td>{{ $jadwal->tanggal_mulai }}</td>
-                                    <td>{{ $jadwal->tanggal_selesai }}</td>
+                                    <td>{{ rentang_tgl($jadwal->tanggal_mulai, $jadwal->tanggal_selesai) }}</td>
+                                    @can('admin')
                                     <td>
                                         <script>
                                             function mulai_button_{{ $jadwal->id }}() {
@@ -83,22 +132,11 @@
                                                 }
                                                 });
                                             }
-                                            function edit_button_{{ $jadwal->id }}() {
-                                                Swal.fire({
-                                                title: "Konfirmasi Pengeditan",
-                                                text: "Apakah Anda yakin ingin mengubah data ini? ",
-                                                icon: "warning",
-                                                showCancelButton: true,
-                                                confirmButtonColor: "#3085d6",
-                                                cancelButtonText: "Batal",
-                                                cancelButtonColor: "#d33",
-                                                confirmButtonText: "Edit"
-                                                }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    window.location.href = "/jadwal-pelatihan/edit/{{ $jadwal->id }}";
-                                                }
-                                                });
+                                            function view_button_{{ $jadwal->id }}() {
+
+                                                window.location.href = "/jadwal-pelatihan/detil/{{ $jadwal->id }}";
                                             }
+                                            
                                             function hapus_button_{{ $jadwal->id }}() {
                                                 Swal.fire({
                                                 title: "Konfirmasi Penghapusan",
@@ -117,9 +155,10 @@
                                             }
                                         </script>
                                         <a onclick="mulai_button_{{ $jadwal->id }}();" class="btn btn-primary btn-sm"><i class="material-icons-outlined center" sty>add_box</i></a> 
-                                        <a onclick="edit_button_{{ $jadwal->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>edit</i></a> 
+                                        <a onclick="view_button_{{ $jadwal->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>visibility</i></a> 
                                         <a onclick="hapus_button_{{ $jadwal->id }}();" class="btn btn-danger btn-sm"><i class="material-icons-outlined center" sty>delete</i></a>
                                     </td>
+                                    @endcan
                                 </tr>
                                 @php
                                     $no++;
