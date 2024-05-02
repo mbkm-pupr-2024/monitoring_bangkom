@@ -18,31 +18,24 @@
   * {
     font-family: 'Roboto', sans-serif;
   }
-    /* .peserta{
+    .tabel{
         border-collapse: collapse;
         
     }
-    .peserta th {
+    .tabel th {
         border: 1px solid black;
         padding: 15px;
     }
-    .peserta td {
+    .tabel td {
         border: 1px solid black;
         padding: 15px;
     }
-    .peserta th{
+    .tabel th{
         background-color: aqua;
     }
-    /* Mengatur counter untuk menghitung urutan */
-    /* #dynamic-list {
-    counter-reset: list-counter;
-    } */
-
-    /* Mengatur urutan huruf abjad pada pseudo-element ::before */
-    /* #dynamic-list li::before {
-    content: counter(list-counter, lower-alpha) ') ';
-    counter-increment: list-counter;
-    } */ */
+    p{
+        text-align: justify;
+    }
     
 
 </style>
@@ -99,12 +92,85 @@
         }
         return date('l', strtotime($tanggal));
     }
+    function terbilang($angka) {
+        $angka = abs($angka);
+        $bilangan = array(
+            '',
+            'Satu',
+            'Dua',
+            'Tiga',
+            'Empat',
+            'Lima',
+            'Enam',
+            'Tujuh',
+            'Delapan',
+            'Sembilan',
+            'Sepuluh',
+            'Sebelas'
+        );
+        $temp = '';
+        if ($angka < 12) {
+            $temp = ' ' . $bilangan[$angka];
+        } else if ($angka < 20) {
+            $temp = terbilang($angka - 10) . ' Belas';
+        } else if ($angka < 100) {
+            $temp = terbilang($angka / 10) . ' Puluh' . terbilang($angka % 10);
+        } else if ($angka < 200) {
+            $temp = ' Seratus' . terbilang($angka - 100);
+        } else if ($angka < 1000) {
+            $temp = terbilang($angka / 100) . ' Ratus' . terbilang($angka % 100);
+        } else if ($angka < 2000) {
+            $temp = ' Seribu' . terbilang($angka - 1000);
+        } else if ($angka < 1000000) {
+            $temp = terbilang($angka / 1000) . ' Ribu' . terbilang($angka % 1000);
+        } else if ($angka < 1000000000) {
+            $temp = terbilang($angka / 1000000) . ' Juta' . terbilang($angka % 1000000);
+        } else if ($angka < 1000000000000) {
+            $temp = terbilang($angka / 1000000000) . ' Milyar' . terbilang(fmod($angka, 1000000000));
+        } else if ($angka < 1000000000000000) {
+            $temp = terbilang($angka / 1000000000000) . ' Trilyun' . terbilang(fmod($angka, 1000000000000));
+        }
+        return $temp;
+    }
+
+
+    /////Konversi Tanggal
+    $pecah = explode('-', now()->toDateString());
+    $tahun = $pecah[0];
+    $bulan = $pecah[1];
+    $hari = $pecah[2];
+
+    // Array untuk nama bulan dalam bahasa Indonesia
+    $namaBulan = array(
+        '01' => 'Januari',
+        '02' => 'Februari',
+        '03' => 'Maret',
+        '04' => 'April',
+        '05' => 'Mei',
+        '06' => 'Juni',
+        '07' => 'Juli',
+        '08' => 'Agustus',
+        '09' => 'September',
+        '10' => 'Oktober',
+        '11' => 'November',
+        '12' => 'Desember'
+    );
+
+    // Konversi angka bulan menjadi nama bulan dalam bahasa Indonesia
+    $bulanIndo = $namaBulan[$bulan];
+
+    // Konversi angka hari menjadi nama hari dalam bahasa Indonesia
+    $hariIndo = terbilang($hari);
+
+    // Konversi angka tahun menjadi kata dalam bahasa Indonesia
+    $tahunIndo = terbilang($tahun);
+
     @endphp
 @endif
   <div class="container">
     <div class="kopsurat"
       style="display: flex; align-items: center; justify-content: center; border-bottom: 1px solid black;">
-      <img style="text-align:left" src="{{ asset('assets/images/pupr.png') }}" alt="" width="100" height="100">
+      <img style="text-align:left" src="{{ $logo }}" alt="" width="100" height="100">
       <div class="heading" style="text-align: center; margin-left: 10px;">
         <h4 style="margin-top: 20px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
         <h4 style="margin-top: -20px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
@@ -114,41 +180,54 @@
     </div>
     <div class="isi">
       <div class="judul">
-        <h4 style="text-align: center">BERITA ACARA RAPAT EVALUASI KELULUSAN</h4>
-        <h4 style="text-align: center">{{ strtoupper($pelatihan->nama) }}</h4>
-        <h4 style="text-align: center">(<i>{{ strtoupper($pelatihan->model_pelatihan->nama) }}</i>)</h4>
+        <h4 style="text-align: center;">BERITA ACARA RAPAT EVALUASI KELULUSAN</h4>
+        <h4 style="text-align: center;margin-top: -20px;">PELATIHAN {{ strtoupper($pelatihan->nama) }}</h4>
+        <h4 style="text-align: center;margin-top: -20px;">(<i>{{ strtoupper($pelatihan->model_pelatihan->nama) }}</i>)</h4>
 
-        <h4 style="text-align: center;white-space: pre;">NOMOR  :       /BA-Mo/2024</h4>
+        <p style="text-align: center;white-space: pre;margin-top: -10px;">NOMOR  :       /BA-Mo/2024</p>
 
         
       </div>
       <div class="isi-surat">
-        <p>Pada hari ini Rabu tanggal Dua Puluh Delapan bulan Maret tahun Dua Ribu Dua Puluh Empat, kami:</p>
+        <p>Pada hari ini <b>{{ hari_indo(now()->toDateString()) }}</b> tanggal <b>{{ $hariIndo }}</b> bulan <b>{{ $bulanIndo }}</b> tahun <b>{{ $tahunIndo }}</b>, kami:</p>
         <ol>
-            <li>Dr. Ir. Sri Hartoyo, M.E., Dipl.SE (NIP. 195805311986031002) selaku Widyaiswara Ahli Utama Sekretariat BPSDM;</li>
-            <li>Nugroho Wuritomo, S.T., M.T. (NIP. 197601222005021001) selaku Kepala Bidang Manajemen Sistem dan Pelaksanaan Pengembangan Kompetensi, Pusbangkom Jalan, Perumahan dan Pengembangan Infrastruktur Wilayah;</li>
-            <li>Alfan Bramestia, SE., M.A. (NIP.198603212009121001) selaku Kasi Penyelenggara Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya.</li>
+            @foreach ($data as $item)
+            
+                <li>{{ $item['nama_lengkap'] }} (NIP. {{ $item['nip'] }}) selaku {{ $item['jabatan'] }} {{ $item['unit_kerja'] }}{{ $loop->last? '.' : ';' }}</li>
+            @endforeach
         </ol>
         <p>
-            Telah melaksanakan rapat evaluasi kelulusan Peserta {{ ucwords($pelatihan->nama) }} ({{ $pelatihan->model_pelatihan->nama }}) yang dilaksanakan oleh Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }} dengan hasil sebagai berikut :
+            Telah melaksanakan rapat evaluasi kelulusan Peserta Pelatihan {{ ucwords($pelatihan->nama) }} ({{ $pelatihan->model_pelatihan->nama }}) yang dilaksanakan oleh Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }} dengan hasil sebagai berikut :
             <ol>
-                <li>Jumlah peserta pelatihan sebanyak 30 (tiga puluh) orang;</li>
-                <li>Sebanyak 3 (tiga) orang lulus dengan predikat “memuaskan”;</li>
-                <li>Sebanyak 24 (dua puluh empat) orang lulus dengan predikat “baik sekali”;</li>
-                <li>Sebanyak 3 (tiga) orang lulus dengan predikat “baik”.</li>
+                <li>Jumlah peserta pelatihan sebanyak {{ $request->jumlah_peserta }} ({{ terbilang($request->jumlah_peserta) }}) orang;</li>
+                <li>Sebanyak {{ $request->memuaskan }} ({{ terbilang($request->memuaskan) }}) orang lulus dengan predikat <b>“memuaskan”</b>;</li>
+                <li>Sebanyak {{ $request->baik_sekali }} ({{ terbilang($request->baik_sekali) }}) orang lulus dengan predikat <b>“baik sekali”</b>;</li>
+                <li>Sebanyak {{ $request->baik }} ({{ terbilang($request->baik) }}) orang lulus dengan predikat <b>“baik”</b>.</li>
             </ol>
             Demikian Berita Acara ini dibuat dengan sesungguhnya untuk dapat dipergunakan sebagaimana mestinya.
         </p>
 
-        <h3 style="text-align: center">MENYETUJUI</h3>
-        <table>
+        <h3 style="text-align: center;page-break-before:always">MENYETUJUI</h3>
+        <table class="tabel">
             <tr>
-                <td>No.</td>
-                <td>Nama Lengkap</td>
-                <td>Jabatan</td>
-                <td>Unit Kerja</td>
-                <td>Tanda Tangan</td>
+                <td style="text-align: center">No.</td>
+                <td style="text-align: center">Nama Lengkap</td>
+                <td style="text-align: center">Jabatan</td>
+                <td style="text-align: center">Unit Kerja</td>
+                <td style="text-align: center">Tanda Tangan</td>
             </tr>
+            @foreach ($data as $item){
+                @if ($item['nama_lengkap'] != null)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item['nama_lengkap'] }}</td>
+                    <td>{{ $item['jabatan'] }}</td>
+                    <td>{{ $item['unit_kerja'] }}</td>
+                    <td style="white-space: pre;">                      </td>
+                </tr>
+                @endif
+            }
+            @endforeach
         </table>
 
       </div>

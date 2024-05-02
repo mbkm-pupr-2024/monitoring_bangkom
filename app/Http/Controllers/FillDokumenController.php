@@ -16,17 +16,35 @@ class FillDokumenController extends Controller
 {
     public function form_dokumen_pelatihan($id_pl,$id_kthp)
     {
-        $pelatihan = PelatihanModel::find($id_pl);
+        $pelatihan = PelatihanModel::with('model_pelatihan','status')->find($id_pl);
+        // dd($pelatihan->model_pelatihan->id);
+        $status = StatusModel::where('id_pelatihan', $id_pl)->first();
         
         $kegiatanTahapan = KegiatanTahapanModel::find($id_kthp);
         $nama_kegiatan = $kegiatanTahapan->dokumen;
-        $nama_kegiatan_break = str_replace([' ', ','], '', $nama_kegiatan);
-        // dd($nama_kegiatan_break);
+        $nama_kegiatan_break = str_replace([' ', ',','-'], '', $nama_kegiatan);
+
+        $file = DetilStatusModel::where('id_status', $status->id)->where('id_kegiatan_tahapan', $id_kthp)->first();
+        if($file){
+            if($file->keterangan == 'Ditolak'){
+                $path = public_path('assets/dokumen/' . $file->file);
+                unlink($path);
+                $file->delete();
+            }
+            else{
+                return redirect()->back()->with(['error' => 'Dokumen ini sudah selesai dibuat', 'popUp_title' => 'Error!']);
+            }
+        }
+
         return view('dokumen.form.'. $nama_kegiatan_break ,[
             'pelatihan' => $pelatihan,
             'kegiatan' => $kegiatanTahapan,
             'nama_fungsi' => $nama_kegiatan_break
        ]);
+    }
+    public function download_template($file){
+        $path = public_path().'/assets/template/'. $file . '.xlsx';
+        return response()->download($path);
     }
     ////////////////////////////// FORM THE DOCUMENT////////////////////////////////////
 
@@ -34,8 +52,9 @@ class FillDokumenController extends Controller
     public function fill_SuratUndanganRapatPersiapan($id_pl, $id_kthp, Request $request)
     {
         $request->validate([
+            'nomor_surat' => 'required',
             'tanggal' => 'required',
-            'waktu' => 'required', 
+            'waktu_mulai' => 'required', 
             'zoom_id' => 'required',
             'passcode' => 'required',
             'req_udRapat' => 'required|mimes:xls,xlsx',
@@ -50,8 +69,8 @@ class FillDokumenController extends Controller
         $req = $req[0]->map(function($row) {
             return [
                 'tim_pusbangkom' => $row[0],
-                'tim_bapekom' => $row[2],
-                'tembusan' => $row[4],
+                'tim_bapekom' => $row[1],
+                'tembusan' => $row[2],
             ];
         });
 
@@ -91,12 +110,82 @@ class FillDokumenController extends Controller
     }
     public function fill_NotulenRapatPersiapan($id_pl, $id_kthp, Request $request)
     {
+        $request->validate([
+            'notulenRapatPersiapan' => 'required|mimes:docx,pdf',
+        ]);
+
+        $extension = $request->file('notulenRapatPersiapan')->extension();
+        $fileName = $id_pl . '_' . $id_kthp . '.' . $extension;
+
+        $request->file('notulenRapatPersiapan')->move(public_path('assets/dokumen'), $fileName);
+
+        // Ambil record terakhir dari tabel
+        $lastRecord = DetilStatusModel::latest('id')->first();
+        // Inisialisasi angka awal
+        $number = 1;
+        if ($lastRecord) {
+            $lastNumber = intval(substr($lastRecord->id, 3));
+            $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
+        }
+        // Format ulang ID dengan 'BP' diikuti oleh angka yang telah diincrement
+        $newId = 'DST' . str_pad($number, 5, '0', STR_PAD_LEFT);
+
+        $status = StatusModel::where('id_pelatihan', $id_pl)->first();
+
+
+        // Tambahkan ID yang telah diincrement ke dalam request
+        $requestData = [];
+        $requestData['id'] = $newId;
+        $requestData['id_status'] = $status->id;
+        $requestData['id_kegiatan_tahapan'] = $id_kthp;
+        $requestData['file'] = $fileName; 
+        $requestData['keterangan'] = 'Disetujui';
         
+
+        // Buat record baru menggunakan metode create
+        DetilStatusModel::create($requestData);
+
+        return redirect('/status-dokumen')->with(['success' => 'Dokumen telah diupload', 'popUp_title' => 'Added!']);
 
     }
     public function fill_PedomanPelatihan($id_pl, $id_kthp, Request $request)
     {
+        $request->validate([
+            'pedomanPelatihan' => 'required|mimes:docx,pdf',
+        ]);
+
+        $extension = $request->file('pedomanPelatihan')->extension();
+        $fileName = $id_pl . '_' . $id_kthp . '.' . $extension;
+
+        $request->file('pedomanPelatihan')->move(public_path('assets/dokumen'), $fileName);
+
+        // Ambil record terakhir dari tabel
+        $lastRecord = DetilStatusModel::latest('id')->first();
+        // Inisialisasi angka awal
+        $number = 1;
+        if ($lastRecord) {
+            $lastNumber = intval(substr($lastRecord->id, 3));
+            $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
+        }
+        // Format ulang ID dengan 'BP' diikuti oleh angka yang telah diincrement
+        $newId = 'DST' . str_pad($number, 5, '0', STR_PAD_LEFT);
+
+        $status = StatusModel::where('id_pelatihan', $id_pl)->first();
+
+
+        // Tambahkan ID yang telah diincrement ke dalam request
+        $requestData = [];
+        $requestData['id'] = $newId;
+        $requestData['id_status'] = $status->id;
+        $requestData['id_kegiatan_tahapan'] = $id_kthp;
+        $requestData['file'] = $fileName; 
+        $requestData['keterangan'] = 'Disetujui';
         
+
+        // Buat record baru menggunakan metode create
+        DetilStatusModel::create($requestData);
+
+        return redirect('/status-dokumen')->with(['success' => 'Dokumen telah diupload', 'popUp_title' => 'Added!']);
 
     }
     public function fill_SuratPenetapanPengajar($id_pl, $id_kthp, Request $request)
@@ -105,7 +194,7 @@ class FillDokumenController extends Controller
             'suratPenetapanPengajar' => 'required|mimes:docx,pdf',
         ]);
 
-        $extension = $request->file('suratPpenetapanPengajar')->extension();
+        $extension = $request->file('suratPenetapanPengajar')->extension();
         $fileName = $id_pl . '_' . $id_kthp . '.' . $extension;
 
         $request->file('suratPenetapanPengajar')->move(public_path('assets/dokumen'), $fileName);
@@ -181,79 +270,42 @@ class FillDokumenController extends Controller
     public function fill_SuratPemanggilanPeserta($id_pl, $id_kthp, Request $request)
     {
         $request->validate([
-            'kata_ganti' => 'required',
-            'nama_yth' => 'required',
-            'lokasi' => 'required',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required', 
-            'zoom_id' => 'required',
-            'passcode' => 'required',
+            'suratPemanggilanPeserta' => 'required|mimes:docx,pdf',
         ]);
-    
-        $pelatihan = PelatihanModel::find($id_pl);
-        $kegiatanTahapan = KegiatanTahapanModel::find($id_kthp);
-        $nama_kegiatan = $kegiatanTahapan->dokumen;
-        $nama_fungsi = str_replace([' ', ',','-'], '', $nama_kegiatan);
-    
-        $path = public_path().'/assets/images/pupr.png';
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $logo = 'data:image/'. $type . ';base64,'. base64_encode($data);
-    
-        // Kirim objek $request bersama dengan data lainnya ke tampilan HTML
-        $data = [
-            'pelatihan' => $pelatihan,
-            'kegiatan' => $kegiatanTahapan,
-            'request' => $request,
-            'logo' => $logo,
-        ];
-    
-        // Tampilkan view HTML dengan nilai-nilai dari objek $request
-        $html_content = view('dokumen.cetak.' . $nama_fungsi, $data)->render();
-    
-    
-        $pdf = new Dompdf();
-        $pdf->loadHtml($html_content);
-        $pdf->setPaper('A4', 'portrait');
-        $pdf->render();
-    
-        $pdf_content = $pdf->output();
-        return view('dokumen.preview.' . $nama_fungsi, ['pdf_content' => $pdf_content,'pelatihan' => $pelatihan,
-        'kegiatan' => $kegiatanTahapan, 'nama_fungsi' => $nama_fungsi]);
-    
+
+        $extension = $request->file('suratPemanggilanPeserta')->extension();
+        $fileName = $id_pl . '_' . $id_kthp . '.' . $extension;
+
+        $request->file('suratPemanggilanPeserta')->move(public_path('assets/dokumen'), $fileName);
+
+        // Ambil record terakhir dari tabel
+        $lastRecord = DetilStatusModel::latest('id')->first();
+        // Inisialisasi angka awal
+        $number = 1;
+        if ($lastRecord) {
+            $lastNumber = intval(substr($lastRecord->id, 3));
+            $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
+        }
+        // Format ulang ID dengan 'BP' diikuti oleh angka yang telah diincrement
+        $newId = 'DST' . str_pad($number, 5, '0', STR_PAD_LEFT);
+
+        $status = StatusModel::where('id_pelatihan', $id_pl)->first();
+
+
+        // Tambahkan ID yang telah diincrement ke dalam request
+        $requestData = [];
+        $requestData['id'] = $newId;
+        $requestData['id_status'] = $status->id;
+        $requestData['id_kegiatan_tahapan'] = $id_kthp;
+        $requestData['file'] = $fileName; 
+        $requestData['keterangan'] = 'Disetujui';
         
-        
-        // Tampilkan PDF atau simpan PDF ke dalam file
-        return $pdf->stream(); // Tampilkan PDF di browser
-        // atau
-        // return $pdf->save('lokasi_direktori/file.pdf'); // Simpan PDF ke dalam file
-        ///////////////////////////////////////////
-        $request->validate([
-            'daftar_calon_peserta' => 'required|mimes:xls,xlsx',
-        ]);
 
-        // dd($request->file('file'));
+        // Buat record baru menggunakan metode create
+        DetilStatusModel::create($requestData);
 
-        $file = $request->file('daftar_calon_peserta');
+        return redirect('/status-dokumen')->with(['success' => 'Dokumen telah diupload', 'popUp_title' => 'Added!']);
 
-        // get collection from each row
-        $data = Excel::toCollection(new UserImport, $file);
-        $data = $data[0]->map(function($row) {
-            return [
-                'no' => $row[0],
-                'nama' => $row[1],
-                'nip' => $row[2],
-                'jabatan' => $row[3],
-                'unit_kerja' => $row[4],
-                'keterangan' => $row[5],
-            ];
-        });
-
-        $pelatihan = PelatihanModel::find($id_pl);
-
-        return view('dokumen.cetak.SuratPemanggilanPeserta', compact('data'), [
-            'pelatihan' => $pelatihan, 'id_pelatihan' => $id_pl, 'request' => $request,
-        ]);
     }
     public function fill_FormBiodataTF4($id_pl, $id_kthp, Request $request)
     {
@@ -297,23 +349,42 @@ class FillDokumenController extends Controller
     public function fill_SKPelatihan($id_pl, $id_kthp, Request $request)
     {
         $request->validate([
-            'kata_ganti' => 'required',
-            'nama_yth' => 'required',
-            'lokasi' => 'required',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required', 
-            'zoom_id' => 'required',
-            'passcode' => 'required',
+            'skPelatihan' => 'required|mimes:docx,pdf',
         ]);
 
-        $pelatihan = PelatihanModel::find($id_pl);
+        $extension = $request->file('skPelatihan')->extension();
+        $fileName = $id_pl . '_' . $id_kthp . '.' . $extension;
 
-        $kegiatanTahapan = KegiatanTahapanModel::find($id_kthp);
-        $nama_kegiatan = $kegiatanTahapan->dokumen;
-        $nama_fungsi = str_replace([' ', ',','-'], '', $nama_kegiatan);
-        return view('dokumen.cetak.' . $nama_fungsi, [
-            'pelatihan' => $pelatihan,'kegiatan' => $kegiatanTahapan,'request' => $request,
-        ]);
+        $request->file('skPelatihan')->move(public_path('assets/dokumen'), $fileName);
+
+        // Ambil record terakhir dari tabel
+        $lastRecord = DetilStatusModel::latest('id')->first();
+        // Inisialisasi angka awal
+        $number = 1;
+        if ($lastRecord) {
+            $lastNumber = intval(substr($lastRecord->id, 3));
+            $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
+        }
+        // Format ulang ID dengan 'BP' diikuti oleh angka yang telah diincrement
+        $newId = 'DST' . str_pad($number, 5, '0', STR_PAD_LEFT);
+
+        $status = StatusModel::where('id_pelatihan', $id_pl)->first();
+
+
+        // Tambahkan ID yang telah diincrement ke dalam request
+        $requestData = [];
+        $requestData['id'] = $newId;
+        $requestData['id_status'] = $status->id;
+        $requestData['id_kegiatan_tahapan'] = $id_kthp;
+        $requestData['file'] = $fileName; 
+        $requestData['keterangan'] = 'Disetujui';
+        
+
+        // Buat record baru menggunakan metode create
+        DetilStatusModel::create($requestData);
+
+        return redirect('/status-dokumen')->with(['success' => 'Dokumen telah diupload', 'popUp_title' => 'Added!']);
+
 
 
     }
@@ -322,12 +393,11 @@ class FillDokumenController extends Controller
         $request->validate([
             'nomor_surat' => 'required',
             'kata_ganti' => 'required',
-            'nama_yth' => 'required',
-            'lokasi' => 'required',
             'nomor_surat_terkait' => 'required',
             'tanggal_surat_terkait' => 'required',
+            'nama_yth' => 'required',
+            'lokasi' => 'required',
             'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required', 
             'zoom_id' => 'required',
             'passcode' => 'required',
             'req_suratPermohonanMembuka' => 'required|mimes:xls,xlsx',
@@ -474,9 +544,13 @@ class FillDokumenController extends Controller
     }
     public function fill_LaporanPembukaan($id_pl, $id_kthp, Request $request)
     {
+        dd($request->all());
         $request->validate([
             'tanggal' => 'required',
+            'kepala_bpsdm' => 'required',
+            'tujuan' => 'required',
             'req_laporanPembukaan' => 'required|mimes:xls,xlsx',
+            'pantun' => 'required',
             ]);
 
         // dd($request->file('file'));
@@ -487,32 +561,27 @@ class FillDokumenController extends Controller
         $req = Excel::toCollection(new UserImport, $file);
         $req = $req[0]->map(function($row) {
             return [
-                'kepala_bpsdm' => $row[0],
-                'kepada_yth' => $row[1],
-                'nama_yth' => $row[2],
-                'yg_dihormati' => $row[3],
-                'dasar_pelaksanaan' => $row[4],
-                'tujuan' => $row[5],
-                'no_peserta' => $row[6],
-                'unit_kerja_peserta' => $row[7],
-                'jumlah_peserta' => $row[8],
-                'no_kurikulum' => $row[9],
-                'mapel_kurikulum' => $row[10],
-                'jp_kurikulum' => $row[11],
-                'evaluasi' => $row[12],
-                'pantun' => $row[13],
+                'kepada_yth' => $row[0],
+                'nama_yth' => $row[1],
+                'yg_dihormati' => $row[2],
+                'dasar_pelaksanaan' => $row[3],
+                'no_peserta' => $row[4],
+                'unit_kerja_peserta' => $row[5],
+                'jumlah_peserta' => $row[6],
+                'no_kurikulum' => $row[7],
+                'mapel_kurikulum' => $row[8],
+                'jp_kurikulum' => $row[9],
+                'evaluasi' => $row[10],
             ];
         });
 
         $req = $req->forget(0);
 
         $data_req = [];
-        $data_req['kepala_bpsdm'] = [];
         $data_req['kepada_yth'] = [];
         $data_req['nama_yth'] = [];
         $data_req['yg_dihormati'] = [];
         $data_req['dasar_pelaksanaan'] = [];
-        $data_req['tujuan'] = [];
         $data_req['no_peserta'] = [];
         $data_req['unit_kerja_peserta'] = [];
         $data_req['jumlah_peserta'] = [];
@@ -520,12 +589,8 @@ class FillDokumenController extends Controller
         $data_req['mapel_kurikulum'] = [];
         $data_req['jp_kurikulum'] = [];
         $data_req['evaluasi'] = [];
-        $data_req['pantun'] = [];
 
         foreach($req as $item){
-            if($item['kepala_bpsdm'] != null){
-                array_push($data_req['kepala_bpsdm'], $item['kepala_bpsdm']);
-            }
             if($item['kepada_yth'] != null){
                 array_push($data_req['kepada_yth'], $item['kepada_yth']);
             }
@@ -537,9 +602,6 @@ class FillDokumenController extends Controller
             }
             if($item['dasar_pelaksanaan'] != null){
                 array_push($data_req['dasar_pelaksanaan'], $item['dasar_pelaksanaan']);
-            }
-            if($item['tujuan'] != null){
-                array_push($data_req['tujuan'], $item['tujuan']);
             }
             if($item['no_peserta'] != null){
                 array_push($data_req['no_peserta'], $item['no_peserta']);
@@ -561,9 +623,6 @@ class FillDokumenController extends Controller
             }
             if($item['evaluasi'] != null){
                 array_push($data_req['evaluasi'], $item['evaluasi']);
-            }
-            if($item['pantun'] != null){
-                array_push($data_req['pantun'], $item['pantun']);
             }
         }
         // dd($data_req['kepala_bpsdm']);
@@ -594,7 +653,6 @@ class FillDokumenController extends Controller
             'request' => $request,
             'logo' => $logo,
             'data' => $data_req,
-            // 'total_jp' => $total_jp,
         ];
 
         // Tampilkan view HTML dengan nilai-nilai dari objek $request
@@ -938,8 +996,9 @@ class FillDokumenController extends Controller
     public function fill_SuratUndanganRapatEvaluasi($id_pl, $id_kthp, Request $request)
     {
         $request->validate([
+            'nomor_surat' => 'required',
             'tanggal' => 'required',
-            'waktu' => 'required', 
+            'waktu_mulai' => 'required', 
             'zoom_id' => 'required',
             'passcode' => 'required',
             'req_udRapat' => 'required|mimes:xls,xlsx',
@@ -954,9 +1013,9 @@ class FillDokumenController extends Controller
         $req = $req[0]->map(function($row) {
             return [
                 'tim_pengajar' => $row[0],
-                'tim_pusbangkom' => $row[2],
-                'tim_bapekom' => $row[4],
-                'tembusan' => $row[6],
+                'tim_pusbangkom' => $row[1],
+                'tim_bapekom' => $row[2],
+                'tembusan' => $row[3],
             ];
         });
 
@@ -999,63 +1058,76 @@ class FillDokumenController extends Controller
     public function fill_BeritaAcaraKelulusan($id_pl, $id_kthp, Request $request)
     {
         $request->validate([
-            'kata_ganti' => 'required',
-            'nama_yth' => 'required',
-            'lokasi' => 'required',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required', 
-            'zoom_id' => 'required',
-            'passcode' => 'required',
-        ]);
-    
+            'nomor_surat' => 'required',
+            'jumlah_peserta' => 'required', 
+            'memuaskan' => 'required',
+            'baik_sekali' => 'required',
+            'baik' => 'required',
+            'req_BA' => 'required|mimes:xls,xlsx',
+            ]);
+
+        // dd($request->file('file'));
+
+        $file = $request->file('req_BA');
+
+        // get collection from each row
+        $req = Excel::toCollection(new UserImport, $file);
+        $req = $req[0]->map(function($row) {
+            return [
+                'nama_lengkap' => $row[0],
+                'nip' => $row[1],
+                'jabatan' => $row[2],
+                'unit_kerja' => $row[3],
+            ];
+        });
+
+        $req = $req->forget(0);
+
+        // dd($req);
+
+        $req = $req->toArray();
+
         $pelatihan = PelatihanModel::find($id_pl);
         $kegiatanTahapan = KegiatanTahapanModel::find($id_kthp);
         $nama_kegiatan = $kegiatanTahapan->dokumen;
         $nama_fungsi = str_replace([' ', ',','-'], '', $nama_kegiatan);
-    
+
         $path = public_path().'/assets/images/pupr.png';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $logo = 'data:image/'. $type . ';base64,'. base64_encode($data);
-    
+
         // Kirim objek $request bersama dengan data lainnya ke tampilan HTML
         $data = [
             'pelatihan' => $pelatihan,
             'kegiatan' => $kegiatanTahapan,
             'request' => $request,
             'logo' => $logo,
+            'data' => $req,
         ];
-    
+
         // Tampilkan view HTML dengan nilai-nilai dari objek $request
         $html_content = view('dokumen.cetak.' . $nama_fungsi, $data)->render();
-    
-    
+
         $pdf = new Dompdf();
         $pdf->loadHtml($html_content);
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
-    
+
         $pdf_content = $pdf->output();
-        return view('dokumen.preview.' . $nama_fungsi, ['pdf_content' => $pdf_content,'pelatihan' => $pelatihan,
-        'kegiatan' => $kegiatanTahapan, 'nama_fungsi' => $nama_fungsi]);
-    
-        
-        
-        // Tampilkan PDF atau simpan PDF ke dalam file
-        return $pdf->stream(); // Tampilkan PDF di browser
-        // atau
-        // return $pdf->save('lokasi_direktori/file.pdf'); // Simpan PDF ke dalam file
+        return view('dokumen.previewDokumenCetak', ['pdf_content' => $pdf_content,'pelatihan' => $pelatihan,
+        'kegiatan' => $kegiatanTahapan, 'nama_fungsi' => $nama_fungsi, 'kegiatan' => $kegiatanTahapan]);
 
     }
     public function fill_SuratPermohonanMenutupdanMenghadiri($id_pl, $id_kthp, Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'nomor_surat' => 'required',
             'kata_ganti' => 'required',
             'nama_yth' => 'required',
             'lokasi' => 'required',
             'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required', 
             'zoom_id' => 'required',
             'passcode' => 'required',
             'req_suratPermohonanMenutup' => 'required|mimes:xls,xlsx',
@@ -1202,52 +1274,152 @@ class FillDokumenController extends Controller
     public function fill_LaporanPenutupan($id_pl, $id_kthp, Request $request)
     {
         $request->validate([
-            'kata_ganti' => 'required',
-            'nama_yth' => 'required',
-            'lokasi' => 'required',
-            'waktu_mulai' => 'required',
-            'waktu_selesai' => 'required', 
-            'zoom_id' => 'required',
-            'passcode' => 'required',
-        ]);
-    
-        $pelatihan = PelatihanModel::find($id_pl);
+            'tanggal' => 'required',
+            'kepala_bpsdm' => 'required',
+            'jumlah_peserta' => 'required',
+            'jumlah_peserta_hadir' => 'required',
+            'peserta_male' => 'required',
+            'peserta_female' => 'required',
+            'req_laporanPenutupan' => 'required|mimes:xls,xlsx',
+            'pantun' => 'required',
+            ]);
+        
+            $baris_pantun = explode("\n", $request->pantun);
+            $pantun = [];
+            
+            // Variabel sementara untuk menyimpan indeks loop
+            $index = 0;
+            
+            foreach($baris_pantun as $baris){
+                // Mengisi array pantun dengan baris-baris pantun
+                $pantun[$index] = $baris;
+                
+                // Menambahkan nilai indeks untuk iterasi berikutnya
+                $index++;
+            }
+            
+
+
+        // dd($request->file('file'));
+
+        $file = $request->file('req_laporanPenutupan');
+
+        // get collection from each row
+        $req = Excel::toCollection(new UserImport, $file);
+        $req = $req[0]->map(function($row) {
+            return [
+                'kepada_yth' => $row[0],
+                'nama_yth' => $row[1],
+                'yg_dihormati' => $row[2],
+                'dasar_hukum_penyelenggaraan' => $row[3],
+                'evaluasi_elearning' => $row[4],
+                'evaluasi_manajemen' => $row[5],
+                'best3_peringkat' => $row[6],
+                'best3_nama' => $row[7],
+                'best3_unit_kerja' => $row[8],
+                'best3_nilai' => $row[9],
+                'best3_predikat' => $row[10],
+            ];
+        });
+
+        $req = $req->forget(0);
+
+        $data_req = [];
+        $data_req['kepada_yth'] = [];
+        $data_req['nama_yth'] = [];
+        $data_req['yg_dihormati'] = [];
+        $data_req['dasar_hukum_penyelenggaraan'] = [];
+        $data_req['evaluasi_elearning'] = [];
+        $data_req['evaluasi_manajemen'] = [];
+        $data_req['best3_peringkat'] = [];
+        $data_req['best3_nama'] = [];
+        $data_req['best3_unit_kerja'] = [];
+        $data_req['best3_nilai'] = [];
+        $data_req['best3_predikat'] = [];
+
+
+        foreach($req as $item){
+            if($item['kepada_yth'] != null){
+                array_push($data_req['kepada_yth'], $item['kepada_yth']);
+            }
+            if($item['nama_yth'] != null){
+                array_push($data_req['nama_yth'], $item['nama_yth']);
+            }
+            if($item['yg_dihormati'] != null){
+                array_push($data_req['yg_dihormati'], $item['yg_dihormati']);
+            }
+            if($item['dasar_hukum_penyelenggaraan'] != null){
+                array_push($data_req['dasar_hukum_penyelenggaraan'], $item['dasar_hukum_penyelenggaraan']);
+            }
+            if($item['evaluasi_elearning'] != null){
+                array_push($data_req['evaluasi_elearning'], $item['evaluasi_elearning']);
+            }
+            if($item['evaluasi_manajemen'] != null){
+                array_push($data_req['evaluasi_manajemen'], $item['evaluasi_manajemen']);
+            }
+            if($item['best3_peringkat'] != null){
+                array_push($data_req['best3_peringkat'], $item['best3_peringkat']);
+            }
+            if($item['best3_nama'] != null){
+                array_push($data_req['best3_nama'], $item['best3_nama']);
+            }
+            if($item['best3_unit_kerja'] != null){
+                array_push($data_req['best3_unit_kerja'], $item['best3_unit_kerja']);
+            }
+            if($item['best3_nilai'] != null){
+                array_push($data_req['best3_nilai'], $item['best3_nilai']);
+            }
+            if($item['best3_predikat'] != null){
+                array_push($data_req['best3_predikat'], $item['best3_predikat']);
+            }
+        }
+
+        // dd($data_req);
+        
+
+        array_shift($data_req['best3_peringkat']);
+        array_shift($data_req['best3_nama']);
+        array_shift($data_req['best3_unit_kerja']);
+        array_shift($data_req['best3_nilai']);
+        array_shift($data_req['best3_predikat']);
+
+        // dd($data_req['best3_predikat']);
+         
+
+        $pelatihan = PelatihanModel::with('model_pelatihan')->find($id_pl);
         $kegiatanTahapan = KegiatanTahapanModel::find($id_kthp);
         $nama_kegiatan = $kegiatanTahapan->dokumen;
         $nama_fungsi = str_replace([' ', ',','-'], '', $nama_kegiatan);
-    
+
+        
+
         $path = public_path().'/assets/images/pupr.png';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $logo = 'data:image/'. $type . ';base64,'. base64_encode($data);
-    
+
         // Kirim objek $request bersama dengan data lainnya ke tampilan HTML
         $data = [
             'pelatihan' => $pelatihan,
             'kegiatan' => $kegiatanTahapan,
             'request' => $request,
+            'pantun' => $pantun,
             'logo' => $logo,
+            'data' => $data_req,
+            // 'total_jp' => $total_jp,
         ];
-    
+
         // Tampilkan view HTML dengan nilai-nilai dari objek $request
         $html_content = view('dokumen.cetak.' . $nama_fungsi, $data)->render();
-    
-    
+
         $pdf = new Dompdf();
         $pdf->loadHtml($html_content);
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
-    
+
         $pdf_content = $pdf->output();
-        return view('dokumen.preview.' . $nama_fungsi, ['pdf_content' => $pdf_content,'pelatihan' => $pelatihan,
-        'kegiatan' => $kegiatanTahapan, 'nama_fungsi' => $nama_fungsi]);
-    
-        
-        
-        // Tampilkan PDF atau simpan PDF ke dalam file
-        // return $pdf->stream(); // Tampilkan PDF di browser
-        // atau
-        // return $pdf->save('lokasi_direktori/file.pdf'); // Simpan PDF ke dalam file
+        return view('dokumen.previewDokumenCetak', ['pdf_content' => $pdf_content,'pelatihan' => $pelatihan,
+        'kegiatan' => $kegiatanTahapan, 'nama_fungsi' => $nama_fungsi, 'kegiatan' => $kegiatanTahapan]);
 
     }
     public function fill_DokumentasiCeremonyPenutupan($id_pl, $id_kthp, Request $request)
@@ -1294,6 +1466,7 @@ class FillDokumenController extends Controller
     public function fill_SuratPengembalianPeserta($id_pl, $id_kthp, Request $request)
     {
         $request->validate([
+            'nomor_surat' => 'required',
             'req_pengembalian' => 'required|mimes:xls,xlsx',
         ]);
 

@@ -11,8 +11,8 @@
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1 class="mb-2">Form {{ $kegiatan->dokumen }}</h1>
-                        <h5 class="text-muted">{{ $pelatihan->nama }}</h5>
+                        <h1 class="mb-2">{{ $kegiatan->dokumen }}</h1>
+                        <h5 class="text-muted">Pelatihan {{ $pelatihan->nama }}</h5>
                     </div>
                 </div>
             </div>
@@ -21,13 +21,22 @@
                     <div class="card widget">
                         <div class="card card-body">
                             <div class="widget-stats-container">
-                                <form action="{{ route('fill-'. $nama_fungsi, ['id_pl' => $pelatihan->id, 'id_kthp' => $kegiatan->id]) }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('fill-'. $nama_fungsi, ['id_pl' => $pelatihan->id, 'id_kthp' => $kegiatan->id]) }}" method="POST" enctype="multipart/form-data" id="form_pembukaan">
                                     @csrf
                                     <div class="mb-4">
                                         <label for="tanggal" class="form-label">Tanggal Pelaksanaan</label>
-                                        <input id="tanggal" class="form-control flatpickr1" type="text" placeholder="Select Date.." name="tanggal">
+                                        <input id="tanggal" class="form-control flatpickr1" type="text" placeholder="Pilih tanggal.." name="tanggal">
                                     </div>
-                                    <br>
+                                    <div class="mb-4">
+                                        <label for="kepala_bpsdm" class="form-label">Nama Plt. Kepala Badan Pengembangan SDM</label>
+                                        <input type="text" class="form-control" id="kepala_bpsdm" name="kepala_bpsdm">
+                                    </div> 
+                                    <div class="mb-4">
+                                        <div class="form-group">
+                                            <label for="tujuan">Tujuan</label>
+                                            <textarea class="form-control" id="tujuan" form="form_pembukaan" rows="5" name="tujuan"></textarea>
+                                        </div>
+                                    </div> 
                                     {{-- <div class="mb-4">
                                         <label for="metode_pembelajaran">Model Rapat</label>
                                         <input type="text" id="metode_pembelajaran" name="metode_pembelajaran">
@@ -36,6 +45,15 @@
                                     <div class="mb-4">
                                         <label for="req_laporanPembukaan" class="form-label">Upload Requirement</label>
                                         <input type="file" class="form-control" id="req_laporanPembukaan" name="req_laporanPembukaan" accept=".xls, .xlsx">
+                                    </div>
+                                    <p>Download template berikut untuk mengisi requirement: 
+                                        <a href="{{ route('download-template', ['file' => 'req_laporanPembukaan']) }}">Unduh template</a>
+                                    </p>
+                                    <div class="mb-4">
+                                        <div class="form-group">
+                                            <label for="pantun">Pantun Penutup</label>
+                                            <textarea class="form-control" id="pantun" form="form_pembukaan" rows="4" name="pantun"></textarea>
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <button class="btn btn-success float-end" type="submit">Cetak surat</button>

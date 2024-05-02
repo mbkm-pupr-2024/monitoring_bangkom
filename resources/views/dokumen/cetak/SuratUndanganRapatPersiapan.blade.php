@@ -21,12 +21,15 @@
   td{
     word-wrap: break-word;
   }
-  @media print {
+  /* @media print {
     td {
       word-wrap: break-word;
       vertical-align: top !important;
     }
-  }
+  } */
+  p{
+      text-align: justify
+    }
 </style>
 
 <body>
@@ -102,7 +105,7 @@
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
-                <td></td>
+                <td>{{ $request->nomor_surat }}</td>
             </tr>
             <tr>
                 <td>Sifat</td>
@@ -117,7 +120,7 @@
             <tr>
                 <td>Hal</td>
                 <td>:</td>
-                <td style="word-wrap: break-word;vertical-align:top">Undangan Rapat Persiapan {{ $pelatihan->nama }}</td>
+                <td style="word-wrap: break-word;vertical-align:top">Undangan Rapat Persiapan Pelatihan {{ $pelatihan->nama }}</td>
             </tr>
         </table>
       </div>
@@ -125,7 +128,7 @@
         <p>Yth. <b>Bapak/Ibu</b><br>(Daftar Terlampir)<br>di Tempat</p>
 
         <p style="text-indent: 50px; line-height: 1.5;">
-          Menindaklanjuti surat Kepala Pusat Pengembangan Kompetensi Jalan, Perumahan Dan Pengembangan Infrastruktur Wilayah Nomor SM 0201-Mj/477 tanggal 18 April 2023 hal Rencana Pengembangan Kompetensi Bidang JPW T.A. 2024, dengan hormat kami sampaikan bahwa Balai Pengembangan Kompetensi Wilayah VI Surabaya akan menyelenggarakan {{ $pelatihan->nama }} pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }}. Sehubungan dengan hal tersebut dengan hormat kami mohon perkenan Bapak/Ibu untuk menghadiri rapat persiapan {{ $pelatihan->nama }} yang akan diselenggarakan pada:</p>
+          Menindaklanjuti surat Kepala Pusat Pengembangan Kompetensi Jalan, Perumahan Dan Pengembangan Infrastruktur Wilayah Nomor SM 0201-Mj/477 tanggal 18 April 2023 hal Rencana Pengembangan Kompetensi Bidang JPW T.A. 2024, dengan hormat kami sampaikan bahwa Balai Pengembangan Kompetensi Wilayah VI Surabaya akan menyelenggarakan Pelatihan {{ $pelatihan->nama }} pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }}. Sehubungan dengan hal tersebut dengan hormat kami mohon perkenan Bapak/Ibu untuk menghadiri rapat persiapan Pelatihan {{ $pelatihan->nama }} yang akan diselenggarakan pada:</p>
         <table style="text-indent: 10px;line-height: 1.5;">
           <tr>
             <td width="200px" >Hari/tanggal</td>
@@ -135,7 +138,7 @@
           <tr>
             <td>Waktu</td>
             <td>:</td>
-            <td>Pukul {{ $request->waktu }} s.d selesai</td>
+            <td>Pukul {{ $request->waktu }} WIB s.d selesai</td>
           </tr>
           <tr>
             <td>Media</td>
@@ -162,7 +165,7 @@
     <ol>
       @foreach($data as $item)
         @if (!$loop->first && $item['tembusan'] != null)
-          <li>{{ $item['tembusan'] }}</li>
+          <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
         @endif
       @endforeach
     </ol>
@@ -190,7 +193,7 @@
   <ol>
     @foreach($data as $item)
       @if (!$loop->first && $item['tim_pusbangkom'] != null)
-        <li>{{ $item['tim_pusbangkom'] }}</li>
+        <li>{{ $item['tim_pusbangkom'] }}{{ $loop->last? '.' : ';' }}</li>
       @endif
     @endforeach
   </ol>
@@ -199,7 +202,7 @@
   <ol>
     @foreach($data as $item)
       @if (!$loop->first && $item['tim_bapekom'] != null)
-        <li>{{ $item['tim_bapekom'] }}</li>
+        <li>{{ $item['tim_bapekom'] }}{{ $loop->last? '.' : ';' }}</li>
       @endif
     @endforeach
   </ol>

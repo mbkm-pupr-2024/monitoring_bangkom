@@ -145,7 +145,7 @@
                                 <div class="d-flex align-items-center">
                                     @php
                                         $split = explode('.', $ditolak->kegiatan_tahapan->file);
-                                        $ext = count($split) > 1 ? $split[1] : ''; // Periksa jika ekstensi ada sebelum mengakses indeks
+                                        $ext = count($split) > 1 ? $split[1] : ''; 
                                     @endphp
                                     @if ($ext == 'pdf' || $ext == 'doc')
                                         <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
@@ -156,7 +156,35 @@
                                     @endif
                                     <a href="#" class="file-manager-recent-item-title flex-fill">{{ $ditolak->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $ditolak->status->pelatihan->nama }}</span>
+                                    
                                 </div>
+                                <br>
+                                    <p><b>Pesan:</b> <br>{{ $ditolak->komentar }}</p>
+                                    @php
+                                        $split_dokumen = explode('.', $ditolak->file);
+                                        $split_dokumen2 = explode('_', $split_dokumen[0]);
+                                        $pelatihan_id = $split_dokumen2[0];
+                                        $kegiatan_id = $split_dokumen2[1];
+                                    @endphp
+                                    <script>
+                                        function recreate_button_{{ $ditolak->id }}() {
+                                                Swal.fire({
+                                                title: "Konfirmasi Pembuatan Ulang Dokumen",
+                                                text: "Jika Anda membuat ulang, maka file ini akan dihapus otomatis oleh sistem. Apakah Anda yakin ingin membuat ulang dokumen ini? ",
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonText: "Batal",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Buat ulang"
+                                                }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    window.location.href = "/form-dokumen-pelatihan-{{ $pelatihan_id }}/{{ $kegiatan_id }}";
+                                                }
+                                                });
+                                            }
+                                    </script>
+                                    <a onclick="recreate_button_{{ $ditolak->id }}();" type="button" class="btn btn-primary btn-small float-end">Buat ulang</a>
                             </div>
                         </div>
                     @empty

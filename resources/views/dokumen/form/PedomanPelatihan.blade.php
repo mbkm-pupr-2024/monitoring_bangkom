@@ -7,8 +7,8 @@
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1 class="mb-2">Form {{ $kegiatan->dokumen }}</h1>
-                        <h5 class="text-muted">{{ $pelatihan->nama }}</h5>
+                        <h1 class="mb-2">{{ $kegiatan->dokumen }}</h1>
+                        <h5 class="text-muted">Pelatihan {{ $pelatihan->nama }}</h5>
                     </div>
                 </div>
             </div>
@@ -20,6 +20,17 @@
                                 <form action="{{ route('fill-'. $nama_fungsi, ['id_pl' => $pelatihan->id, 'id_kthp' => $kegiatan->id]) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="mb-4">
+                                        <label for="pedomanPelatihan" class="form-label">Upload Pedoman Pelatihan</label>
+                                        <input type="file" class="form-control" id="pedomanPelatihan" name="pedomanPelatihan" accept=".pdf, .docx">
+                                    </div>
+                                    <br>
+                                    <div class="mb-4">
+                                        <button class="btn btn-success float-end" type="submit">Upload dokumen</button>
+                                    </div>
+                                </form>
+                                {{-- <form action="{{ route('fill-'. $nama_fungsi, ['id_pl' => $pelatihan->id, 'id_kthp' => $kegiatan->id]) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="mb-4">
                                         <label for="daftar_peserta" class="form-label">Upload Daftar Peserta</label>
                                         <input type="file" class="form-control" id="daftar_peserta" name="daftar_peserta" accept=".xls, .xlsx">
                                     </div>
@@ -27,7 +38,7 @@
                                     <div class="mb-4">
                                         <button class="btn btn-success float-end" type="submit">Cetak surat</button>
                                     </div>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </div>

@@ -25,6 +25,10 @@
   <link href="{{ asset('assets/plugins/perfectscroll/perfect-scrollbar.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/plugins/pace/pace.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/plugins/highlight/styles/github-gist.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/plugins/flatpickr/flatpickr.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/css/timeline.css') }}">
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -41,60 +45,149 @@
 <body>
     <div class="app menu-off-canvas align-content-stretch d-flex flex-wrap">
         <div class="app-container">
-
-                                <div class="example-container">
-                                    <div class="example-content">
-                                        <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                                            <div class="carousel-indicators">
-                                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
-                                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-                                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
-                                            </div>
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active" data-bs-interval="10000">
-                                                    <svg class="placeholder-img placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: First slide" preserveaspectratio="xMidYMid slice" focusable="false">
-                                                        <title>Placeholder</title>
-                                                        <rect width="100%" height="100%" fill="#f5f5f5"></rect><text x="50%" y="50%" fill="#aaa" dy=".3em">First slide</text>
-                                                    </svg>
-                                        
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h5>First slide label</h5>
-                                                        <p>Some representative placeholder content for the first slide.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item" data-bs-interval="2000">
-                                                    <svg class="placeholder-img placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Second slide" preserveaspectratio="xMidYMid slice" focusable="false">
-                                                        <title>Placeholder</title>
-                                                        <rect width="100%" height="100%" fill="#eee"></rect><text x="50%" y="50%" fill="#bbb" dy=".3em">Second slide</text>
-                                                    </svg>
-                                        
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h5>Second slide label</h5>
-                                                        <p>Some representative placeholder content for the second slide.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <svg class="placeholder-img placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveaspectratio="xMidYMid slice" focusable="false">
-                                                        <title>Placeholder</title>
-                                                        <rect width="100%" height="100%" fill="#e5e5e5"></rect><text x="50%" y="50%" fill="#999" dy=".3em">Third slide</text>
-                                                    </svg>
-                                        
-                                                    <div class="carousel-caption d-none d-md-block">
-                                                        <h5>Third slide label</h5>
-                                                        <p>Some representative placeholder content for the third slide.</p>
-                                                    </div>
+            <div class="example-container">
+                    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            @foreach ($pelatihans as $pelatihan)
+                                @if ($loop->first)
+                                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="{{ $loop->index }}" class="active" aria-label="Slide {{ $loop->iteration }}" aria-current="true"></button>
+                                @else
+                                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="{{ $loop->index }}" aria-label="Slide {{ $loop->iteration }}" class=""></button>
+                                @endif
+                            @endforeach
+                        </div>
+                        <div class="carousel-inner">
+                            @foreach ($pelatihans as $pelatihan)
+                                @if ($loop->first)
+                                    <div class="carousel-item active" data-bs-interval="2000">
+                                        <div class="card">
+                                            <div class="app-auth-container-slides">
+                                                <div class="logo">
+                                                    <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
                                                 </div>
                                             </div>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
+                                            <div class="main-timeline-slides">
+                                                <ul class="ul-timeline-slides">
+                                                    @foreach ($tahapans as $tahapan)
+                                                        @if ($loop->first)
+                                                            <li class="li-timeline-slides">
+                                                                <i class="material-icons-outlined icon-timeline-slides uil-timeline-slides">{{ $tahapan->icon}}</i>
+                                                                @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
+                                                                    <a style="pointer:" class="progress-timeline-slides first-timeline-slides active">
+                                                                        <i class="material-icons">check</i>
+                                                                @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
+                                                                    <a class="progress-timeline-slides first-timeline-slides active">
+                                                                        <i class="material-icons">sync</i>
+                                                                @else
+                                                                    <a class="progress-timeline-slides first-timeline-slides">
+                                                                        <p class="p-timeline-slides">{{ $loop->iteration }}</p>
+                                                                @endif
+                                                                    </a>
+                                                                    {{-- <i class="uil-timeline-slides uil-check"></i> --}}
+                                                                <p class="text-timeline-slides">{{ $tahapan->judul }}</p>
+                                                            </li>
+                                                        @else
+                                                        <li class="li-timeline-slides">
+                                                            <i class="material-icons-outlined icon-timeline-slides uil-timeline-slides">{{ $tahapan->icon}}</i>
+                                                            @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active">
+                                                                    <i class="material-icons">check</i>
+                                                            @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active">
+                                                                    <i class="material-icons">sync</i>
+                                                            @else
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline">
+                                                                    <p class="p-timeline-slides">{{ $loop->iteration }}</p>
+                                                            @endif
+                                                                    {{-- <i class="uil-timeline-slides uil-check"></i> --}}
+                                                                </a>
+                                                            <p class="text-timeline-slides">{{ $tahapan->judul }}</p>
+                                                        </li>
+                                                        @endif
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        
+                                            <br><br><br><br><br><br>
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>{{ $pelatihan->nama }}</h5>
+                                                <p>{{ $pelatihan->model_pelatihan->nama }}.</p>
+                                            </div>
                                         </div>
                                     </div>
+                                @else
+                                    <div class="carousel-item" data-bs-interval="2000">
+                                        <div class="card">
+                                            <div class="app-auth-container-slides">
+                                                <div class="logo">
+                                                    <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
+                                                </div>
+                                            </div>
+                                            <div class="main-timeline-slides">
+                                                <ul class="ul-timeline-slides">
+                                                    @foreach ($tahapans as $tahapan)
+                                                        @if ($loop->first)
+                                                            <li class="li-timeline-slides">
+                                                                <i class="material-icons-outlined icon-timeline-slides uil-timeline-slides">{{ $tahapan->icon}}</i>
+                                                                @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
+                                                                    <a class="progress-timeline-slides first-timeline-slides active">
+                                                                        <i class="material-icons">check</i>
+                                                                @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
+                                                                    <a class="progress-timeline-slides first-timeline-slides active">
+                                                                        <i class="material-icons">sync</i>
+                                                                @else
+                                                                    <a class="progress-timeline-slides first-timeline-slides">
+                                                                        <p class="p-timeline-slides">{{ $loop->iteration }}</p>
+                                                                @endif
+                                                                    </a>
+                                                                    {{-- <i class="uil-timeline-slides uil-check"></i> --}}
+                                                                <p class="text-timeline-slides">{{ $tahapan->judul }}</p>
+                                                            </li>
+                                                        @else
+                                                        <li class="li-timeline-slides">
+                                                            <i class="material-icons-outlined icon-timeline-slides uil-timeline-slides">{{ $tahapan->icon}}</i>
+                                                            @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active">
+                                                                    <i class="material-icons">check</i>
+                                                            @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active">
+                                                                    <i class="material-icons">sync</i>
+                                                            @else
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline">
+                                                                    <p class="p-timeline-slides">{{ $loop->iteration }}</p>
+                                                            @endif
+                                                                    {{-- <i class="uil-timeline-slides uil-check"></i> --}}
+                                                                </a>
+                                                            <p class="text-timeline-slides">{{ $tahapan->judul }}</p>
+                                                        </li>
+                                                        @endif
+                                                        
+                                                
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            <br><br><br><br><br><br>
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5>{{ $pelatihan->nama }}</h5>
+                                                <p>{{ $pelatihan->model_pelatihan->nama }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                
+                            @endforeach
+                            
+                        </div>
+                        <button style="margin-top: -250px;margin-left:-50px" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button style="margin-top: -250px;margin-right:-50px" class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    
+                </div>
                   
             
         </div>

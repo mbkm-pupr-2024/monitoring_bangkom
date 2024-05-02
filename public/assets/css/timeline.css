@@ -155,3 +155,190 @@
         font-size: 16px;
     }
 }
+
+
+
+
+
+
+
+////////////////////////////////////////////////
+.main-timeline-slides{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.head-timeline-slides{
+    text-align: center;
+}
+.head_1-timeline-slides{
+    font-size: 25px;
+    font-weight: 600;
+    color: #333;
+}
+.head_2-timeline-slides{
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 3px;
+}
+.ul-timeline-slides{
+    display: flex;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    /* overflow-x: auto;  */
+}
+/* Custom scrollbar */
+.main-timeline-slides::-webkit-scrollbar {
+    width: 15px; 
+    border-radius: 5px; 
+    background-color: transparent; 
+}
+.main-timeline-slides::-webkit-scrollbar-track {
+    width: 15px;
+    border-radius: 5px;
+    background-color: #e3e3fd;
+	box-shadow: inset 0 0 6px #3a74cf;
+}
+
+.main-timeline-slides::-webkit-scrollbar-thumb {
+    background-color: linear-gradient(45deg, #ff4732, #7375f4);
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.main-timeline-slides::-webkit-scrollbar-thumb:hover {
+    background-color: #6190d9; /* Warna thumb saat hover */
+}
+.ul-timeline-slides .li-timeline-slides{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ul-timeline-slides .li-timeline-slides .icon-timeline-slides{
+    font-size: 30px;
+    color: #3a74cf;
+    margin: 0 45px;
+}
+.ul-timeline-slides .li-timeline-slides .text-timeline-slides{
+    font-size: 12px;
+	text-align: center;
+	width: 125px;
+    font-weight: 600;
+    color: #222349;
+}
+
+/* Progress Div Css  */
+
+.ul-timeline-slides .li-timeline-slides .progress-timeline-slides{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(68, 68, 68, 0.781);
+    margin: 14px 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+}
+.progress-timeline-slides::after{
+    content: " ";
+    position: absolute;
+    width: 95px;
+    height: 5px;
+    background-color: rgba(68, 68, 68, 0.781);
+    right: 30px;
+}
+.first-timeline-slides::after{
+    width: 0;
+    height: 0;
+}
+.ul-timeline-slides .li-timeline-slides .progress-timeline-slides .uil-timeline-slides{
+    display: none;
+}
+.ul-timeline-slides .li-timeline-slides .progress-timeline-slides .p-timeline-slides{
+    font-size: 13px;
+	margin-top: 5px;
+}
+
+/* Active Css  */
+
+.ul-timeline-slides .li-timeline-slides .active{
+    background-color: #3468ba;
+    display: grid;
+    place-items: center;
+}
+.li-timeline-slides .active::after{
+    background-color: #3468ba;
+}
+.ul-timeline-slides .li-timeline-slides .active .p-timeline-slides::after{
+    display: none;
+}
+.ul-timeline-slides .li-timeline-slides .active .uil-slides{
+    font-size: 15px;
+    display: flex;
+}
+
+/* Responsive Css  */
+
+@media (max-width: 980px) {
+    .ul-timeline-slides{
+        flex-direction: column;
+    }
+    .ul-timeline-slides .li-timeline-slides{
+        flex-direction: row;
+    }
+    .ul-timeline-slides .li-timeline-slides .progress-timeline-slides{
+        margin: 0 30px;
+    }
+    .progress-timeline-slides::after{
+        width: 5px;
+        height: 55px;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+    }
+    .first-timeline-slides::after{
+        height: 0;
+    }
+    .ul-timeline-slides .li-timeline-slides .icon-timeline-slides{
+        margin: 15px 0;
+    }
+}
+
+@media (max-width:600px) {
+    .head-timeline-slides .head_1-timeline-slides{
+        font-size: 24px;
+    }
+    .head-timeline-slides .head_2-timeline-slides{
+        font-size: 16px;
+    }
+}
+
+
+.app-auth-container-slides {
+    width: 650px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 80px;
+}
+.app-auth-container-slides .logo a {
+    display: flex;
+    padding-left: 70px;
+    background: url('../images/logo.jpg') no-repeat;
+    height: 50px;
+    background-size: 50px;
+    align-items: center;
+    text-decoration: none;
+    color: #40475c;
+    font-size: 21px;
+    font-weight: bold;
+}

@@ -33,7 +33,6 @@
   @section('style')
   @show
 
-
   <!-- Theme Styles -->
   <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/css/main_tamu.css') }}" rel="stylesheet">
@@ -77,9 +76,10 @@
                 <li class="nav-item dropdown hidden-on-mobile">
                   <a class="nav-link dropdown-toggle" href="#" id="addDropdownLink" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="material-icons">add</i>
+                    <i class="material-icons">apps</i>
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="addDropdownLink">
+                    <li><a class="dropdown-item" href="/kelola-pengguna">Kelola Pengguna</a></li>
                     <li><a class="dropdown-item" href="/kelola-jenis-pelatihan">Kelola Jenis Pelatihan</a></li>
                     <li><a class="dropdown-item" href="/kelola-bidang-pelatihan">Kelola Bidang Pelatihan</a></li>
                     <li><a class="dropdown-item" href="/kelola-model-pelatihan">Kelola Model Pelatihan</a></li>
@@ -89,8 +89,19 @@
               </ul>
             </div>
             
-            {{-- <div class="d-flex"> --}}
-              {{-- <ul class="navbar-nav"> --}}
+            {{-- <div class="d-flex ">
+              <ul class="navbar-nav ">
+                <li class="nav-item dropdown hidden-on-mobile mr-3">
+                  <a class="nav-link dropdown-toggle" href="#" id="addDropdownLink" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="material-icons">apps</i> Kelola 
+                  </a>
+                  <ul class="dropdown-menu ml-3" aria-labelledby="addDropdownLink">
+                    <li><a class="dropdown-item" href="/kelola-jenis-pelatihan">Jenis Pelatihan</a></li>
+                    <li><a class="dropdown-item" href="/kelola-bidang-pelatihan">Bidang Pelatihan</a></li>
+                    <li><a class="dropdown-item" href="/kelola-model-pelatihan">Model Pelatihan</a></li>
+                  </ul>
+                </li> --}}
                {{-- <li class="nav-item">
                   <a class="nav-link toggle-search" href="/search"><i class="material-icons">search</i></a>
                 </li>
@@ -217,7 +228,8 @@
     <script src="{{ asset('assets/js/main_tammu.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/pages/dashboard.js') }}"></script>
-    
+
+
     @section('script')
     {{-- <script>
       window.addEventListener('pageshow', function(event) {

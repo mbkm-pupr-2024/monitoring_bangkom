@@ -15,7 +15,7 @@ class JadwalPelatihanController extends Controller
     public function jadwalPelatihan()
     {
         $jadwal_pelatihan = PelatihanModel::with('jenis_pelatihan','bidang_pelatihan','model_pelatihan','status')->whereHas('status', function ($query) {
-            $query->where('ket_status', '=', 'Terjadwal'); })->get();
+            $query->where('ket_status', '=', 'Terjadwal'); })->orderBy('tanggal_mulai','asc')->get();
         return view('jadwal_pelatihan.jadwalPelatihan',['jadwals' => $jadwal_pelatihan]);
     }
     public function jadwalPelatihan_tambah()

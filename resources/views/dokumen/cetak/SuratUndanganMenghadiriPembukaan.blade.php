@@ -20,12 +20,15 @@
   td{
     word-wrap: break-word;
   }
-  @media print {
+  /* @media print {
     td {
       word-wrap: break-word;
       vertical-align: top !important;
     }
-  }
+  } */
+  p{
+      text-align: justify
+    }
 </style>
 
 <body>
@@ -116,7 +119,7 @@
             <tr>
                 <td>Hal</td>
                 <td>:</td>
-                <td style="word-wrap: break-word;vertical-align:top">Permohonan Menghadiri Pembukaan {{ $pelatihan->nama }}</td>
+                <td style="word-wrap: break-word;vertical-align:top">Permohonan Menghadiri Pembukaan Pelatihan {{ $pelatihan->nama }}</td>
             </tr>
         </table>
       </div>
@@ -124,7 +127,7 @@
         <p><b>Yth. {{ $request->nama_yth }}</b> <br>di Tempat</p>
 
         <p style="text-indent: 50px; line-height: 1.5;">
-          Sehubungan dengan {{ $pelatihan->nama }} yang akan dilaksanakan pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }} secara {{ $pelatihan->model_pelatihan->nama }} di Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya, mohon kesediaan {{ $request->kata_ganti }} untuk berkenan menghadiri pembukaan kegiatan dimaksud yang akan dilaksanakan pada:
+          Sehubungan dengan Pelatihan {{ $pelatihan->nama }} yang akan dilaksanakan pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }} secara {{ $pelatihan->model_pelatihan->nama }} di Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya, mohon kesediaan {{ $request->kata_ganti }} untuk berkenan menghadiri pembukaan kegiatan dimaksud yang akan dilaksanakan pada:
         </p>
         <table style="text-indent: 10px;line-height: 1.5;">
           <tr>
@@ -161,7 +164,7 @@
     <p><b>Tembusan:</b></p>
     <ol>
         @foreach ($data as $item)
-            <li>{{ $item['tembusan'] }}</li>
+            <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
         @endforeach
     </ol>
   </div>

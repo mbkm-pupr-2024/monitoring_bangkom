@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('role', ['admin', 'supervisi', 'petugas']);
             $table->string('nip');
             $table->string('nama_lengkap');
-            $table->string('username');
+            $table->string('username')->nullable();
             $table->string('password');
             $table->timestamps();
         });

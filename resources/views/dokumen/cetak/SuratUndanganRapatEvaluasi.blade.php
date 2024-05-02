@@ -104,7 +104,7 @@
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
-                <td></td>
+                <td>{{ $request->nomor_surat }}</td>
             </tr>
             <tr>
                 <td>Sifat</td>
@@ -120,7 +120,7 @@
                 <td>Hal</td>
                 <td>:</td>
                 <td style="word-wrap: break-word;vertical-align:top">Undangan Rapat Evaluasi Kelulusan Peserta 
-                 {{ $pelatihan->nama }}({{ $pelatihan->model_pelatihan->nama }})</td>
+                 Pelatihan {{ $pelatihan->nama }}({{ $pelatihan->model_pelatihan->nama }})</td>
             </tr>
         </table>
       </div>
@@ -128,7 +128,7 @@
         <p>Yth. <b>Bapak/Ibu<br><i>(Daftar Terlampir)</i></b><br>di Tempat</p>
 
         <p style="text-indent: 50px; line-height: 1.5;">
-          Berdasarkan Surat Edaran Kepala Badan Pengembangan Sumber Daya Manusia Kementerian PUPR nomor 04/SE/KM/2023 tentang Pedoman Umum Penyelenggaraan Pengembangan Kompetensi dalam Bentuk Pelatihan di Kementerian Pekerjaan Umum dan Perumahan Rakyat, hasil evaluasi peserta digunakan sebagai dasar penentuan kelulusan. Sehubungan dengan hal tersebut, dengan hormat kami mohon perkenan Bapak/Ibu untuk menghadiri rapat evaluasi kelulusan peserta <b>{{ ucwords($pelatihan->nama) }}</b> yang akan diselenggarakan pada:</p>
+          Berdasarkan Surat Edaran Kepala Badan Pengembangan Sumber Daya Manusia Kementerian PUPR nomor 04/SE/KM/2023 tentang Pedoman Umum Penyelenggaraan Pengembangan Kompetensi dalam Bentuk Pelatihan di Kementerian Pekerjaan Umum dan Perumahan Rakyat, hasil evaluasi peserta digunakan sebagai dasar penentuan kelulusan. Sehubungan dengan hal tersebut, dengan hormat kami mohon perkenan Bapak/Ibu untuk menghadiri rapat evaluasi kelulusan peserta <b>Pelatihan {{ ucwords($pelatihan->nama) }}</b> yang akan diselenggarakan pada:</p>
         <table style="text-indent: 10px;line-height: 1.5;">
           <tr>
             <td width="200px" >Hari/tanggal</td>
@@ -165,7 +165,7 @@
     <ol>
       @foreach($data as $item)
         @if (!$loop->first && $item['tembusan'] != null)
-          <li>{{ $item['tembusan'] }}</li>
+          <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
         @endif
     @endforeach
     </ol>
@@ -193,7 +193,7 @@
   <ol>
     @foreach($data as $item)
       @if (!$loop->first && $item['tim_pengajar'] != null)
-        <li>{{ $item['tim_pengajar'] }}</li>
+        <li>{{ $item['tim_pengajar'] }}{{ $loop->last? '.' : ';' }}</li>
       @endif
     @endforeach
   </ol>
@@ -202,7 +202,7 @@
   <ol>
     @foreach($data as $item)
       @if (!$loop->first && $item['tim_pusbangkom'] != null)
-        <li>{{ $item['tim_pusbangkom'] }}</li>
+        <li>{{ $item['tim_pusbangkom'] }}{{ $loop->last? '.' : ';' }}</li>
       @endif
     @endforeach
   </ol>
@@ -211,7 +211,7 @@
   <ol>
     @foreach($data as $item)
       @if (!$loop->first && $item['tim_bapekom'] != null)
-        <li>{{ $item['tim_bapekom'] }}</li>
+        <li>{{ $item['tim_bapekom'] }}{{ $loop->last? '.' : ';' }}</li>
       @endif
     @endforeach
   </ol>

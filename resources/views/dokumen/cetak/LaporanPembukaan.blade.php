@@ -40,8 +40,6 @@
         text-align: justify;
     
     }
-
-
 </style>
 
 <body>
@@ -102,33 +100,31 @@
     <div class="isi">
       <div class="judul">
         <h2 style="text-align: center;">LAPORAN PERSIAPAN PELAKSANAAN</h2>
-        <h3 style="text-align: center;margin-top:-25px;">PEMBUKAAN {{ strtoupper($pelatihan->nama) }} SECARA {{ strtoupper($pelatihan->model_pelatihan->nama) }}</h3>
+        <h3 style="text-align: center;margin-top:-25px;">PEMBUKAAN PELATIHAN{{ strtoupper($pelatihan->nama) }} SECARA {{ strtoupper($pelatihan->model_pelatihan->nama) }}</h3>
         
         <h4 style="text-align: center;">=============================================================================</h4>
       </div>
       <div class="isi-surat">
-        <p style="margin-bottom: 20px; text-align:right;">Surabaya, {{ tanggal_indo($request->tanggal) }}
+        <p style="margin-bottom: 20px; text-align:right;">Surabaya, {{ hari_indo($request->tanggal) }} {{ tanggal_indo($request->tanggal) }}
         </p>
         <p>
             <b>Kepada yang selalu kami banggakan Plt. Kepala Badan Pengembangan SDM:</b>
             <br>
-            @foreach($data['kepala_bpsdm'] as $item)
-                {{ $item }}
-            @endforeach
+            {{ $pelatihan->kepala_bpsdm }}
         </p>
         <p>
             <b>Kepada Yth :</b>
             <ul>
                 @foreach($data['kepada_yth'] as $item)
-                    <li>{{ $data['kepada_yth'][$loop->index] }} <b>{{ $data['nama_yth'][$loop->index] }}</b></li>
+                    <li>{{ $data['kepada_yth'][$loop->index] }} {{ $loop->last? '.' : ';' }} <b>{{ $data['nama_yth'][$loop->index] }}</b></li>
                 @endforeach
             </ul>
         </p>
         <p>
             <b>Yang kami hormati: </b>
-            <ul type="-">
+            <ul>
                 @foreach($data['yg_dihormati'] as $item)
-                    <li>{{ $item }}</li>
+                    <li>{{ $item }}{{ $loop->last? '.' : ';' }}</li>
                 @endforeach
                 <li>Para Widyaiswara, Pengajar, Panitia dan Peserta pelatihan yang berbahagia.</li>
             </ul>
@@ -137,7 +133,7 @@
         <p>Assalamu’alaikum Wr. Wb.</p>
         <p>Selamat pagi, Salam sejahtera bagi kita semua,</p>
         <p>
-            Pertama-tama marilah kita panjatkan puji syukur kehadirat Allah SWT karena atas perkenan-Nya, pada hari ini <b>{{ hari_indo($request->tanggal) }}, {{ tanggal_indo($request->tanggal) }}</b> kita dapat hadir di sini diberikan nikmat sehat dan kesempatan, sehingga masih dapat mengikuti acara <b>Pembukaan</b> {{ ucwords($pelatihan->nama) }} yang dilaksanakan secara {{ ucwords($pelatihan->model_pelatihan->nama) }}. 
+            Pertama-tama marilah kita panjatkan puji syukur kehadirat Allah SWT karena atas perkenan-Nya, pada hari ini <b>{{ hari_indo($request->tanggal) }}, {{ tanggal_indo($request->tanggal) }}</b> kita dapat hadir di sini diberikan nikmat sehat dan kesempatan, sehingga masih dapat mengikuti acara <b>Pembukaan</b> Pelatihan {{ ucwords($pelatihan->nama) }} yang dilaksanakan secara {{ ucwords($pelatihan->model_pelatihan->nama) }}. 
         </p>
         <p>
             Perkenankanlah kami panitia melaporkan persiapan pelaksanaan penyelenggaraan pelatihan tersebut sebagai berikut :
@@ -147,15 +143,12 @@
             <li style="font-weight: bold">DASAR PELAKSANAAN</li>
                 <ol type="1"> 
                     @foreach($data['dasar_pelaksanaan'] as $item)
-                        <li>{{ $item }}</li>
+                        <li>{{ $item }}{{ $loop->last? '.' : ';' }}</li>
                     @endforeach
                 </ol>
                 <br>
             <li style="font-weight: bold">TUJUAN</li>
-                <p>{{ $pelatihan->nama }} ini dimaksudkan  
-                    @foreach($data['tujuan'] as $item)
-                        {{ $item }}
-                    @endforeach
+                <p>Pelatihan {{ $pelatihan->nama }} ini dimaksudkan {{ $request->tujuan }}
                 </p>
             <li style="font-weight: bold">WAKTU DAN TEMPAT</li>
                 <p>Pelatihan diselenggarakan tanggal <b>{{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }}</b> dilaksanakan dengan model pembelajaran {{ $pelatihan->model_pelatihan->nama }} dengan panitia di Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya.</p>
@@ -213,7 +206,7 @@
                             </tbody>
                         </table>
                     <li>MODEL PEMBELAJARAN</li>
-                        <p>Pelatihan ini dilaksanakan dengan model klasikal dengan mengunakan pola pembelajaran di kelas bertatap muka secara langsung dengan peserta. Metode penyampaian pelatihan menggunakan sistem belajar orang dewasa (andragogy) dengan pembelajaran langsung. Metode ini diharapkan akan menimbulkan peran serta secara aktif bagi peserta pelatihan. Peserta diperlakukan sebagai orang dewasa melalui komunikasi dua arah sehingga memberikan kesempatan kepada peserta untuk menyumbangkan pikiran dan pengalamannya. Pola pembelajaran pada pelatihan ini dilaksanakan secara konvesional dengan metode ceramah serta praktik yang dipandu oleh pengampu/pengajar secara langsung yang berpusat pada aktivitas peserta. </p>
+                        <p>Pelatihan ini dilaksanakan dengan model {{ $pelatihan->model_pelatihan->nama }} dengan mengunakan pola pembelajaran di kelas bertatap muka secara langsung dengan peserta. Metode penyampaian pelatihan menggunakan sistem belajar orang dewasa (andragogy) dengan pembelajaran langsung. Metode ini diharapkan akan menimbulkan peran serta secara aktif bagi peserta pelatihan. Peserta diperlakukan sebagai orang dewasa melalui komunikasi dua arah sehingga memberikan kesempatan kepada peserta untuk menyumbangkan pikiran dan pengalamannya. Pola pembelajaran pada pelatihan ini dilaksanakan secara konvesional dengan metode ceramah serta praktik yang dipandu oleh pengampu/pengajar secara langsung yang berpusat pada aktivitas peserta. </p>
                 </ol>
                 
             <li style="font-weight: bold">PENGAJAR / WIDYAISWARA</li>
@@ -222,7 +215,7 @@
                 <p>Evaluasi untuk pelatihan yang dilakukan terdiri dari :</p>
                 <ol type="1">
                     @foreach($data['evaluasi'] as $item)
-                        <li>{{ $item }}</li>
+                        <li>{{ $item }}.</li>
                     @endforeach
                 </ol>
                 <br>
@@ -230,13 +223,14 @@
                 <p>Peserta pelatihan yang dapat mengikuti seluruh program pelatihan yang telah ditetapkan akan diberikan Sertifikat Pelatihan yang ditandatangani oleh Kepala BPSDM Kementerian PUPR.</p>
         </ol>
         <p>Sebelum saya akhiri izinkan saya menyampaikan pantun terlebih dahulu :</p>
-        @foreach($data['pantun'] as $item)
-            <h4 style="line-height: 0.5">{{ $item }}</h4>
+        @foreach ($pantun as $item)
+            {{ $item }}<br>
         @endforeach
 
         <p style="text-align: justify">
-            Demikian Laporan Persiapan Penyelenggaraan {{ $pelatihan->nama }} selanjutnya mohon perkenan <b>
-                {{ $data['nama_yth'][0] }}
+            Demikian Laporan Persiapan Penyelenggaraan Pelatihan {{ $pelatihan->nama }} selanjutnya mohon perkenan 
+            <b>
+                {{ $data['kepada_yth'][0] }} : {{ $data['nama_yth'][0] }}
             </b> berkenan untuk memberikan pengarahan dan sekaligus membuka pelatihan secara resmi.
         </p>
 

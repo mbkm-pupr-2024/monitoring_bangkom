@@ -1,17 +1,11 @@
 @extends('layout.navbar')
 
 @section('style')
-<link href="{{ asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
-@endsection
-
-@section('sidebar')
-@include('layout.sidebar')
 @endsection
 
 @section('content')
 <div class="app-content">
     @if(Session::has('success'))
-        <p>ok</p>
         <script>
             Swal.fire({
                 title: '{{ Session::get('popUp_title') }}',
@@ -74,6 +68,48 @@
                                     <a class="dropdown-toggle file-manager-recent-file-actions" id="file-manager-recent-10" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="file-manager-recent-10">
                                         <li><a class="dropdown-item" href="/tinjau-dokumen/setujui-{{ $belum->id }}">Setujui</a></li>
+                                        
+                                        <script>
+                                            async function tolak_button_{{ $belum->id }}() {
+                                                const { value: text } = await Swal.fire({
+                                                    input: "textarea",
+                                                    inputLabel: "Pesan Anda",
+                                                    inputPlaceholder: "Masukkan pesan Anda...",
+                                                    inputAttributes: {
+                                                        "aria-label": "Masukkan pesan Anda"
+                                                    },
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Kirim',
+                                                    cancelButtonText: 'Batal' 
+                                                    });
+                                                    if (text) {
+                                                    window.location.href = '/tinjau-dokumen/tolak-{{ $belum->id }}?pesan=' + encodeURIComponent(text);
+                                                }
+                                            }
+                                        </script>
+                                        <li><a class="dropdown-item" onclick=" return tolak_button_{{ $belum->id }}();">Tolak</a></li>
+
+                                        {{-- <li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#tolakDokumenModal">Tolak</a></li> --}}
+
+                                        {{-- <div class="modal fade" id="tolakDokumenModal" aria-labelledby="tolakModal" style="display: none;" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="tolakModal">Kirim Penolakan</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Placeholder text for this demonstration of a vertically centered modal dialog.</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> --}}
+
+
                                         <li><a class="dropdown-item" href="/tinjau-dokumen/unduh-{{ $belum->id }}">Unduh</a></li>
                                     </ul>
                                 </div>

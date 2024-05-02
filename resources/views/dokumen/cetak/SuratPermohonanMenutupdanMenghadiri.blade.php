@@ -17,6 +17,9 @@
   * {
     font-family: 'Roboto', sans-serif;
   }
+  p{
+      text-align: justify
+    }
 </style>
 
 <body>
@@ -92,7 +95,7 @@
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
-                <td>{{ $request->nomor_Surat }}</td>
+                <td>{{ $request->nomor_surat }}</td>
             </tr>
             <tr>
                 <td>Sifat</td>
@@ -124,7 +127,7 @@
           <tr>
             <td>Waktu</td>
             <td>:</td>
-            <td>Pukul {{ $request->waktu_mulai }} s.d {{ $request->waktu_selesai }} WIB</td>
+            <td>Pukul {{ $request->waktu_mulai }} WIB s.d selesai</td>
           </tr>
           <tr>
             <td>Tempat</td>
@@ -156,7 +159,7 @@
     <p><b>Tembusan:</b></p>
     <ol>
         @foreach ($data as $item)
-            <li>{{ $item['tembusan'] }}</li>
+            <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
         @endforeach
     </ol>
   </div>

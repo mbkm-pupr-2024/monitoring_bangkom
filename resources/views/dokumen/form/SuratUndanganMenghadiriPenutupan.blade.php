@@ -7,8 +7,8 @@
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1 class="mb-2">Form {{ $kegiatan->dokumen }}</h1>
-                        <h5 class="text-muted">{{ $pelatihan->nama }}</h5>
+                        <h1 class="mb-2">{{ $kegiatan->dokumen }}</h1>
+                        <h5 class="text-muted">Pelatihan {{ $pelatihan->nama }}</h5>
                     </div>
                 </div>
             </div>
@@ -62,6 +62,10 @@
                                         <label for="req_suratUndanganMenghadiriPenutupan" class="form-label">Upload Requirement</label>
                                         <input type="file" class="form-control" id="req_suratUndanganMenghadiriPenutupan" name="req_suratUndanganMenghadiriPenutupan" accept=".xls, .xlsx">
                                     </div>
+                                    <p>Download template berikut untuk mengisi requirement: 
+                                        <a href="{{ route('download-template', ['file' => 'req_suratUndanganMenghadiriPenutup']) }}">Unduh template</a>
+                                    </p>
+                                    <br>
                                     <div class="mb-4">
                                         <button class="btn btn-success float-end" type="submit">Cetak surat</button>
                                     </div>

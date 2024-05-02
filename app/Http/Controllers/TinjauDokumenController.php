@@ -76,6 +76,15 @@ class TinjauDokumenController extends Controller
 
         return redirect()->back();
     }
+    public function tolak_dokumen($id_fl, Request $request)
+    {
+        $status = DetilStatusModel::find($id_fl);
+        $status->keterangan = 'Ditolak';
+        $status->komentar = $request->pesan;
+        $status->save();
+
+        return redirect()->back();
+    }
     
     public function unduh_dokumen($id_fl)
     {

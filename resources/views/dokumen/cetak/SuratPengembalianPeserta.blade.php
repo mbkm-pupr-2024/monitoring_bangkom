@@ -30,6 +30,9 @@
         border: 2px solid black;
         padding: 15px;
     }
+    p{
+      text-align: justify
+    }
 </style>
 
 <body> 
@@ -105,7 +108,7 @@
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
-                <td></td>
+                <td>{{ $request->nomor_surat }}</td>
             </tr>
             <tr>
                 <td>Sifat</td>
@@ -120,7 +123,7 @@
             <tr>
                 <td>Hal</td>
                 <td>:</td>
-                <td style="word-wrap: break-word;vertical-align:top">Pengembalian Peserta {{ $pelatihan->nama }}</td>
+                <td style="word-wrap: break-word;vertical-align:top">Pengembalian Peserta Pelatihan {{ $pelatihan->nama }}</td>
             </tr>
         </table>
       </div>
@@ -154,7 +157,7 @@
     <ol>
       @foreach ($data as $item)
         @if (!$loop->first && $item['tembusan'] != null)
-          <li>{{ $item['tembusan'] }}</li>
+          <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
         @endif
       @endforeach
     </ol>
@@ -182,7 +185,7 @@
   <ol>
       @foreach($data as $item)
         @if (!$loop->first && $item['unit_kerja_pengutus'] != null)
-          <li>{{ $item['unit_kerja_pengutus'] }}</li>
+          <li>{{ $item['unit_kerja_pengutus'] }}{{ $loop->last? '.' : ';' }}</li>
         @endif
       @endforeach
     </ol>
