@@ -10,8 +10,8 @@ class UserController extends Controller
 {
     public function user()
     {
-        $model = UserModel::orderBy('id')->get();
-        return view('user.modelPelatihan',['models' => $model]);
+        $user = UserModel::orderBy('id')->get();
+        return view('user.user',['users' => $user]);
     }
     public function user_tambah()
     {
@@ -20,7 +20,10 @@ class UserController extends Controller
     public function user_insert(Request $request): RedirectResponse
     {
         $request->validate([
-            'nama' => 'required',
+            'nip' => 'required',
+            'nama_lengkap' => 'required',
+            'role' => 'required',
+            'password' => 'required',
         ]);
 
         // Ambil record terakhir dari tabel
@@ -32,36 +35,36 @@ class UserController extends Controller
             $number = ($lastNumber < 999) ? $lastNumber + 1 : 1;
         }
         // Format ulang ID dengan 'JP' diikuti oleh angka yang telah diincrement
-        $newId = 'MP' . str_pad($number, 3, '0', STR_PAD_LEFT);
+        $newId = 'US' . str_pad($number, 3, '0', STR_PAD_LEFT);
 
         // Tambahkan ID yang telah diincrement ke dalam request
         $request->merge(['id' => $newId]);
 
         // Buat record baru menggunakan metode create
-        userModel::create($request->all());
+        UserModel::create($request->all());
 
-        return redirect('/kelola-model-pelatihan')->with(['success' => 'Data model Pelatihan berhasil ditambahkan', 'popUp_title' => 'Added!']);
+        return redirect('/kelola-pengguna')->with(['success' => 'Data pengguna berhasil ditambahkan', 'popUp_title' => 'Added!']);
     }
-    public function user_edit($id)
+    public function user_resetPassword($id)
     {
-        $user = userModel::find($id);
-        return view('user.user_edit', ['model' => $user]);
+        return view('user.user_resetPassword', ['user_id' => $id]);
     }
-    public function user_update(Request $request)
+    public function user_updatePassword(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
+            'password' => 'required',
         ]);
 
-        $pelatihan = userModel::find($request->id);
-        $pelatihan->update($request->all());
+        $user = UserModel::find($request->id);
+        $user->update($request->all());
 
-        return redirect('/kelola-model-pelatihan')->with(['success' => 'Data Model Pelatihan berhasil diubah', 'popUp_title' => 'Updated!']);
+        return redirect('/kelola-pengguna')->with(['success' => 'Reset password berhasil', 'popUp_title' => 'Updated!']);
     }
     public function user_delete($id)
     {
-        userModel::find($id)->delete();
+        UserModel::find($id)->delete();
 
-        return redirect('/kelola-model-pelatihan')->with(['success' => 'Data Model Pelatihan berhasil dihapus', 'popUp_title' => 'Deleted!']);
+        return redirect('/kelola-model-pelatihan')->with(['success' => 'Data pengguna berhasil dihapus', 'popUp_title' => 'Deleted!']);
     }
+
 }

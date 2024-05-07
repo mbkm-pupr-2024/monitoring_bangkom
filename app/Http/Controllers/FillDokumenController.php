@@ -53,6 +53,10 @@ class FillDokumenController extends Controller
     {
         $request->validate([
             'nomor_surat' => 'required',
+            'surat_perintah' => 'required',
+            'nomor_surat_perintah' => 'required',
+            'tanggal_surat_perintah' => 'required',
+            'hal_surat_perintah' => 'required',
             'tanggal' => 'required',
             'waktu_mulai' => 'required', 
             'zoom_id' => 'required',
@@ -393,8 +397,10 @@ class FillDokumenController extends Controller
         $request->validate([
             'nomor_surat' => 'required',
             'kata_ganti' => 'required',
-            'nomor_surat_terkait' => 'required',
-            'tanggal_surat_terkait' => 'required',
+            'surat_perintah' => 'required',
+            'nomor_surat_perintah' => 'required',
+            'tanggal_surat_perintah' => 'required',
+            'hal_surat_perintah' => 'required',
             'nama_yth' => 'required',
             'lokasi' => 'required',
             'waktu_mulai' => 'required',

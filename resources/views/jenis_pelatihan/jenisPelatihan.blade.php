@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1>Kelola Bidang Pelatihan</h1>
+                        <h1>Kelola Data Jenis Pelatihan</h1>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <a href="/kelola-bidang-pelatihan/tambah" class="btn btn-primary btn-sm float-end mb-5"><i class="material-icons-outlined">add</i> Tambah Bidang Pelatihan</a>
+                                <a href="/kelola-jenis-pelatihan/tambah" class="btn btn-primary btn-sm float-end mb-5"><i class="material-icons-outlined">add</i> Tambah Jenis Pelatihan</a>
                             </div>
                         <div class="row">
                         <table id="datatable1" class="display" style="width:100%">
@@ -85,12 +85,6 @@
                                 @endphp
                                 @endforeach
                             </tbody>
-                            {{-- <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Bidang Pelatihan</th>
-                                </tr>
-                            </tfoot> --}}
                         </table>
                     </div>
                 </div>

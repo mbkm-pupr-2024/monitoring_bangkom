@@ -42,16 +42,25 @@
                                           </div>
                                     </div>
                                     <h6>Menindaklanjuti:</h6>
+                                    <div class="mb-4">
+                                        <label for="surat_perintah" class="form-label">Surat Perintah</label>
+                                        <input type="text" class="form-control" id="surat_perintah" name="surat_perintah">
+                                    </div>
                                     <div class="row">
                                         <div class="col-6">
-                                            <label for="nomor_surat_terkait" class="form-label">Nomor Surat</label>
-                                            <input type="text" class="form-control" id="nomor_surat_terkait" name="nomor_surat_terkait">
+                                            <label for="nomor_surat_perintah" class="form-label">Nomor Surat Perintah</label>
+                                            <input type="text" class="form-control" id="nomor_surat_perintah" name="nomor_surat_perintah">
                                         </div>
                                         <div class="col-6">
-                                            <label for="tanggal_surat_terkait" class="form-label">Tanggal Surat</label>
-                                            <input id="tanggal_surat_terkait" class="form-control flatpickr1" type="text" placeholder="Pilih tanggal.." name="tanggal_surat_terkait">
+                                            <label for="tanggal_surat_perintah" class="form-label">Tanggal Surat Perintah</label>
+                                            <input id="tanggal_surat_perintah" class="form-control flatpickr1" type="text" placeholder="Pilih tanggal.." name="tanggal_surat_perintah">
                                         </div> 
                                     </div>
+                                    <br>
+                                    <div class="mb-4">
+                                        <label for="hal_surat_perintah" class="form-label">Hal</label>
+                                        <input type="text" class="form-control" id="hal_surat_perintah" name="hal_surat_perintah">
+                                    </div>                 
                                     <div class="mb-4">
                                         <label for="nama_yth" class="form-label">Penerima</label>
                                         <input type="text" class="form-control" id="nama_yth" name="nama_yth">

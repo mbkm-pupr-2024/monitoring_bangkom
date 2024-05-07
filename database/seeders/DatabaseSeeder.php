@@ -822,7 +822,7 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('tahapan')->insert([
             'id'=> 'TP009',
-            'judul' => 'Pasca Penutupan Pelatihan',
+            'judul' => 'Pengembalian Peserta',
             'icon' => 'event_note',
             'created_at' => now(),
             'updated_at' => now(),

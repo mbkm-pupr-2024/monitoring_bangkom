@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1>Kelola Pengguna</h1>
+                        <h1>Kelola Data Pengguna</h1>
                     </div>
                 </div>
             </div>
@@ -32,6 +32,8 @@
                                     <th>NIP</th>
                                     <th>Nama Lengkap</th>
                                     <th>Username</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,10 +46,10 @@
                                     <td>{{ $user->role }}</td>
                                     <td>
                                         <script>
-                                            function edit_button_{{ $user->id }}() {
+                                            function reset_button_{{ $user->id }}() {
                                                 Swal.fire({
-                                                title: "Konfirmasi Pengeditan",
-                                                text: "Apakah Anda yakin ingin mengubah data ini? ",
+                                                title: "Konfirmasi Reset Password",
+                                                text: "Apakah Anda yakin ingin melakukan reset password data ini? ",
                                                 icon: "warning",
                                                 showCancelButton: true,
                                                 confirmButtonColor: "#3085d6",
@@ -56,7 +58,7 @@
                                                 confirmButtonText: "Edit"
                                                 }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    window.location.href = "/kelola-user/edit/{{ $user->id }}";
+                                                    window.location.href = "/kelola-pengguna/reset-password/{{ $user->id }}";
                                                 }
                                                 });
                                             }
@@ -72,12 +74,12 @@
                                                 confirmButtonText: "Hapus"
                                                 }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    window.location.href = "/kelola-user/hapus/{{ $user->id }}";
+                                                    window.location.href = "/kelola-pengguna/hapus/{{ $user->id }}";
                                                 }
                                                 });
                                             }
                                         </script>
-                                        <a onclick="edit_button_{{ $user->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>edit</i></a> 
+                                        <a onclick="reset_button_{{ $user->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>lock</i></a> 
                                         <a onclick="hapus_button_{{ $user->id }}();" class="btn btn-danger btn-sm"><i class="material-icons-outlined center" sty>delete</i></a>
                                     </td>
                                 </tr>

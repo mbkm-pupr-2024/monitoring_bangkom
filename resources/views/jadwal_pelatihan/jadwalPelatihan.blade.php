@@ -165,17 +165,6 @@ function hari_indo($tanggal){
                                 @endphp
                                 @endforeach
                             </tbody>
-                            {{-- <tfoot>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama Pelatihan</th>
-                                    <th>Jenis Pelatihan</th>
-                                    <th>Bidang Pelatihan</th>
-                                    <th>Model Pelatihan</th>
-                                    <th>Tanggal Mulai</th>
-                                    <th>Tanggal Selesai</th>
-                                </tr>
-                            </tfoot> --}}
                         </table>
                     </div>
                 </div>

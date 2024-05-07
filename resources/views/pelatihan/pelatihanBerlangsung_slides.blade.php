@@ -40,9 +40,74 @@
 
   <link rel="icon" type="image/jpg" sizes="32x32" href="{{ asset('assets/images/logo.jpg') }}" />
   <link rel="icon" type="image/jpg" sizes="16x16" href="{{ asset('assets/images/logo.jpg') }}" />
+
+  <style>
+    .merah {
+        color: red;
+    }
+    .kuning {
+        color: yellow;
+    }
+    .hijau {
+        color: green;
+    }
+</style>
 </head>
 
 <body>
+@if (!function_exists('tanggal_indo'))
+    @php
+    function tanggal_indo($tanggal){
+        $bulan = array (
+        1 =>'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+        );
+        $pecahkan = explode('-', $tanggal);
+
+        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+    }
+
+    function rentang_tgl($tgl_mulai, $tgl_selesai){
+        $tgl_mulai = tanggal_indo($tgl_mulai);
+        $tgl_selesai = tanggal_indo($tgl_selesai);
+        $tgl_mulai_pecah = explode(' ', $tgl_mulai);
+        $tgl_selesai_pecah = explode(' ', $tgl_selesai);
+        if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
+            return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+        }
+        return $tgl_mulai . ' s.d ' . $tgl_selesai;
+    }
+
+    function hari_indo($tanggal){
+        if (date('l', strtotime($tanggal)) == 'Sunday') {
+            return 'Minggu';
+        } elseif (date('l', strtotime($tanggal)) == 'Monday') {
+            return 'Senin';
+        } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
+            return 'Selasa';
+        } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
+            return 'Rabu';
+        } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
+            return 'Kamis';
+        } elseif (date('l', strtotime($tanggal)) == 'Friday') {
+            return 'Jumat';
+        } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
+            return 'Sabtu';
+        }
+        return date('l', strtotime($tanggal));
+    }
+    @endphp
+@endif
     <div class="app menu-off-canvas align-content-stretch d-flex flex-wrap">
         <div class="app-container">
             <div class="example-container">
@@ -57,6 +122,7 @@
                             @endforeach
                         </div>
                         <div class="carousel-inner">
+
                             @foreach ($pelatihans as $pelatihan)
                                 @if ($loop->first)
                                     <div class="carousel-item active" data-bs-interval="2000">
@@ -65,7 +131,12 @@
                                                 <div class="logo">
                                                     <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
                                                 </div>
+                                                <br>
+                                                <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
                                             </div>
+                                            
+                                            
+
                                             <div class="main-timeline-slides">
                                                 <ul class="ul-timeline-slides">
                                                     @foreach ($tahapans as $tahapan)
@@ -112,6 +183,7 @@
                                             <div class="carousel-caption d-none d-md-block">
                                                 <h5>{{ $pelatihan->nama }}</h5>
                                                 <p>{{ $pelatihan->model_pelatihan->nama }}.</p>
+                                                <p class="badge badge-info badge-style-light" style="font-size:0.9rem"><b>{{ rentang_tgl($pelatihan->tanggal_mulai,$pelatihan->tanggal_selesai) }}</b></p>
                                             </div>
                                         </div>
                                     </div>
@@ -122,6 +194,8 @@
                                                 <div class="logo">
                                                     <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
                                                 </div>
+                                                <br>
+                                                <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
                                             </div>
                                             <div class="main-timeline-slides">
                                                 <ul class="ul-timeline-slides">
@@ -161,33 +235,66 @@
                                                             <p class="text-timeline-slides">{{ $tahapan->judul }}</p>
                                                         </li>
                                                         @endif
-                                                        
-                                                
                                                     @endforeach
                                                 </ul>
                                             </div>
+                                            {{-- <br><br><br><br><br><br><br> --}}
                                             <br><br><br><br><br><br>
-                                            <div class="carousel-caption d-none d-md-block">
-                                                <h5>{{ $pelatihan->nama }}</h5>
-                                                <p>{{ $pelatihan->model_pelatihan->nama }}</p>
+                                            <div class="carousel-caption">
+                                                <div class="d-none d-md-block">
+                                                    <h5>{{ $pelatihan->nama }}</h5>
+                                                    <p>{{ $pelatihan->model_pelatihan->nama }}</p>
+                                                    <p class="badge badge-info badge-style-light" style="font-size:0.9rem"><b>{{ rentang_tgl($pelatihan->tanggal_mulai,$pelatihan->tanggal_selesai) }}</b></p>
+                                                </div>
+                                                {{-- <div class="settings-security-two-factor" style="width:40%;float:right">
+                                                    <h5>Keterangan</h5>
+                                                    <p><span class="text-danger">&#x25CF;</span>: Tahap belum dimulai</p>
+                                                    <p><span class="text-warning">&#x25CF;</span>: Tahap proses</p>
+                                                    <p><span class="text-success">&#x25CF;</span>: Tahap selesai</p>
+                                                </div> --}}
+                                            
+                                                
                                             </div>
+                                            
+                                            
+                                            {{-- <br><br><br><br> --}}
+                                            
+                                            {{-- <div class="carousel-caption">
+                                                <p class="text-left">Keterangan:</p>
+                                                <p class="badge badge-success badge-style-light" style="font-size:0.9rem">Tahap Selesai</p>
+                                                <p class="badge badge-warning badge-style-light" style="font-size:0.9rem">Tahap Proses</p>
+                                                <p class="badge badge-danger badge-style-light" style="font-size:0.9rem">Tahap Belum Dimulai</p>
+                                               
+                                            </div> --}}
                                         </div>
+                                        
                                     </div>
                                 @endif
                                 
                             @endforeach
                             
                         </div>
-                        <button style="margin-top: -250px;margin-left:-50px" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                        <button style="margin-top: -150px;margin-left:-50px" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button style="margin-top: -250px;margin-right:-50px" class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                        <button style="margin-top: -150px;margin-right:-50px" class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
                     
                 </div>
+                {{-- <div class="card">
+                    <div class="settings-security-two-factor">
+                            <h5>Keterangan</h5>
+                        <div style="float: left;margin-left: -200px;">
+                            <p><span class="text-danger">&#x25CF;</span>: Tahap belum dimulai</p>
+                            <p><span class="text-warning">&#x25CF;</span>: Tahap proses</p>
+                            <p><span class="text-success">&#x25CF;</span>: Tahap selesai</p>
+                        </div>
+                    </div>
+                </div> --}}
+                        
                   
             
         </div>

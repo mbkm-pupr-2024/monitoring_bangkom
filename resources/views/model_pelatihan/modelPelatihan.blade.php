@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col">
                     <div class="page-description">
-                        <h1>Kelola Model Pelatihan</h1>
+                        <h1>Kelola Data Model Pelatihan</h1>
                     </div>
                 </div>
             </div>

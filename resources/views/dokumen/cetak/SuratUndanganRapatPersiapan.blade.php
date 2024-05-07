@@ -128,7 +128,7 @@
         <p>Yth. <b>Bapak/Ibu</b><br>(Daftar Terlampir)<br>di Tempat</p>
 
         <p style="text-indent: 50px; line-height: 1.5;">
-          Menindaklanjuti surat Kepala Pusat Pengembangan Kompetensi Jalan, Perumahan Dan Pengembangan Infrastruktur Wilayah Nomor SM 0201-Mj/477 tanggal 18 April 2023 hal Rencana Pengembangan Kompetensi Bidang JPW T.A. 2024, dengan hormat kami sampaikan bahwa Balai Pengembangan Kompetensi Wilayah VI Surabaya akan menyelenggarakan Pelatihan {{ $pelatihan->nama }} pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }}. Sehubungan dengan hal tersebut dengan hormat kami mohon perkenan Bapak/Ibu untuk menghadiri rapat persiapan Pelatihan {{ $pelatihan->nama }} yang akan diselenggarakan pada:</p>
+          Menindaklanjuti surat {{ $request->surat_perintah }} Nomor {{ $request->nomor_surat_perintah }} tanggal {{ tanggal_indo($request->tanggal_surat_perintah) }} hal {{ $request->hal_surat_perintah }}, dengan hormat kami sampaikan bahwa Balai Pengembangan Kompetensi Wilayah VI Surabaya akan menyelenggarakan Pelatihan {{ $pelatihan->nama }} pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }}. Sehubungan dengan hal tersebut dengan hormat kami mohon perkenan Bapak/Ibu untuk menghadiri rapat persiapan Pelatihan {{ $pelatihan->nama }} yang akan diselenggarakan pada:</p>
         <table style="text-indent: 10px;line-height: 1.5;">
           <tr>
             <td width="200px" >Hari/tanggal</td>
@@ -189,7 +189,11 @@
     </div>
   <h3 style="text-align:center;clear:right;">Daftar Undangan</h3>
   <p>Yth.</p>
-  <p><b>Tim Pusbangkom Jalan, Perumahan dan Pengembangan Infrastruktur Wilayah</b></p>
+  @foreach($data as $item)
+    @if ($loop->first && $item['tim_pusbangkom'] != null)
+      <p><b>{{ $item['tim_pusbangkom'] }}</b></p>
+    @endif
+  @endforeach
   <ol>
     @foreach($data as $item)
       @if (!$loop->first && $item['tim_pusbangkom'] != null)
@@ -198,7 +202,11 @@
     @endforeach
   </ol>
 
-  <p><b>Tim Bapekom PUPR Wilayah VI Surabaya</b></p>
+  @foreach($data as $item)
+    @if ($loop->first && $item['tim_bapekom'] != null)
+      <p><b>{{ $item['tim_bapekom'] }}</b></p>
+    @endif
+  @endforeach
   <ol>
     @foreach($data as $item)
       @if (!$loop->first && $item['tim_bapekom'] != null)

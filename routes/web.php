@@ -75,7 +75,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/kelola-pengguna/edit/{id}', [UserController::class, 'user_edit']);
     Route::post('/kelola-pengguna/edit/{id}', [UserController::class, 'user_update']);
     Route::get('/kelola-pengguna/hapus/{id}', [UserController::class, 'user_delete']);
-    Route::get('/kelola-pengguna/reset-password/{id}', [UserController::class, 'user_reset_password']);
+    Route::get('/kelola-pengguna/reset-password/{id}', [UserController::class, 'user_resetPassword']);
+    Route::post('/kelola-pengguna/reset-password/{id}', [UserController::class, 'user_updatePassword']);
 
     Route::get('/jadwal-pelatihan/tambah', [JadwalPelatihanController::class, 'jadwalPelatihan_tambah']);
     Route::post('/jadwal-pelatihan/tambah', [JadwalPelatihanController::class, 'jadwalPelatihan_insert']);
@@ -123,7 +124,9 @@ Route::middleware(['all-role'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/edit-profile', [ProfileController::class, 'edit_profile'])->name('edit-profile');
+    Route::post('/edit-profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
     Route::get('/ubah_password', [ProfileController::class, 'ubah_password'])->name('ubah-password');
+    Route::post('/ubah_password', [ProfileController::class, 'updatePassword'])->name('update-password');
 
 
     Route::get('/sop-pelatihan', [SopPelatihanController::class, 'sopPelatihan'])->name('sop-pelatihan');
