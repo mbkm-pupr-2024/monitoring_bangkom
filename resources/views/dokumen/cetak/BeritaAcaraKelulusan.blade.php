@@ -184,7 +184,7 @@
         <h4 style="text-align: center;margin-top: -20px;">PELATIHAN {{ strtoupper($pelatihan->nama) }}</h4>
         <h4 style="text-align: center;margin-top: -20px;">(<i>{{ strtoupper($pelatihan->model_pelatihan->nama) }}</i>)</h4>
 
-        <p style="text-align: center;white-space: pre;margin-top: -10px;">NOMOR  :       /BA-Mo/2024</p>
+        <p style="text-align: center;white-space: pre;margin-top: -10px;">NOMOR  : {{ $request->nomor_surat }}</p>
 
         
       </div>

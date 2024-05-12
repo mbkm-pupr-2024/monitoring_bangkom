@@ -84,6 +84,13 @@ class PelatihanBerlangsungController extends Controller
         return view('pelatihan.pelatihanBerlangsung', ['pelatihans' => $pelatihans, 'pelatihan_progres'=>$pelatihan_progres,'tahapanKegiatan'=>$tahapanKegiatan,'bidangs'=>$bidang_pelatihan,'tahapans'=>$tahapans, 'querypelatihan'=> request('querypelatihan')]);
     }
 
+    public function pelatihan_arsip($id){
+        $status = StatusModel::where('id_pelatihan', $id)->first();
+        $status->keterangan = 'Selesai';
+        $status->save();
+
+        return redirect('/pelatihan-berlangsung')->with(['success' => 'Status pelatihan selesai', 'popUp_title' => 'Updated!']);
+    }
     public function pelatihan_delete($id){
         $status = StatusModel::where('id_pelatihan', $id)->first();
         DetilStatusModel::where('id_status', $status->id)->delete();

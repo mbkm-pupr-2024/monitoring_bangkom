@@ -41,6 +41,14 @@
                                             </label>
                                           </div>
                                     </div>
+                                    <div class="mb-4">
+                                        <label for="nama_yth" class="form-label">Penerima</label>
+                                        <input type="text" class="form-control" id="nama_yth" name="nama_yth">
+                                    </div> 
+                                    <div class="mb-4">
+                                        <label for="lokasi" class="form-label">Lokasi</label>
+                                        <input type="text" class="form-control" id="lokasi" name="lokasi">
+                                    </div> 
                                     <h6>Menindaklanjuti:</h6>
                                     <div class="mb-4">
                                         <label for="surat_perintah" class="form-label">Surat Perintah</label>
@@ -61,14 +69,6 @@
                                         <label for="hal_surat_perintah" class="form-label">Hal</label>
                                         <input type="text" class="form-control" id="hal_surat_perintah" name="hal_surat_perintah">
                                     </div>                 
-                                    <div class="mb-4">
-                                        <label for="nama_yth" class="form-label">Penerima</label>
-                                        <input type="text" class="form-control" id="nama_yth" name="nama_yth">
-                                    </div>                                    
-                                    <div class="mb-4">
-                                        <label for="lokasi" class="form-label">Lokasi</label>
-                                        <input type="text" class="form-control" id="lokasi" name="lokasi">
-                                    </div>                                    
                                     <div class="mb-4">
                                         <label for="waktu_mulai" class="form-label">Waktu Mulai</label>
                                             <input id="waktu_mulai" class="form-control" type="time" name="waktu_mulai">

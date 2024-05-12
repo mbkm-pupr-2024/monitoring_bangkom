@@ -89,7 +89,7 @@
                                                     <i class="uil uil-edit"></i> Buat
                                                 </a>
                                                 <a type="button" class="btn btn-primary btn-small" href="/form-dokumen-pelatihan-{{ $pelatihan->id }}/{{ $kegiatan->id }}-upload">
-                                                    <i class="uil uil-edit"></i> Upload
+                                                    <i class="uil uil-upload"></i> Upload
                                                 </a>
                                             @else
                                                 <a type="button" class="btn btn-primary btn-small" href="/form-dokumen-pelatihan-{{ $pelatihan->id }}/{{ $kegiatan->id }}-upload">

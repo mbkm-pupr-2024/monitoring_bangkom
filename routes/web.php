@@ -84,11 +84,21 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/jadwal-pelatihan/hapus/{id}', [JadwalPelatihanController::class, 'jadwalPelatihan_delete']);
 
     Route::get('/pelatihan/hapus/{id}', [PelatihanBerlangsungController::class, 'pelatihan_delete'])->name('pelatihan-hapus');
+    Route::get('/pelatihan/arsip/{id}', [PelatihanBerlangsungController::class, 'pelatihan_arsip'])->name('pelatihan-arsip');
 
     
 });
 
 Route::middleware('petugas')->group(function () {
+
+    Route::get('/status-dokumen', [StatusDokumenController::class, 'status_dokumen'])->name('status-dokumen');
+    Route::post('/status-dokumen/cari-dokumen-terkirim', [StatusDokumenController::class, 'cari_dokumen_terkirim'])->name('cari-dokumen-terkirim');
+    Route::post('/status-dokumen/cari-dokumen-disetujui', [StatusDokumenController::class, 'cari_dokumen_disetujui'])->name('cari-dokumen-disetujui');
+    Route::post('/status-dokumen/cari-dokumen-ditolak', [StatusDokumenController::class, 'cari_dokumen_ditolak'])->name('cari-dokumen-ditolak');
+});
+
+Route::middleware('petugasSupervisi')->group(function () {
+
     Route::get('/dokumen-pelatihan-{id_pl}/{no_thp}/tahapan-{id_thp}', [PelatihanBerlangsungController::class, 'menu_dokumen_pelatihan'])->name('dokumen-pelatihan');
     Route::get('/form-dokumen-pelatihan-{id_pl}/{id_kthp}-create', [FillDokumenController::class, 'form_dokumen_pelatihan_create'])->name('create-form-dokumen-pelatihan');
     Route::get('/form-dokumen-pelatihan-{id_pl}/{id_kthp}-upload', [FillDokumenController::class, 'form_dokumen_pelatihan_upload'])->name('upload-form-dokumen-pelatihan');
@@ -109,11 +119,6 @@ Route::middleware('petugas')->group(function () {
         }
     }
     Route::get('/unduh-requirement-dokumen-{file}-pelatihan', [FillDokumenController::class, 'download_requirement'])->name('download-requirement');
-
-    Route::get('/status-dokumen', [StatusDokumenController::class, 'status_dokumen'])->name('status-dokumen');
-    Route::post('/status-dokumen/cari-dokumen-terkirim', [StatusDokumenController::class, 'cari_dokumen_terkirim'])->name('cari-dokumen-terkirim');
-    Route::post('/status-dokumen/cari-dokumen-disetujui', [StatusDokumenController::class, 'cari_dokumen_disetujui'])->name('cari-dokumen-disetujui');
-    Route::post('/status-dokumen/cari-dokumen-ditolak', [StatusDokumenController::class, 'cari_dokumen_ditolak'])->name('cari-dokumen-ditolak');
 });
 
 Route::middleware('supervisi')->group(function () {

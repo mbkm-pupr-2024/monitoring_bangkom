@@ -339,6 +339,19 @@ class FillDokumenController extends Controller
             ]);
 
         // dd($request->file('file'));
+        $baris_pantun = explode("\n", $request->pantun);
+            $pantun = [];
+            
+            // Variabel sementara untuk menyimpan indeks loop
+            $index = 0;
+            
+            foreach($baris_pantun as $baris){
+                // Mengisi array pantun dengan baris-baris pantun
+                $pantun[$index] = $baris;
+                
+                // Menambahkan nilai indeks untuk iterasi berikutnya
+                $index++;
+            }
 
         $file = $request->file('req_laporanPembukaan');
 
@@ -435,6 +448,7 @@ class FillDokumenController extends Controller
         $data = [
             'pelatihan' => $pelatihan,
             'kegiatan' => $kegiatanTahapan,
+            'pantun' => $pantun,
             'request' => $request,
             'logo' => $logo,
             'data' => $data_req,

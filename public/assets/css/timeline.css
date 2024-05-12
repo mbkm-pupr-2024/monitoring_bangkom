@@ -73,7 +73,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: rgba(68, 68, 68, 0.781);
+    background-color: #7e848d;
     margin: 14px 0;
     display: grid;
     place-items: center;
@@ -86,7 +86,7 @@
     position: absolute;
     width: 125px;
     height: 5px;
-    background-color: rgba(68, 68, 68, 0.781);
+    background-color: #7e848d;
     right: 30px;
 }
 .first-timeline::after{
@@ -104,12 +104,11 @@
 /* Active Css  */
 
 .ul-timeline .li-timeline .active{
-    background-color: #3468ba;
     display: grid;
     place-items: center;
 }
 .li-timeline .active::after{
-    background-color: #3468ba;
+    background-color: #0d6efd;
 }
 .ul-timeline .li-timeline .active .p-timeline::after{
     display: none;
@@ -238,7 +237,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: rgba(68, 68, 68, 0.781);
+    background-color: #7e848d;
     margin: 14px 0;
     display: grid;
     place-items: center;
@@ -251,7 +250,7 @@
     position: absolute;
     width: 95px;
     height: 5px;
-    background-color: rgba(68, 68, 68, 0.781);
+    background-color: #7e848d;
     right: 30px;
 }
 .first-timeline-slides::after{
@@ -269,12 +268,12 @@
 /* Active Css  */
 
 .ul-timeline-slides .li-timeline-slides .active{
-    background-color: #3468ba;
+    background-color: #0d6efd;
     display: grid;
     place-items: center;
 }
 .li-timeline-slides .active::after{
-    background-color: #3468ba;
+    background-color: #0d6efd;
 }
 .ul-timeline-slides .li-timeline-slides .active .p-timeline-slides::after{
     display: none;

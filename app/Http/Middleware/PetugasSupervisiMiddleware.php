@@ -19,7 +19,7 @@ class PetugasSupervisiMiddleware
         if (!Auth::check()){
             return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu');
         }
-        if (!Auth::guard('petugas')->check() || !Auth::guard('supervisi')->check()) {
+        if (Auth::guard('admin')->check()) {
             return redirect()->back()->with('error', 'Anda tidak memiliki akses');
         }
         return $next($request);

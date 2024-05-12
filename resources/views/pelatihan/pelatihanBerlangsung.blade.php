@@ -92,6 +92,7 @@
                                 <div class="card-body">
                                     @can('admin')
                                     <a onclick="hapus_button_{{ $pelatihan->id }}();" class="btn btn-danger btn-sm m-1 float-end"><i class="material-icons-outlined">delete</i></a>
+                                    <a onclick="arsip_button_{{ $pelatihan->id }}();" class="btn btn-warning btn-sm m-1 float-end"><i class="material-icons-outlined">archive</i></a>
                                     @endcan
                                     
                                     <div class="widget-popular-blog-container">
@@ -146,13 +147,13 @@
                                                     <li class="li-timeline">
                                                         <i class="material-icons-outlined icon-timeline uil-timeline">{{ $tahapan->icon}}</i>
                                                         @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
-                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline active">
+                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline active" style="background-color:#20aa6c">
                                                                 <i class="material-icons">check</i>
                                                         @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
-                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline active">
+                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline active" style="background-color:#0d6efd">
                                                                 <i class="material-icons">sync</i>
                                                         @else
-                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline">
+                                                            <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline first-timeline" style="background-color:#7e848d">
                                                                 <p class="p-timeline">{{ $no }}</p>
                                                         @endif
                                                             </a>
@@ -163,13 +164,13 @@
                                                 <li class="li-timeline">
                                                     <i class="material-icons-outlined icon-timeline uil-timeline">{{ $tahapan->icon}}</i>
                                                     @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
-                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline active">
+                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline active" style="background-color:#20aa6c">
                                                             <i class="material-icons">check</i>
                                                     @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
-                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline active">
+                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline active" style="background-color:#0d6efd">
                                                             <i class="material-icons">sync</i>
                                                     @else
-                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline">
+                                                        <a href="/dokumen-pelatihan-{{ $pelatihan->id }}/{{ $no }}/tahapan-{{ $tahapan->id }}" type="button" class="progress-timeline {{ $tahapan->id }}-timeline" style="background-color:#7e848d">
                                                             <p class="p-timeline">{{ $no }}</p>
                                                     @endif
                                                             {{-- <i class="uil-timeline uil-check"></i> --}}
@@ -187,6 +188,22 @@
                                 </div>
                                 <div class="card-footer">
                                     <script>
+                                        function arsip_button_{{ $pelatihan->id }}() {
+                                            Swal.fire({
+                                            title: "Konfirmasi Pengarsipan",
+                                            text: "Apakah Anda yakin ingin menetapkan pelatihan ini sebagai selesai? ",
+                                            icon: "warning",
+                                            showCancelButton: true,
+                                            confirmButtonColor: "#3085d6",
+                                            cancelButtonText: "Batal",
+                                            cancelButtonColor: "#d33",
+                                            confirmButtonText: "Arsip"
+                                            }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location.href = "/pelatihan/arsip/{{ $pelatihan->id }}";
+                                            }
+                                            });
+                                        }
                                         function hapus_button_{{ $pelatihan->id }}() {
                                             Swal.fire({
                                             title: "Konfirmasi Penghapusan",

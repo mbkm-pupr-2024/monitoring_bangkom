@@ -11,7 +11,7 @@
     <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Neptune - Responsive Admin Dashboard Template</title>
+    <title>Ringkasan - Monitoring</title>
 
      <!-- Styles -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -40,18 +40,7 @@
 
   <link rel="icon" type="image/jpg" sizes="32x32" href="{{ asset('assets/images/logo.jpg') }}" />
   <link rel="icon" type="image/jpg" sizes="16x16" href="{{ asset('assets/images/logo.jpg') }}" />
-
-  <style>
-    .merah {
-        color: red;
-    }
-    .kuning {
-        color: yellow;
-    }
-    .hijau {
-        color: green;
-    }
-</style>
+  
 </head>
 
 <body>
@@ -129,18 +118,18 @@
                                         <div class="card">
                                             <div class="app-auth-container-slides" style="width: 100%">
                                                 <div class="row d-flex justify-content-between">
-                                                    <div class="col-md-5">
+                                                    <div class="col-md-6">
                                                         <div class="logo">
                                                             <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
                                                         </div>
                                                         <br>
-                                                        <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
+                                                        <h1 class="badge text-center badge-dark" style="width:80%">RINGKASAN - Monitoring Pelaksanaan</h1>
                                                     </div>
-                                                    <ul class="col-md-4" style="list-style: none;">
+                                                    <ul class="col-md-3 mt-3" style="list-style: none;font-size:0.9em">
                                                         <li><b>Keterangan: </b></li>
-                                                        <li><span class="bg-danger text-danger text-small me-3">icon</span>Belum ada progres</li>
-                                                        <li><span class="bg-primary text-primary text-small me-3">icon</span>Progres sedang berlangsung</li>
-                                                        <li><span class="bg-success text-success text-small me-3">icon</span>Progres selesai</li>
+                                                        <li><span class="me-3" style="background-color:#7e848d;white-space: pre;">        </span>Belum ada progres</li>
+                                                        <li><span class="me-3" style="background-color:#0d6efd;white-space: pre;">        </span>Progres sedang berlangsung</li>
+                                                        <li><span class="me-3" style="background-color:#20aa6c;white-space: pre;">        </span>Progres selesai</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -154,13 +143,13 @@
                                                             <li class="li-timeline-slides">
                                                                 <i class="material-icons-outlined icon-timeline-slides uil-timeline-slides">{{ $tahapan->icon}}</i>
                                                                 @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
-                                                                    <a style="pointer:" class="progress-timeline-slides first-timeline-slides active">
+                                                                    <a class="progress-timeline-slides first-timeline-slides active" style="background-color:#20aa6c">
                                                                         <i class="material-icons">check</i>
                                                                 @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
-                                                                    <a class="progress-timeline-slides first-timeline-slides active">
+                                                                    <a class="progress-timeline-slides first-timeline-slides active" style="background-color:#0d6efd">
                                                                         <i class="material-icons">sync</i>
                                                                 @else
-                                                                    <a class="progress-timeline-slides first-timeline-slides">
+                                                                    <a class="progress-timeline-slides first-timeline-slides" style="background-color:#7e848d">
                                                                         <p class="p-timeline-slides">{{ $loop->iteration }}</p>
                                                                 @endif
                                                                     </a>
@@ -171,13 +160,13 @@
                                                         <li class="li-timeline-slides">
                                                             <i class="material-icons-outlined icon-timeline-slides uil-timeline-slides">{{ $tahapan->icon}}</i>
                                                             @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
-                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active">
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active" style="background-color:#20aa6c">
                                                                     <i class="material-icons">check</i>
                                                             @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
-                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active">
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active" style="background-color:#0d6efd">
                                                                     <i class="material-icons">sync</i>
                                                             @else
-                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline">
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline" style="background-color:#7e848d">
                                                                     <p class="p-timeline-slides">{{ $loop->iteration }}</p>
                                                             @endif
                                                                     {{-- <i class="uil-timeline-slides uil-check"></i> --}}
@@ -202,26 +191,18 @@
                                         <div class="card">
                                             <div class="app-auth-container-slides" style="width: 100%">
                                                     <div class="row d-flex justify-content-between">
-                                                        <div class="col-md-5">
+                                                        <div class="col-md-6">
                                                             <div class="logo">
                                                                 <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
                                                             </div>
                                                             <br>
-                                                            <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
+                                                            <h1 class="badge text-center badge-dark" style="width:80%">RINGKASAN - Monitoring Pelaksanaan</h1>
                                                         </div>
-<<<<<<< HEAD
-                                                        <ul class="col-md-4" style="list-style: none;">
+                                                        <ul class="col-md-3 mt-3" style="list-style: none;font-size:0.9em">
                                                             <li><b>Keterangan: </b></li>
-                                                            <li><span class="bg-danger text-danger me-3">icon</span>Belum ada progres</li>
-                                                            <li><span class="bg-primary text-primary me-3">icon</span>Progres sedang berlangsung</li>
-                                                            <li><span class="bg-success text-success me-3">icon</span>Progres selesai</li>
-=======
-                                                        <ul class="col-md-2" style="list-style: none;">
-                                                            <li><b>Keterangan: </b></li>
-                                                            <li><span class="bg-danger text-danger me-3">icon</span>Red</li>
-                                                            <li><span class="bg-warning text-warning me-3">icon</span>Yellow</li>
-                                                            <li><span class="bg-success text-success me-3">icon</span>Green</li>
->>>>>>> a9468cec28c69362c93a7201de4e9bed731c54b7
+                                                            <li><span class="me-3" style="background-color:#7e848d;white-space: pre;">        </span>Belum ada progres</li>
+                                                            <li><span class="me-3" style="background-color:#0d6efd;white-space: pre;">        </span>Progres sedang berlangsung</li>
+                                                            <li><span class="me-3" style="background-color:#20aa6c;white-space: pre;">        </span>Progres selesai</li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -233,13 +214,13 @@
                                                             <li class="li-timeline-slides">
                                                                 <i class="material-icons-outlined icon-timeline-slides uil-timeline-slides">{{ $tahapan->icon}}</i>
                                                                 @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
-                                                                    <a class="progress-timeline-slides first-timeline-slides active">
+                                                                    <a class="progress-timeline-slides first-timeline-slides active" style="background-color:#20aa6c">
                                                                         <i class="material-icons">check</i>
                                                                 @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
-                                                                    <a class="progress-timeline-slides first-timeline-slides active">
+                                                                    <a class="progress-timeline-slides first-timeline-slides active" style="background-color:#0d6efd">
                                                                         <i class="material-icons">sync</i>
                                                                 @else
-                                                                    <a class="progress-timeline-slides first-timeline-slides">
+                                                                    <a class="progress-timeline-slides first-timeline-slides" style="background-color:#7e848d">
                                                                         <p class="p-timeline-slides">{{ $loop->iteration }}</p>
                                                                 @endif
                                                                     </a>
@@ -250,13 +231,13 @@
                                                         <li class="li-timeline-slides">
                                                             <i class="material-icons-outlined icon-timeline-slides uil-timeline-slides">{{ $tahapan->icon}}</i>
                                                             @if ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'yes')
-                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active">
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active" style="background-color:#20aa6c">
                                                                     <i class="material-icons">check</i>
                                                             @elseif ($pelatihan_progres[$pelatihan->id][$tahapan->id] == 'process')
-                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active">
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline active" style="background-color:#0d6efd">
                                                                     <i class="material-icons">sync</i>
                                                             @else
-                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline">
+                                                                <a class="progress-timeline-slides {{ $tahapan->id }}-timeline" style="background-color:#7e848d">
                                                                     <p class="p-timeline-slides">{{ $loop->iteration }}</p>
                                                             @endif
                                                                     {{-- <i class="uil-timeline-slides uil-check"></i> --}}
@@ -275,26 +256,7 @@
                                                     <p>{{ $pelatihan->model_pelatihan->nama }}</p>
                                                     <p class="badge badge-info badge-style-light" style="font-size:0.9rem"><b>{{ rentang_tgl($pelatihan->tanggal_mulai,$pelatihan->tanggal_selesai) }}</b></p>
                                                 </div>
-                                                {{-- <div class="settings-security-two-factor" style="width:40%;float:right">
-                                                    <h5>Keterangan</h5>
-                                                    <p><span class="text-danger">&#x25CF;</span>: Tahap belum dimulai</p>
-                                                    <p><span class="text-warning">&#x25CF;</span>: Tahap proses</p>
-                                                    <p><span class="text-success">&#x25CF;</span>: Tahap selesai</p>
-                                                </div> --}}
-                                            
-                                                
                                             </div>
-                                            
-                                            
-                                            {{-- <br><br><br><br> --}}
-                                            
-                                            {{-- <div class="carousel-caption">
-                                                <p class="text-left">Keterangan:</p>
-                                                <p class="badge badge-success badge-style-light" style="font-size:0.9rem">Tahap Selesai</p>
-                                                <p class="badge badge-warning badge-style-light" style="font-size:0.9rem">Tahap Proses</p>
-                                                <p class="badge badge-danger badge-style-light" style="font-size:0.9rem">Tahap Belum Dimulai</p>
-                                               
-                                            </div> --}}
                                         </div>
                                         
                                     </div>

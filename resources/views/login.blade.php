@@ -59,7 +59,8 @@
         </div>
         <div class="app-auth-container">
             <div class="logo">
-                <h2>Monitoring Bangkom</h2>
+                <h2>RINGKASAN</h2>
+                <p class="text-small">Monitoring Pelaksanaan Pelatihan</p>
             </div>
             <p class="auth-description">Silahkan login menggunakan akun Anda untuk melanjutkan menuju dashboard atau <a href="/pelatihan-berlangsung/slide-show">Akses sebagai tamu</a></p>
 
