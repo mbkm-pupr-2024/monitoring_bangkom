@@ -209,11 +209,19 @@
                                                             <br>
                                                             <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
                                                         </div>
+<<<<<<< HEAD
                                                         <ul class="col-md-4" style="list-style: none;">
                                                             <li><b>Keterangan: </b></li>
                                                             <li><span class="bg-danger text-danger me-3">icon</span>Belum ada progres</li>
                                                             <li><span class="bg-primary text-primary me-3">icon</span>Progres sedang berlangsung</li>
                                                             <li><span class="bg-success text-success me-3">icon</span>Progres selesai</li>
+=======
+                                                        <ul class="col-md-2" style="list-style: none;">
+                                                            <li><b>Keterangan: </b></li>
+                                                            <li><span class="bg-danger text-danger me-3">icon</span>Red</li>
+                                                            <li><span class="bg-warning text-warning me-3">icon</span>Yellow</li>
+                                                            <li><span class="bg-success text-success me-3">icon</span>Green</li>
+>>>>>>> a9468cec28c69362c93a7201de4e9bed731c54b7
                                                         </ul>
                                                     </div>
                                                 </div>
