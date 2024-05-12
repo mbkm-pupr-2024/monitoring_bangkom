@@ -54,12 +54,12 @@
                                         $split = explode('.', $terkirim->file);
                                         $ext = $split[1]
                                     @endphp
-                                    @if ($ext == 'pdf' || $ext == 'doc')
+                                    @if ($ext == 'pdf')
                                         <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
-                                    @elseif($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg')
-                                        <i class="material-icons-outlined text-success align-middle m-r-sm">image</i>
-                                    @else
-                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">code</i>
+                                    @elseif($ext == 'doc' || $ext == 'docx')
+                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
+                                    @elseif($ext == 'xlxs' || $ext == 'xls')
+                                        <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
                                     @endif
                                     {{-- <a href="{{ asset('assets/dokumen/daftar_calon_peserta.xlsx') }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $terkirim->kegiatan_tahapan->dokumen }}</a> --}}
                                     <a href="{{ asset('assets/dokumen/'. $terkirim->status->pelatihan->id . '_' .$terkirim->id_kegiatan_tahapan . '.pdf') }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $terkirim->kegiatan_tahapan->dokumen }}</a>
@@ -99,12 +99,12 @@
                                         $split = explode('.', $disetujui->file);
                                         $ext = $split[1]
                                     @endphp
-                                    @if ($ext == 'pdf' || $ext == 'doc')
+                                    @if ($ext == 'pdf')
                                         <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
-                                    @elseif($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg')
-                                        <i class="material-icons-outlined text-success align-middle m-r-sm">image</i>
-                                    @else
-                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">code</i>
+                                    @elseif($ext == 'doc' || $ext == 'docx')
+                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
+                                    @elseif($ext == 'xlxs' || $ext == 'xls')
+                                        <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
                                     @endif
                                     <a href="#" class="file-manager-recent-item-title flex-fill">{{ $disetujui->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $disetujui->status->pelatihan->nama }}</span>
@@ -147,12 +147,12 @@
                                         $split = explode('.', $ditolak->kegiatan_tahapan->file);
                                         $ext = count($split) > 1 ? $split[1] : ''; 
                                     @endphp
-                                    @if ($ext == 'pdf' || $ext == 'doc')
+                                    @if ($ext == 'pdf')
                                         <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
-                                    @elseif($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg')
-                                        <i class="material-icons-outlined text-success align-middle m-r-sm">image</i>
-                                    @else
-                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">code</i>
+                                    @elseif($ext == 'doc' || $ext == 'docx')
+                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
+                                    @elseif($ext == 'xlxs' || $ext == 'xls')
+                                        <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
                                     @endif
                                     <a href="#" class="file-manager-recent-item-title flex-fill">{{ $ditolak->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $ditolak->status->pelatihan->nama }}</span>
@@ -196,55 +196,6 @@
                     @endforelse
                 </div>
             </div>
-
-                    {{-- <table id="datatable1" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Pelatihan</th>
-                                <th>Dokumen</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
-                            @foreach ($dokumens as $dokumen)
-                            <tr>
-                                <td>{{ $no }}</td>
-                                <td>
-                                    <img src="{{ asset('assets/images/bidang_pelatihan/' . $dokumen->bidang_pelatihan->gambar) }}" width="35" > 
-                                    {{ $dokumen->nama }}
-                                </td>
-                                <td>
-                                    <script>
-                                        function cetak_button_{{ $dokumen->id }}() {
-                                            Swal.fire({
-                                            title: "Konfirmasi Pencetakan Surat",
-                                            text: "Apakah Anda ingin melakukan cetak surat untuk pelatihan ini? ",
-                                            icon: "warning",
-                                            showCancelButton: true,
-                                            confirmButtonColor: "#3085d6",
-                                            cancelButtonText: "Batal",
-                                            cancelButtonColor: "#d33",
-                                            confirmButtonText: "Menuju Cetak Menu"
-                                            }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                window.location.href = "/cetak-surat/pelatihan-{{ $dokumen->id }}";
-                                            }
-                                            });
-                                        }
-                                    </script>
-                                    <a onclick="cetak_button_{{ $dokumen->id }}();" class="btn btn-primary btn-sm"><i class="material-icons-outlined center" sty>print</i></a> 
-                                </td>
-                            </tr>
-                            @php
-                                $no++;
-                            @endphp
-                            @endforeach
-                        </tbody>
-                    </table> --}}
         </div>
     </div>
 </div>

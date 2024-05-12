@@ -31,7 +31,6 @@
                                     <th>No</th>
                                     <th>NIP</th>
                                     <th>Nama Lengkap</th>
-                                    <th>Username</th>
                                     <th>Role</th>
                                     <th>Action</th>
                                 </tr>
@@ -42,14 +41,29 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $user->nip }}</td>
                                     <td>{{ $user->nama_lengkap }}</td>
-                                    <td>{{ $user->username }}</td>
                                     <td>{{ $user->role }}</td>
                                     <td>
                                         <script>
+                                            function edit_button_{{ $user->id }}() {
+                                                Swal.fire({
+                                                title: "Konfirmasi Perubahan",
+                                                text: "Apakah Anda yakin ingin melakukan perubahan pada data ini? ",
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonText: "Batal",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Edit"
+                                                }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    window.location.href = "/kelola-pengguna/edit/{{ $user->id }}";
+                                                }
+                                                });
+                                            }
                                             function reset_button_{{ $user->id }}() {
                                                 Swal.fire({
-                                                title: "Konfirmasi Reset Password",
-                                                text: "Apakah Anda yakin ingin melakukan reset password data ini? ",
+                                                title: "Konfirmasi Perubahan Password",
+                                                text: "Apakah Anda yakin ingin melakukan perubahan password data ini? ",
                                                 icon: "warning",
                                                 showCancelButton: true,
                                                 confirmButtonColor: "#3085d6",
@@ -79,7 +93,8 @@
                                                 });
                                             }
                                         </script>
-                                        <a onclick="reset_button_{{ $user->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>lock</i></a> 
+                                        <a onclick="edit_button_{{ $user->id }}();" class="btn btn-primary btn-sm"><i class="material-icons-outlined center" sty>edit</i></a> 
+                                        <a onclick="reset_button_{{ $user->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>lock_reset</i></a> 
                                         <a onclick="hapus_button_{{ $user->id }}();" class="btn btn-danger btn-sm"><i class="material-icons-outlined center" sty>delete</i></a>
                                     </td>
                                 </tr>

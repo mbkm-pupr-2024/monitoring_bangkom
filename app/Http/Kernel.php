@@ -72,6 +72,7 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'supervisi' => \App\Http\Middleware\SupervisiMiddleware::class,
         'petugas' => \App\Http\Middleware\PetugasMiddleware::class,
+        'petugasSupervisi' => \App\Http\Middleware\PetugasSupervisiMiddleware::class,
         'revalidate' => \App\Http\Middleware\RevalidateBackHistory::class,
         'all-role' => \App\Http\Middleware\AllRoleMiddleware::class,
     ];

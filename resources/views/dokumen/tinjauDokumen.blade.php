@@ -56,12 +56,12 @@
                                         $split = explode('.', $belum->file);
                                         $ext = $split[1]
                                     @endphp
-                                    @if ($ext == 'pdf' || $ext == 'doc')
+                                    @if ($ext == 'pdf')
                                         <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
-                                    @elseif($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg')
-                                        <i class="material-icons-outlined text-success align-middle m-r-sm">image</i>
-                                    @else
-                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">code</i>
+                                    @elseif($ext == 'doc' || $ext == 'docx')
+                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
+                                    @elseif($ext == 'xlxs' || $ext == 'xls')
+                                        <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
                                     @endif
                                     <a href="{{ asset('assets/dokumen/'. $belum->status->pelatihan->id . '_' .$belum->id_kegiatan_tahapan . '.pdf') }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $belum->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $belum->status->pelatihan->nama }}</span>
@@ -88,27 +88,6 @@
                                             }
                                         </script>
                                         <li><a class="dropdown-item" onclick=" return tolak_button_{{ $belum->id }}();">Tolak</a></li>
-
-                                        {{-- <li><a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#tolakDokumenModal">Tolak</a></li> --}}
-
-                                        {{-- <div class="modal fade" id="tolakDokumenModal" aria-labelledby="tolakModal" style="display: none;" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="tolakModal">Kirim Penolakan</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Placeholder text for this demonstration of a vertically centered modal dialog.</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-
 
                                         <li><a class="dropdown-item" href="/tinjau-dokumen/unduh-{{ $belum->id }}">Unduh</a></li>
                                     </ul>
@@ -147,12 +126,12 @@
                                         $split = explode('.', $telah->file);
                                         $ext = $split[1]
                                     @endphp
-                                    @if ($ext == 'pdf' || $ext == 'doc')
+                                    @if ($ext == 'pdf')
                                         <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
-                                    @elseif($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg')
-                                        <i class="material-icons-outlined text-success align-middle m-r-sm">image</i>
-                                    @else
-                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">code</i>
+                                    @elseif($ext == 'doc' || $ext == 'docx')
+                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
+                                    @elseif($ext == 'xlxs' || $ext == 'xls')
+                                        <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
                                     @endif
                                     <a href="#" class="file-manager-recent-item-title flex-fill">{{ $telah->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $telah->status->pelatihan->nama }}</span>
@@ -174,61 +153,11 @@
                 </div>
             </div>
 
-                    {{-- <table id="datatable1" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Pelatihan</th>
-                                <th>Dokumen</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $no = 1;
-                            @endphp
-                            @foreach ($dokumens as $dokumen)
-                            <tr>
-                                <td>{{ $no }}</td>
-                                <td>
-                                    <img src="{{ asset('assets/images/bidang_pelatihan/' . $dokumen->bidang_pelatihan->gambar) }}" width="35" > 
-                                    {{ $dokumen->nama }}
-                                </td>
-                                <td>
-                                    <script>
-                                        function cetak_button_{{ $dokumen->id }}() {
-                                            Swal.fire({
-                                            title: "Konfirmasi Pencetakan Surat",
-                                            text: "Apakah Anda ingin melakukan cetak surat untuk pelatihan ini? ",
-                                            icon: "warning",
-                                            showCancelButton: true,
-                                            confirmButtonColor: "#3085d6",
-                                            cancelButtonText: "Batal",
-                                            cancelButtonColor: "#d33",
-                                            confirmButtonText: "Menuju Cetak Menu"
-                                            }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                window.location.href = "/cetak-surat/pelatihan-{{ $dokumen->id }}";
-                                            }
-                                            });
-                                        }
-                                    </script>
-                                    <a onclick="cetak_button_{{ $dokumen->id }}();" class="btn btn-primary btn-sm"><i class="material-icons-outlined center" sty>print</i></a> 
-                                </td>
-                            </tr>
-                            @php
-                                $no++;
-                            @endphp
-                            @endforeach
-                        </tbody>
-                    </table> --}}
         </div>
     </div>
 </div>
 @endsection
 
 @section('script')
-<script src="{{ asset('assets/plugins/select2/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('assets/js/pages/select2.js') }}"></script>
 @endsection
 

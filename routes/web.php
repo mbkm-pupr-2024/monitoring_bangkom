@@ -42,9 +42,6 @@ Route::middleware(['tamu'])->group(function () {
 
 Route::get('/pelatihan-berlangsung/slide-show', [PelatihanBerlangsungController::class, 'pelatihan_slides'])->name('pelatihan-berlangsung-slide-show');
 
-// Route::get('/pelatihan/cek-status/{id}', [PelatihanController::class, 'pelatihan_cekStatus'])->name('pelatihan-cekStatus');
-// Route::get('/pelatihan/kelola-status/{id}', [PelatihanStatusController::class, 'pelatihan_kelolaStatus'])->name('pelatihan-kelolaStatus');
-
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/kelola-jenis-pelatihan', [JenisPelatihanController::class, 'jenisPelatihan'])->name('kelola-jenis-pelatihan');
@@ -93,17 +90,25 @@ Route::middleware(['admin'])->group(function () {
 
 Route::middleware('petugas')->group(function () {
     Route::get('/dokumen-pelatihan-{id_pl}/{no_thp}/tahapan-{id_thp}', [PelatihanBerlangsungController::class, 'menu_dokumen_pelatihan'])->name('dokumen-pelatihan');
-    Route::get('/form-dokumen-pelatihan-{id_pl}/{id_kthp}', [FillDokumenController::class, 'form_dokumen_pelatihan'])->name('form-dokumen-pelatihan');
+    Route::get('/form-dokumen-pelatihan-{id_pl}/{id_kthp}-create', [FillDokumenController::class, 'form_dokumen_pelatihan_create'])->name('create-form-dokumen-pelatihan');
+    Route::get('/form-dokumen-pelatihan-{id_pl}/{id_kthp}-upload', [FillDokumenController::class, 'form_dokumen_pelatihan_upload'])->name('upload-form-dokumen-pelatihan');
 
     $kegiatan_tahapan = KegiatanTahapanModel::all();
     foreach ($kegiatan_tahapan as $kegiatan) {
         $nama_dokumen = $kegiatan->dokumen;
+        $aksi_dokumen = $kegiatan->aksi;
         $nama_url = str_replace([' ', ', '], '-', $nama_dokumen);
         $nama_fungsi = str_replace([' ', ',','-'], '', $nama_dokumen);
-        Route::post('/fill-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [FillDokumenController::class, 'fill_'.$nama_fungsi])->name('fill-'.$nama_fungsi);
-        Route::post('/print-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [PrintDokumenController::class, 'print_'.$nama_fungsi])->name('print-'.$nama_fungsi);
+        if ($aksi_dokumen == 'upload') {
+            Route::post('/upload-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [FillDokumenController::class, 'upload_'.$nama_fungsi])->name('upload-'.$nama_fungsi);
+        } else {
+            Route::post('/create-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [FillDokumenController::class, 'create_'.$nama_fungsi])->name('create-'.$nama_fungsi);
+            Route::post('/print-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [PrintDokumenController::class, 'print_'.$nama_fungsi])->name('print-'.$nama_fungsi);
+
+            Route::post('/upload-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [FillDokumenController::class, 'upload_'.$nama_fungsi])->name('upload-'.$nama_fungsi);
+        }
     }
-    Route::get('/unduh-template-dokumen-{file}-pelatihan', [FillDokumenController::class, 'download_template'])->name('download-template');
+    Route::get('/unduh-requirement-dokumen-{file}-pelatihan', [FillDokumenController::class, 'download_requirement'])->name('download-requirement');
 
     Route::get('/status-dokumen', [StatusDokumenController::class, 'status_dokumen'])->name('status-dokumen');
     Route::post('/status-dokumen/cari-dokumen-terkirim', [StatusDokumenController::class, 'cari_dokumen_terkirim'])->name('cari-dokumen-terkirim');
@@ -123,12 +128,6 @@ Route::middleware(['all-role'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::get('/edit-profile', [ProfileController::class, 'edit_profile'])->name('edit-profile');
-    Route::post('/edit-profile', [ProfileController::class, 'updateProfile'])->name('update-profile');
-    Route::get('/ubah_password', [ProfileController::class, 'ubah_password'])->name('ubah-password');
-    Route::post('/ubah_password', [ProfileController::class, 'updatePassword'])->name('update-password');
-
-
     Route::get('/sop-pelatihan', [SopPelatihanController::class, 'sopPelatihan'])->name('sop-pelatihan');
 
     Route::get('/jadwal-pelatihan', [JadwalPelatihanController::class, 'jadwalPelatihan'])->name('jadwal-pelatihan');
@@ -142,8 +141,5 @@ Route::middleware(['all-role'])->group(function () {
     Route::get('/arsip-dokumen/unduh-{id_fl}', [ArsipDokumenController::class, 'unduh_dokumen'])->name('unduh-arsip-dokumen');
     Route::get('/arsip-dokumen', [ArsipDokumenController::class, 'arsip_dokumen'])->name('arsip-dokumen');
     Route::get('/arsip-dokumen/pelatihan-{id_pl}', [ArsipDokumenController::class, 'arsip_dokumen_pelatihan'])->name('arsip-dokumen-pelatihan');
-
-    // Route::get('/arsip-pelatihan', [ArsipPelatihanController::class, 'arsip_pelatihan'])->name('arsip-pelatihan');
-    // Route::get('/arsip-pelatihan/cari-pelatihan', [ArsipPelatihanController::class, 'cari_arsipPelatihan'])->name('cari-arsip-pelatihan');
  
 });

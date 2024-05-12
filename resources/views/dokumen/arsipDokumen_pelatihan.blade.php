@@ -35,12 +35,12 @@
                                             $split = explode('.', $dokumen->file);
                                             $ext = $split[1]
                                         @endphp
-                                        @if ($ext == 'pdf' || $ext == 'doc')
+                                        @if ($ext == 'pdf')
                                             <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
-                                        @elseif($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg')
-                                            <i class="material-icons-outlined text-success align-middle m-r-sm">image</i>
-                                        @else
-                                            <i class="material-icons-outlined text-primary align-middle m-r-sm">code</i>
+                                        @elseif($ext == 'doc' || $ext == 'docx')
+                                            <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
+                                        @elseif($ext == 'xlxs' || $ext == 'xls')
+                                            <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
                                         @endif
                                         {{-- <a href="{{ asset('assets/dokumen/daftar_calon_peserta.xlsx') }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $dokumen->kegiatan_tahapan->dokumen }}</a> --}}
                                         <a href="{{ asset('assets/dokumen/'. $dokumen->status->pelatihan->id . '_' .$dokumen->id_kegiatan_tahapan . '.pdf') }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $dokumen->kegiatan_tahapan->dokumen }}</a>

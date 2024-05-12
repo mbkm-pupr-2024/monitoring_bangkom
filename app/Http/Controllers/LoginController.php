@@ -16,40 +16,42 @@ class LoginController extends Controller
         return view('login');
     }
 
+    
+    // $request->validate([
+            //     'nip' => 'required',
+            //     'password'=> 'required' 
+            // ], [
+            //     'nip.required' => 'NIP is required',
+            //     'password.required' => 'Password is required',
+            // ]);
     public function signin(Request $request)
-    {
-        $request->validate([
-            'nip' => 'required',
-            'password'=> 'required' 
-        ]);
-        // $request->validate([
-        //     'nip' => 'required',
-        //     'password'=> 'required' 
-        // ], [
-        //     'nip.required' => 'NIP is required',
-        //     'password.required' => 'Password is required',
-        // ]);
-        if (Auth::attempt($request->only('nip','password'))) {
-            if (Auth::user()->role == 'admin') {
-                Auth::guard('admin')->login(Auth::user());
-            }
-            else if (Auth::user()->role == 'supervisi') {
-                Auth::guard('supervisi')->login(Auth::user());
-            }
-            else if (Auth::user()->role == 'petugas') {
-                Auth::guard('petugas')->login(Auth::user());
-            }
-            // dd(Auth('petugas')->check());
-            
-            $request->session()->regenerate();
+{
+    $request->validate([
+        'nip' => 'required',
+        'password'=> 'required' 
+    ]);
 
-            return redirect()->route('pelatihan-berlangsung')->with('success', 'Anda berhasil login');
+    if (Auth::attempt($request->only('nip','password'))) {
+        if (Auth::user()->role == 'admin') {
+            Auth::guard('admin')->login(Auth::user());
         }
-        else
-        {
-            return redirect('/login')->with('error', 'Invalid nip or password')->withInput($request->except('password'));
+        else if (Auth::user()->role == 'supervisi') {
+            Auth::guard('supervisi')->login(Auth::user());
         }
+        else if (Auth::user()->role == 'petugas') {
+            Auth::guard('petugas')->login(Auth::user());
+        }
+
+        $request->session()->regenerate();
+
+        return redirect()->route('pelatihan-berlangsung')->with('success', 'Anda berhasil login');
     }
+    else
+    {
+        return redirect('/login')->with('error', 'Invalid nip or password')->withInput($request->except('password'));
+    }
+}
+
     public function logout(Request $request)
     {
 

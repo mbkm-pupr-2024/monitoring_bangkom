@@ -127,12 +127,22 @@
                                 @if ($loop->first)
                                     <div class="carousel-item active" data-bs-interval="2000">
                                         <div class="card">
-                                            <div class="app-auth-container-slides">
-                                                <div class="logo">
-                                                    <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
+                                            <div class="app-auth-container-slides" style="width: 100%">
+                                                <div class="row d-flex justify-content-between">
+                                                    <div class="col-md-5">
+                                                        <div class="logo">
+                                                            <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
+                                                        </div>
+                                                        <br>
+                                                        <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
+                                                    </div>
+                                                    <ul class="col-md-4" style="list-style: none;">
+                                                        <li><b>Keterangan: </b></li>
+                                                        <li><span class="bg-danger text-danger text-small me-3">icon</span>Belum ada progres</li>
+                                                        <li><span class="bg-primary text-primary text-small me-3">icon</span>Progres sedang berlangsung</li>
+                                                        <li><span class="bg-success text-success text-small me-3">icon</span>Progres selesai</li>
+                                                    </ul>
                                                 </div>
-                                                <br>
-                                                <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
                                             </div>
                                             
                                             
@@ -190,13 +200,24 @@
                                 @else
                                     <div class="carousel-item" data-bs-interval="2000">
                                         <div class="card">
-                                            <div class="app-auth-container-slides">
-                                                <div class="logo">
-                                                    <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
+                                            <div class="app-auth-container-slides" style="width: 100%">
+                                                    <div class="row d-flex justify-content-between">
+                                                        <div class="col-md-5">
+                                                            <div class="logo">
+                                                                <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
+                                                            </div>
+                                                            <br>
+                                                            <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
+                                                        </div>
+                                                        <ul class="col-md-4" style="list-style: none;">
+                                                            <li><b>Keterangan: </b></li>
+                                                            <li><span class="bg-danger text-danger me-3">icon</span>Belum ada progres</li>
+                                                            <li><span class="bg-primary text-primary me-3">icon</span>Progres sedang berlangsung</li>
+                                                            <li><span class="bg-success text-success me-3">icon</span>Progres selesai</li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <br>
-                                                <h1 class="badge text-center badge-dark" style="width:80%">Monitoring Bangkom</h1>
-                                            </div>
+
                                             <div class="main-timeline-slides">
                                                 <ul class="ul-timeline-slides">
                                                     @foreach ($tahapans as $tahapan)

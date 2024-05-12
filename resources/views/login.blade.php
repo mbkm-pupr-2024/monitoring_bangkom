@@ -70,10 +70,10 @@
 
                 <div class="auth-credentials m-b-xxl">
                     <label for="nip" class="form-label">NIP</label>
-                    <input type="text" class="form-control m-b-md" id="nip" placeholder="nip" name="nip" value="{{ old('username') }}">
+                    <input type="text" class="form-control m-b-md" id="nip" placeholder="nip" name="nip" value="{{ old('nip') }}" required>
 
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" value="{{ old('password') }}">
+                    <input type="password" class="form-control" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" name="password" value="{{ old('password') }}" required>
                 </div>
                 
                 <div class="auth-submit">

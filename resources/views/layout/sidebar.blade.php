@@ -6,7 +6,15 @@
       <a href="/dashboard">
         <img src="{{ asset('assets/images/logo.jpg') }}" width="50">
         <span class="activity-indicator"></span>
-        <span class="user-info-text">{{ ucwords(Auth::user()->username) }}<br><span class="user-state-info">{{ (Auth::user()->role) }}</span></span>
+        @php
+          if(strpos(Auth::user()->nama_lengkap, ' ') !== false){
+            $authusername = explode(' ', Auth::user()->nama_lengkap);
+            $username = $authusername[0] . ' ' . $authusername[1];
+          } else {
+            $username = Auth::user()->nama_lengkap;
+          }
+        @endphp
+        <span class="user-info-text">{{ ucwords($username) }}<br><span class="user-state-info">{{ (Auth::user()->role) }}</span></span>
       </a>
     </div>
   </div>    

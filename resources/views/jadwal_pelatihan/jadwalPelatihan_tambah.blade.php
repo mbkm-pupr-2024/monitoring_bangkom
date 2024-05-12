@@ -25,46 +25,46 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="nama_pelatihan" class="form-label">Nama Pelatihan</label>
-                                        <input type="text" class="form-control" id="nama_pelatihan" name="nama">
+                                        <input type="text" class="form-control" id="nama_pelatihan" name="nama" value="{{ old('nama') }}" required>
                                     </div>
                                     <div class="mb-4">
                                         <label for="jenis_pelatihan" class="form-label">Jenis Pelatihan</label>
-                                        <select class="js-states form-control" id="jenis_pelatihan" tabindex="-1" style="display:none;width: 100%" name="id_jenis">
-                                            
+                                        <select class="js-states form-control" id="jenis_pelatihan" tabindex="-1" style="display:none;width: 100%" name="id_jenis" required>
+                                            <option value="">---Pilih jenis pelatihan---</option>
                                             @foreach ($jeniss as $jenis)
-                                                <option value={{ $jenis->id }}>{{ $jenis->nama }}</option>
+                                                <option value="{{ $jenis->id }}" {{ old('id_jenis' == $jenis->id ? 'selected' : '') }}>{{ $jenis->nama }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="mb-4">
                                         <label for="bidang_pelatihan" class="form-label">Bidang Pelatihan</label>
-                                        <select class="js-states form-control" id="bidang_pelatihan" tabindex="-1" style="display:none;width: 100%" name="id_bidang">
-                                            
+                                        <select class="js-states form-control" id="bidang_pelatihan" tabindex="-1" style="display:none;width: 100%" name="id_bidang" required>
+                                            <option value="">---Pilih bidang pelatihan---</option>
                                             @foreach ($bidangs as $bidang)
-                                                <option value={{ $bidang->id }}>{{ $bidang->nama }}</option>
+                                                <option value="{{ $bidang->id }}" {{ old('id_bidang' == $bidang->id ? 'selected' : '') }}>{{ $bidang->nama }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="mb-4">
                                         <label for="model_pelatihan" class="form-label">Model Pelatihan</label>
-                                        <select class="js-states form-control" id="model_pelatihan" tabindex="-1" style="display:none;width: 100%" name="id_model">
-                                            
+                                        <select class="js-states form-control" id="model_pelatihan" tabindex="-1" style="display:none;width: 100%" name="id_model" required>
+                                            <option value="">---Pilih model pelatihan---</option>
                                             @foreach ($models as $model)
-                                                <option value={{ $model->id }}>{{ $model->nama }}</option>
+                                                <option value="{{ $model->id }}" {{ old('id_model' == $model->id ? 'selected' : '') }}>{{ $model->nama }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="mb-4">
                                         <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
-                                        <input id="tanggal_mulai" class="form-control flatpickr1" type="text" placeholder="Select Date.." name="tanggal_mulai">
+                                        <input id="tanggal_mulai" class="form-control flatpickr1" type="text" placeholder="Pilih tanggal.." name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" required>
                                     </div>
                                     <div class="mb-4">
                                         <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
-                                        <input id="tanggal_selesai" class="form-control flatpickr1" type="text" placeholder="Select Date.." name="tanggal_selesai">
+                                        <input id="tanggal_selesai" class="form-control flatpickr1" type="text" placeholder="Pilih tanggal.." name="tanggal_selesai" value="{{ old('tanggal_selesai') }}" required>
                                     </div>
                                     <div class="mb-4">
                                         <label for="tahun_periode" class="form-label">Tahun Periode</label>
-                                        <input id="tahun_periode" class="form-control" type="number" name="tahun_periode" value="{{ date('Y') }}">
+                                        <input id="tahun_periode" class="form-control" type="number" name="tahun_periode" value="{{ old('tahun_periode'),date('Y') }}" required>
                                     </div>
                                     <div class="mb-4">
                                         <button class="btn btn-success float-end" type="submit">Tambah</button>
@@ -85,4 +85,7 @@
 <script src="{{ asset('assets/js/pages/select2.js') }}"></script>
 <script src="{{ asset('assets/plugins/flatpickr/flatpickr.js') }}"></script>
 <script src="{{ asset('assets/js/pages/datepickers.js') }}"></script>
+<script>
+$('select').select2();
+<script>
 @endsection

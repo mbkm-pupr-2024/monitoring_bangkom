@@ -45,21 +45,43 @@ class UserController extends Controller
 
         return redirect('/kelola-pengguna')->with(['success' => 'Data pengguna berhasil ditambahkan', 'popUp_title' => 'Added!']);
     }
-    public function user_resetPassword($id)
+    public function user_edit($id)
     {
-        return view('user.user_resetPassword', ['user_id' => $id]);
+        $user = UserModel::find($id);
+        return view('user.user_edit', ['user' => $user]);
     }
-    public function user_updatePassword(Request $request)
+
+    public function user_update(Request $request): RedirectResponse
     {
         $request->validate([
-            'password' => 'required',
+            'nip' => 'required',
+            'nama_lengkap' => 'required',
         ]);
 
         $user = UserModel::find($request->id);
         $user->update($request->all());
 
-        return redirect('/kelola-pengguna')->with(['success' => 'Reset password berhasil', 'popUp_title' => 'Updated!']);
+        return redirect('/kelola-pengguna')->with(['success' => 'Data pengguna berhasil diubah', 'popUp_title' => 'Updated!']);
     }
+    public function user_resetPassword($id)
+    {
+        return view('user.user_resetPassword', ['user_id' => $id]);
+    }
+    public function user_updatePassword(Request $request)
+{
+    $request->validate([
+        'password' => 'required',
+    ]);
+
+    $user = UserModel::find($request->id);
+
+    $user->password = bcrypt($request->password);
+
+    $user->save();
+
+    return redirect('/kelola-pengguna')->with(['success' => 'Reset password berhasil', 'popUp_title' => 'Updated!']);
+}
+
     public function user_delete($id)
     {
         UserModel::find($id)->delete();

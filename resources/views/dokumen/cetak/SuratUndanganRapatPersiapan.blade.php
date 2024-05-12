@@ -138,7 +138,7 @@
           <tr>
             <td>Waktu</td>
             <td>:</td>
-            <td>Pukul {{ $request->waktu }} WIB s.d selesai</td>
+            <td>Pukul {{ $request->waktu_mulai }} WIB s.d selesai</td>
           </tr>
           <tr>
             <td>Media</td>

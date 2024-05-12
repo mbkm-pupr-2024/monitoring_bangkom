@@ -23,7 +23,7 @@
                         <form action="{{ route('print-' . $nama_fungsi, ['id_pl' => $pelatihan->id, 'id_kthp' => $kegiatan->id]) }}" method="POST">
                             @csrf
                             <input type="hidden" name="pdf_content" value="{{ base64_encode($pdf_content) }}">
-                            <button type="submit" class="btn btn-primary btn-sm float-end mt-3">Kirim ke Supervisi</button>
+                            <button type="submit" class="btn btn-primary btn-sm float-end mt-3">Simpan dan kirim untuk ditinjau</button>
                         </form>
                 </div>
             </div>
