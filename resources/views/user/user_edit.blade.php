@@ -23,11 +23,21 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="nip" class="form-label">NIP</label>
-                                        <input type="text" class="form-control" id="nip" name="nip" value="{{ $user->nip }}">
+                                        <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip" value="{{ old('nip') ? old('nip') :  $user->nip  }}">
+                                        <div class="invalid-feedback">
+                                            @error('nip')
+                                                NIP harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
-                                        <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" value="{{ $user->nama_lengkap }}">
+                                        <input type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" id="nama_lengkap" name="nama_lengkap" value="{{ old('nama_lengkap') ? old('nama_lengkap') :  $user->nama_lengkap  }}">
+                                        <div class="invalid-feedback">
+                                            @error('nama_lengkap')
+                                                Nama lengkap harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <button class="btn btn-primary float-end" type="submit">Edit</button>

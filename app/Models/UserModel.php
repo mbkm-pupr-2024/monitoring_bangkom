@@ -11,7 +11,7 @@ class UserModel extends Authenticatable
 
     protected $table = 'user';
     protected $guarded = ['id'];
-    protected $fillable=['role','nip','nama_lengkap','username', 'password'];
+    protected $fillable=['role','nip','nama_lengkap', 'password'];
     protected $keyType = 'string';
     public $incrementing = false;
     public $timestamps = true;

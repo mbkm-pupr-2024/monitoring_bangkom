@@ -23,13 +23,23 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="nama_bidang" class="form-label">Nama Bidang Pelatihan</label>
-                                        <input type="text" class="form-control" id="nama_bidang" name="nama">
+                                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama_bidang" name="nama" value="{{ old('nama') }}">
+                                        <div class="invalid-feedback">
+                                            @error('nama')
+                                                Nama bidang pelatihan harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label for="gambar_bidang" class="form-label">Gambar Bidang Pelatihan</label>
-                                                <input type="file" class="form-control" id="gambar_bidang" name="gambar">
+                                                <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar_bidang" name="gambar" value="{{ old('gambar') }}">
+                                                <div class="invalid-feedback">
+                                                    @error('gambar')
+                                                        Gambar bidang pelatihan harus diisi
+                                                    @enderror
+                                                </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>Preview Foto</label>

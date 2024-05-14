@@ -126,14 +126,6 @@
                                         </span>
                                     </div>
                                     <br>
-                                    {{-- <p>
-                                        @if (isset($status_terakhir[$pelatihan->id]))
-                                            <b>Status:</b> {{ $status_terakhir[$pelatihan->id] }}
-                                        @else
-                                            <b>Status:</b> Belum ada progres
-                                        @endif
-                                    </p> --}}
-
 
                                     @php
                                         $no = 1;

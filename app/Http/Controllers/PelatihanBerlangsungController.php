@@ -116,6 +116,7 @@ class PelatihanBerlangsungController extends Controller
 
     public function menu_dokumen_pelatihan($id_pl,$no_thp,$id_thp)
     {
+        // dd($id_pl,$no_thp,$id_thp);
         $pelatihan = PelatihanModel::with('status')->find($id_pl);
         $status = StatusModel::where('id_pelatihan', $id_pl)->first();
         $tahapan = TahapanModel::find($id_thp);

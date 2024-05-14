@@ -38,12 +38,14 @@
                                         @if ($ext == 'pdf')
                                             <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
                                         @elseif($ext == 'doc' || $ext == 'docx')
-                                            <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
-                                        @elseif($ext == 'xlxs' || $ext == 'xls')
-                                            <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
+                                            <i class="material-icons-outlined text-primary align-middle m-r-sm">description</i>
+                                        @elseif($ext == 'xlsx' || $ext == 'xls')
+                                            <i class="material-icons-outlined text-success align-middle m-r-sm">description</i>
+                                        @elseif($ext == 'rar' || $ext == 'zip')
+                                            <i class="material-icons-outlined text-info align-middle m-r-sm">description</i>
                                         @endif
                                         {{-- <a href="{{ asset('assets/dokumen/daftar_calon_peserta.xlsx') }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $dokumen->kegiatan_tahapan->dokumen }}</a> --}}
-                                        <a href="{{ asset('assets/dokumen/'. $dokumen->status->pelatihan->id . '_' .$dokumen->id_kegiatan_tahapan . '.pdf') }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $dokumen->kegiatan_tahapan->dokumen }}</a>
+                                        <a href="{{ asset('assets/dokumen/'. $dokumen->status->pelatihan->id . '_' .$dokumen->id_kegiatan_tahapan . '.' . $ext) }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $dokumen->kegiatan_tahapan->dokumen }}</a>
                                         <span class="p-h-sm text-muted">{{ $dokumen->status->pelatihan->nama }}</span>
                                         <a class="dropdown-toggle file-manager-recent-file-actions" id="file-manager-recent-10" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="file-manager-recent-10">

@@ -24,7 +24,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="suratPermohonan" class="form-label">Upload Surat Permohonan Membuka dan Menghadiri</label>
-                                        <input type="file" class="form-control" id="suratPermohonan" name="suratPermohonan" accept=".docx, .pdf, .zip, .rar">
+                                        <input type="file" class="form-control @error('suratPermohonan') is-invalid @enderror" id="suratPermohonan" name="suratPermohonan" accept=".docx, .pdf, .zip, .rar" value="{{ old('suratPermohonan') }}">
+                                        <div class="invalid-feedback">
+                                            @error('suratPermohonan')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

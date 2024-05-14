@@ -23,7 +23,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="password" class="form-label">Password Baru</label>
-                                        <input type="password" class="form-control" id="password" name="password">
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
+                                        <div class="invalid-feedback">
+                                            @error('password')
+                                                Password baru harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <button class="btn btn-primary float-end" type="submit">Reset</button>
@@ -40,5 +45,4 @@
 @endsection
 
 @section('script')
-
 @endsection

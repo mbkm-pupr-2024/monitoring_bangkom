@@ -27,7 +27,7 @@ class JadwalPelatihanController extends Controller
     }
     public function jadwalPelatihan_insert(Request $request): RedirectResponse
     {
-        $request->validate([
+        if (!$request->validate([
             'nama' => 'required',
             'id_jenis' => 'required',
             'id_bidang' => 'required',
@@ -35,7 +35,18 @@ class JadwalPelatihanController extends Controller
             'tanggal_mulai' => 'required',
             'tanggal_selesai' => 'required',
             'tahun_periode' => 'required',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nama',
+                'id_jenis',
+                'id_bidang',
+                'id_model',
+                'tanggal_mulai',
+                'tanggal_selesai',
+                'tahun_periode',
+            ]);
+        }
+        
 
         $lastRecordPelatihan = PelatihanModel::latest('id')->first();
         $numberPelatihan = 1;
@@ -88,7 +99,7 @@ class JadwalPelatihanController extends Controller
         return view('jadwal_pelatihan.jadwalPelatihan_edit', ['jeniss' => $jenis_pelatihan ,'bidangs' =>$bidang_pelatihan, 'models' => $model_pelatihan,'pelatihan' => $pelatihan]);
     }
     public function jadwalPelatihan_update(Request $request){
-        $request->validate([
+        if (!$request->validate([
             'nama' => 'required',
             'id_jenis' => 'required',
             'id_bidang' => 'required',
@@ -96,7 +107,17 @@ class JadwalPelatihanController extends Controller
             'tanggal_mulai' => 'required',
             'tanggal_selesai' => 'required',
             'tahun_periode' => 'required',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nama',
+                'id_jenis',
+                'id_bidang',
+                'id_model',
+                'tanggal_mulai',
+                'tanggal_selesai',
+                'tahun_periode',
+            ]);
+        }
 
         $pelatihan = PelatihanModel::find($request->id);
         $pelatihan->update($request->all());

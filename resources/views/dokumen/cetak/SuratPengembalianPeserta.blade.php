@@ -30,81 +30,83 @@
         border: 2px solid black;
         padding: 15px;
     }
-    p{
+    p,li{
       text-align: justify
     }
 </style>
 
 <body> 
     @if (!function_exists('tanggal_indo'))
-    @php
-    function tanggal_indo($tanggal){
-        $bulan = array (
-        1 =>'Januari',
-        'Februari',
-        'Maret',
-        'April',
-        'Mei',
-        'Juni',
-        'Juli',
-        'Agustus',
-        'September',
-        'Oktober',
-        'November',
-        'Desember'
-        );
-        $pecahkan = explode('-', $tanggal);
+      @php
+      function tanggal_indo($tanggal){
+          $bulan = array (
+          1 =>'Januari',
+          'Februari',
+          'Maret',
+          'April',
+          'Mei',
+          'Juni',
+          'Juli',
+          'Agustus',
+          'September',
+          'Oktober',
+          'November',
+          'Desember'
+          );
+          $pecahkan = explode('-', $tanggal);
 
-        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
-    }
+          return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+      }
 
-    function rentang_tgl($tgl_mulai, $tgl_selesai){
-        $tgl_mulai = tanggal_indo($tgl_mulai);
-        $tgl_selesai = tanggal_indo($tgl_selesai);
-        $tgl_mulai_pecah = explode(' ', $tgl_mulai);
-        $tgl_selesai_pecah = explode(' ', $tgl_selesai);
-        if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
-            return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
-        }
-        return $tgl_mulai . ' s.d ' . $tgl_selesai;
-    }
+      function rentang_tgl($tgl_mulai, $tgl_selesai){
+          $tgl_mulai = tanggal_indo($tgl_mulai);
+          $tgl_selesai = tanggal_indo($tgl_selesai);
+          $tgl_mulai_pecah = explode(' ', $tgl_mulai);
+          $tgl_selesai_pecah = explode(' ', $tgl_selesai);
+          if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
+              return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+          }
+          return $tgl_mulai . ' s.d ' . $tgl_selesai;
+      }
 
-    function hari_indo($tanggal){
-        if (date('l', strtotime($tanggal)) == 'Sunday') {
-            return 'Minggu';
-        } elseif (date('l', strtotime($tanggal)) == 'Monday') {
-            return 'Senin';
-        } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
-            return 'Selasa';
-        } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
-            return 'Rabu';
-        } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
-            return 'Kamis';
-        } elseif (date('l', strtotime($tanggal)) == 'Friday') {
-            return 'Jumat';
-        } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
-            return 'Sabtu';
-        }
-        return date('l', strtotime($tanggal));
-    }
-    @endphp
+      function hari_indo($tanggal){
+          if (date('l', strtotime($tanggal)) == 'Sunday') {
+              return 'Minggu';
+          } elseif (date('l', strtotime($tanggal)) == 'Monday') {
+              return 'Senin';
+          } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
+              return 'Selasa';
+          } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
+              return 'Rabu';
+          } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
+              return 'Kamis';
+          } elseif (date('l', strtotime($tanggal)) == 'Friday') {
+              return 'Jumat';
+          } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
+              return 'Sabtu';
+          }
+          return date('l', strtotime($tanggal));
+      }
+      @endphp
 @endif
   <div class="container">
-    <div class="kopsurat"
-      style="display: flex; align-items: center; justify-content: center; border-bottom: 1px solid black;">
-      <img style="text-align:left" src="{{ $logo }}" alt="" width="100" height="100">
-      <div class="heading" style="text-align: center; margin-left: 10px;">
-        <h4 style="margin-top: 20px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
-        <h4 style="margin-top: -20px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
-        <h4 style="margin-top: -20px;">BALAI PENGEMBANGAN KOMPETENSI PUPR WILAYAH IV SURABAYA</h4>
-        <h6 style="margin-top: -20px;font-weight:normal">Jalan Gayung Kebonsari 48, Gayungan, Surabaya 60234, Telepon (031) 8291040, 8286501 Faksimili 8275847</h6>
+    <div class="kopsurat" style="border-bottom: 1px solid black;">
+      <div class="wrapper">
+        <img style="background-color: blue;" src="{{ $logo }}" alt="pupr" width="100" height="100">
+        <div class="heading" style="text-align: center; width: 80%; float: right;">
+          <h4 style="margin-top: 5px;margin-left: -80px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
+          <h4 style="margin-top: -20px;margin-left: -80px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
+          <h4 style="margin-top: -20px;margin-left: -80px;">BALAI PENGEMBANGAN KOMPETENSI PUPR WILAYAH IV SURABAYA</h4>
+          <h6 style="margin-top: -20px;margin-left: -80px;font-weight:normal">Jalan Gayung Kebonsari 48, Gayungan, Surabaya 60234, Telepon (031) 8291040, 8286501 Faksimili 8275847</h6>
+        </div>
       </div>
     </div>
+    <br>
     <div class="isi">
       <div class="judul">
-        <p style="margin-bottom: 10px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
+        <p style="margin-bottom: 20px; margin-top: -5px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
         </p>
-        <table>
+        <table style="margin-top: -30px;">
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
@@ -141,10 +143,8 @@
         <p style="text-indent: 50px;line-height: 1.5;">Demikian kami sampaikan, atas perhatian dan kerjasamanya, kami mengucapkan terima kasih.</p>
       </div>
     </div>
-    <div class="ttd" style="display: flex; justify-content: flex-end;">
-      <div class="ttd-koprodi" style="position: relative;">
-        
-        <br>
+    <div class="ttd" style="position: relative; margin-bottom: 250px;">
+      <div class="ttd-koprodi" style="position: absolute; width: 50%; right: 0; top: 20px;">
         <p style="margin-top: -20px; text-align:center;"><b>Kepala Balai Pengembangan Kompetensi PUPR 
             <br>Wilayah VI Surabaya,</b>
         </p>
@@ -153,32 +153,36 @@
         <p style="margin-top: -10px;text-align:center;"><i style="color:rgb(151, 149, 149)">Ditandatangani secara elektronik</i></p>
       </div>
     </div>
-    <p><b>Tembusan:</b></p>
-    <ol>
-      @foreach ($data as $item)
-        @if (!$loop->first && $item['tembusan'] != null)
-          <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
-        @endif
-      @endforeach
-    </ol>
+    <div style="page-break-inside: avoid">
+      <p><b>Tembusan:</b></p>
+      <ol>
+        @foreach ($data as $item)
+          @if (!$loop->first && $item['tembusan'] != null)
+            <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
+          @endif
+        @endforeach
+      </ol>
+    </div>
   </div>
 
   {{-- Lampiran 1 --}}
-  <p style="text-align: right;page-break-before: always;">
-    Lampiran II Surat Kepala Balai Pengembangan
-     Kompetensi PUPR Wilayah VI Surabaya</p>
-  <div style="text-align: right;margin-bottom:90px;margin-top:-15px">
-    <table style="float:right">
-      <tr>
-          <td>Nomor</td>
-          <td>:</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>Tanggal</td>
-          <td>:</td>
-          <td></td>
-    </table>
+  <div class="wrapper" style="width: 50%; float: right;">
+    <p style="text-align: left; page-break-before: always;">
+      Lampiran I Surat Kepala Balai Pengembangan
+       Kompetensi PUPR Wilayah VI Surabaya</p>
+    <div style="text-align: right;margin-bottom:30px;margin-top:-15px">
+      <table style="">
+        <tr>
+            <td>Nomor</td>
+            <td>:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Tanggal</td>
+            <td>:</td>
+            <td></td>
+      </table>
+    </div>
   </div>
   <h3 style="text-align:center;clear:right;">DAFTAR UNIT ORGANISASI PENGUTUS</h3>
   <p>Yth.</p>
@@ -191,23 +195,26 @@
     </ol>
 
     {{-- Lampiran 2 --}}
-  <p style="text-align: right;page-break-before: always;">
-    Lampiran II Surat Kepala Balai Pengembangan
-     Kompetensi PUPR Wilayah VI Surabaya</p>
-  <div style="text-align: right;margin-bottom:90px;margin-top:-15px">
-    <table style="float:right">
-      <tr>
-          <td>Nomor</td>
-          <td>:</td>
-          <td></td>
-      </tr>
-      <tr>
-          <td>Tanggal</td>
-          <td>:</td>
-          <td></td>
-    </table>
-  </div>
-    <h3 style="text-align:center">
+    <div class="wrapper" style="width: 50%; float: right;">
+      <p style="text-align: left; page-break-before: always;">
+        Lampiran II Surat Kepala Balai Pengembangan
+         Kompetensi PUPR Wilayah VI Surabaya</p>
+      <div style="text-align: right;margin-bottom:30px;margin-top:-15px">
+        <table style="">
+          <tr>
+              <td>Nomor</td>
+              <td>:</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Tanggal</td>
+              <td>:</td>
+              <td></td>
+        </table>
+      </div>
+    </div>
+    <br>
+    <h3 style="text-align:center;clear: both;">
         DAFTAR PESERTA
         <br>
         PESERTA PELATIHAN MANAJEMEN KONSTRUKSI 

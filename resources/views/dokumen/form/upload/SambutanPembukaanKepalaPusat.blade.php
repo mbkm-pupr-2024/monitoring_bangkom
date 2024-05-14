@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="sambutanPembukaanKapus" class="form-label">Upload Sambutan Pembukaan Kepala Pusat</label>
-                                        <input type="file" class="form-control" id="sambutanPembukaanKapus" name="sambutanPembukaanKapus" accept=".docx, .pdf">
+                                        <input type="file" class="form-control @error('sambutanPembukaanKapus') is-invalid @enderror" id="sambutanPembukaanKapus" name="sambutanPembukaanKapus" accept=".docx, .pdf" value="{{ old('sambutanPembukaanKapus') }}">
+                                        <div class="invalid-feedback">
+                                            @error('sambutanPembukaanKapus')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

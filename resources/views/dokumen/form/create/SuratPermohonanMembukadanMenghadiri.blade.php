@@ -24,70 +24,134 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="nomor_surat" class="form-label">Nomor Surat</label>
-                                        <input type="text" class="form-control" id="nomor_surat" name="nomor_surat">
+                                        <input type="text" class="form-control @error('nomor_surat') is-invalid @enderror" id="nomor_surat" name="nomor_surat" value="{{ old('nomor_surat') }}">
+                                        <div class="invalid-feedback">
+                                            @error('nomor_surat')
+                                                Nomor surat harus diisi
+                                            @enderror
+                                        </div>
                                     </div> 
                                     <h6>Kepada:</h6>
                                     <div class="mb-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="kata_ganti" id="bapak" value="Bapak" checked>
-                                            <label class="form-check-label" for="bapak">
-                                              Bapak
+                                            @if (old('kata_ganti'))
+                                                <input class="form-check-input" type="radio" name="kata_ganti" id="bapak" value="Bapak" {{ old('kata_ganti') == 'Bapak' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="bapak">
+                                                Bapak
                                             </label>
-                                          </div>
-                                          <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="kata_ganti" id="ibu" value="Ibu">
+                                            @else
+                                                <input class="form-check-input" type="radio" name="kata_ganti" id="bapak" value="Bapak" checked>
+                                            @endif
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="kata_ganti" id="ibu" value="Ibu" {{ old('kata_ganti') == 'Ibu' ? 'checked' : '' }}>
                                             <label class="form-check-label" for="ibu">
-                                              Ibu
+                                                Ibu
                                             </label>
-                                          </div>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            @error('kata_ganti')
+                                                Kata ganti identitas penerima harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <label for="nama_yth" class="form-label">Penerima</label>
-                                        <input type="text" class="form-control" id="nama_yth" name="nama_yth">
+                                        <input type="text" class="form-control @error('nama_yth') is-invalid @enderror" id="nama_yth" name="nama_yth" value="{{ old('nama_yth') }}">
+                                        <div class="invalid-feedback">
+                                            @error('nama_yth')
+                                                Penerima harus diisi
+                                            @enderror
+                                        </div>
                                     </div> 
                                     <div class="mb-4">
                                         <label for="lokasi" class="form-label">Lokasi</label>
-                                        <input type="text" class="form-control" id="lokasi" name="lokasi">
+                                        <input type="text" class="form-control @error('lokasi') is-invalid @enderror" id="lokasi" name="lokasi" value="{{ old('lokasi') }}">
+                                        <div class="invalid-feedback">
+                                            @error('lokasi')
+                                                Lokasi penerima harus diisi
+                                            @enderror
+                                        </div>
                                     </div> 
                                     <h6>Menindaklanjuti:</h6>
                                     <div class="mb-4">
                                         <label for="surat_perintah" class="form-label">Surat Perintah</label>
-                                        <input type="text" class="form-control" id="surat_perintah" name="surat_perintah">
+                                        <input type="text" class="form-control @error('surat_perintah') is-invalid @enderror" id="surat_perintah" name="surat_perintah" value="{{ old('surat_perintah') }}">
+                                        <div class="invalid-feedback">
+                                            @error('surat_perintah')
+                                                Surat perintah harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
                                             <label for="nomor_surat_perintah" class="form-label">Nomor Surat Perintah</label>
-                                            <input type="text" class="form-control" id="nomor_surat_perintah" name="nomor_surat_perintah">
+                                            <input type="text" class="form-control @error('nomor_surat_perintah') is-invalid @enderror" id="nomor_surat_perintah" name="nomor_surat_perintah" value="{{ old('nomor_surat_perintah') }}">
+                                            <div class="invalid-feedback">
+                                                @error('nomor_surat_perintah')
+                                                    Nomor surat perintah harus diisi
+                                                @enderror
+                                            </div>
                                         </div>
                                         <div class="col-6">
                                             <label for="tanggal_surat_perintah" class="form-label">Tanggal Surat Perintah</label>
-                                            <input id="tanggal_surat_perintah" class="form-control flatpickr1" type="text" placeholder="Pilih tanggal.." name="tanggal_surat_perintah">
+                                            <input id="tanggal_surat_perintah" class="form-control @error('tanggal_surat_perintah') is-invalid @enderror flatpickr1" type="text" placeholder="Pilih tanggal.." name="tanggal_surat_perintah" value="{{ old('tanggal_surat_perintah') }}">
+                                            <div class="invalid-feedback">
+                                                @error('tanggal_surat_perintah')
+                                                    Tanggal surat perintah harus diisi
+                                                @enderror
+                                            </div>
                                         </div> 
                                     </div>
                                     <br>
                                     <div class="mb-4">
                                         <label for="hal_surat_perintah" class="form-label">Hal</label>
-                                        <input type="text" class="form-control" id="hal_surat_perintah" name="hal_surat_perintah">
+                                        <input type="text" class="form-control @error('hal_surat_perintah') is-invalid @enderror" id="hal_surat_perintah" name="hal_surat_perintah" value="{{ old('hal_surat_perintah') }}">
+                                        <div class="invalid-feedback">
+                                            @error('hal_surat_perintah')
+                                                Hal surat perintah harus diisi
+                                            @enderror
+                                        </div>
                                     </div>                 
                                     <div class="mb-4">
                                         <label for="waktu_mulai" class="form-label">Waktu Mulai</label>
-                                            <input id="waktu_mulai" class="form-control" type="time" name="waktu_mulai">
+                                            <input id="waktu_mulai" class="form-control @error('waktu_mulai') is-invalid @enderror" type="time" name="waktu_mulai" value="{{ old('waktu_mulai') }}">
+                                            <div class="invalid-feedback">
+                                                @error('waktu_mulai')
+                                                    Waktu mulai pembukaan harus diisi
+                                                @enderror
+                                            </div>
                                     </div>                                    
                                     <div class="row">
                                         <div class="col-6">
                                             <label for="zoom_id" class="form-label">Zoom Meeting ID</label>
-                                            <input type="text" class="form-control" id="zoom_id" name="zoom_id">
+                                            <input type="text" class="form-control @error('zoom_id') is-invalid @enderror" id="zoom_id" name="zoom_id" value="{{ old('zoom_id') }}">
+                                            <div class="invalid-feedback">
+                                                @error('zoom_id')
+                                                    Zoom Meeting ID harus diisi
+                                                @enderror
+                                            </div>
                                             
                                         </div>
                                         <div class="col-6">
                                             <label for="passcode" class="form-label">Passcode</label>
-                                            <input type="text" class="form-control" id="passcode" name="passcode">
+                                            <input type="text" class="form-control @error('passcode') is-invalid @enderror" id="passcode" name="passcode" value="{{ old('passcode') }}">
+                                            <div class="invalid-feedback">
+                                                @error('passcode')
+                                                    Passcode Zoom harus diisi
+                                                @enderror
+                                            </div>
                                         </div>  
                                     </div>
                                     <br>
                                     <div class="mb-4">
                                         <label for="req_suratPermohonanMembuka" class="form-label">Upload Requirement</label>
-                                        <input type="file" class="form-control" id="req_suratPermohonanMembuka" name="req_suratPermohonanMembuka" accept=".xls, .xlsx">
+                                        <input type="file" class="form-control @error('req_suratPermohonanMembuka') is-invalid @enderror" id="req_suratPermohonanMembuka" name="req_suratPermohonanMembuka" accept=".xls, .xlsx" value="{{ old('req_suratPermohonanMembuka') }}">
+                                        <div class="invalid-feedback">
+                                            @error('req_suratPermohonanMembuka')
+                                                Requirement harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <p>Download requirement berikut untuk mengisi requirement diatas: 
                                         <a href="{{ route('download-requirement', ['file' => 'req_suratPermohonanMembukadanMenghadiri']) }}">Unduh requirement</a>

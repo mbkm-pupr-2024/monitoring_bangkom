@@ -23,13 +23,13 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="nama_bidang" class="form-label">Nama Bidang Pelatihan</label>
-                                        <input type="text" class="form-control" id="nama_bidang" name="nama" value="{{ $bidang->nama }}">
+                                        <input type="text" class="form-control" id="nama_bidang" name="nama" value="{{ old('nama') ? old('nama') : $bidang->nama }}">
                                     </div>
                                     <div class="mb-4">
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label for="gambar_bidang" class="form-label">Gambar Bidang Pelatihan</label>
-                                                <input type="file" class="form-control" id="gambar_bidang" name="gambar" value="{{ $bidang->gambar }}">
+                                                <input type="file" class="form-control" id="gambar_bidang" name="gambar" value="{{ old('gambar') ? old('gambar') : $bidang->gambar }}">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>Preview Foto</label>

@@ -19,12 +19,19 @@ class UserController extends Controller
     }
     public function user_insert(Request $request): RedirectResponse
     {
-        $request->validate([
+        if (!$request->validate([
             'nip' => 'required',
             'nama_lengkap' => 'required',
             'role' => 'required',
             'password' => 'required',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nip',
+                'nama_lengkap',
+                'role',
+                'password',
+            ]);
+        }
 
         // Ambil record terakhir dari tabel
         $lastRecord = userModel::latest('id')->first();
@@ -53,10 +60,15 @@ class UserController extends Controller
 
     public function user_update(Request $request): RedirectResponse
     {
-        $request->validate([
+        if (!$request->validate([
             'nip' => 'required',
             'nama_lengkap' => 'required',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nip',
+                'nama_lengkap',
+            ]);
+        }
 
         $user = UserModel::find($request->id);
         $user->update($request->all());
@@ -68,19 +80,24 @@ class UserController extends Controller
         return view('user.user_resetPassword', ['user_id' => $id]);
     }
     public function user_updatePassword(Request $request)
-{
-    $request->validate([
-        'password' => 'required',
-    ]);
+    {
+                   
+        if (!$request->validate([
+            'password' => 'required',
+        ])) {
+            return redirect()->back()->withErrors([
+                'password',
+            ]);
+        }
 
-    $user = UserModel::find($request->id);
+        $user = UserModel::find($request->id);
 
-    $user->password = bcrypt($request->password);
+        $user->password = bcrypt($request->password);
 
-    $user->save();
+        $user->save();
 
-    return redirect('/kelola-pengguna')->with(['success' => 'Reset password berhasil', 'popUp_title' => 'Updated!']);
-}
+        return redirect('/kelola-pengguna')->with(['success' => 'Reset password berhasil', 'popUp_title' => 'Updated!']);
+    }
 
     public function user_delete($id)
     {

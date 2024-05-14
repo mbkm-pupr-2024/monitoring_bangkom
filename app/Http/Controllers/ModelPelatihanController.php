@@ -19,9 +19,13 @@ class ModelPelatihanController extends Controller
     }
     public function modelPelatihan_insert(Request $request): RedirectResponse
     {
-        $request->validate([
+        if (!$request->validate([
             'nama' => 'required',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nama',
+            ]);
+        }
 
         // Ambil record terakhir dari tabel
         $lastRecord = ModelPelatihanModel::latest('id')->first();
@@ -49,9 +53,13 @@ class ModelPelatihanController extends Controller
     }
     public function modelPelatihan_update(Request $request)
     {
-        $request->validate([
+        if (!$request->validate([
             'nama' => 'required',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nama',
+            ]);
+        }
 
         $pelatihan = ModelPelatihanModel::find($request->id);
         $pelatihan->update($request->all());

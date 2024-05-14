@@ -20,10 +20,15 @@ class BidangPelatihanController extends Controller
 
     public function bidangPelatihan_insert(Request $request): RedirectResponse
     {
-        $request->validate([
+        if (!$request->validate([
             'nama' => 'required',
             'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nama',
+                'gambar',
+            ]);
+        }
 
 
         // Menyimpan gambar ke dalam path yang ditentukan
@@ -66,10 +71,15 @@ class BidangPelatihanController extends Controller
     }
     public function bidangPelatihan_update(Request $request)
     {
-        $request->validate([
+        if (!$request->validate([
             'nama' => 'required',
             'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nama',
+                'gambar',
+            ]);
+        }
 
         // Menyimpan gambar ke dalam path yang ditentukan
         $gambarPath = $request->file('gambar')->store('public/assets/images/bidang_pelatihan');

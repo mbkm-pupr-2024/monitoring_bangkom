@@ -20,16 +20,15 @@
                                 <form action="{{ route('upload-'. $nama_fungsi, ['id_pl' => $pelatihan->id, 'id_kthp' => $kegiatan->id]) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="mb-4">
-                                        <label for="nomor_surat" class="form-label">Nomor Surat</label>
-                                        <input type="text" class="form-control" id="nomor_surat" name="nomor_surat">
-                                    </div> 
-                                    <div class="mb-4">
-                                        <label for="req_pengembalian" class="form-label">Upload Requirement</label>
-                                        <input type="file" class="form-control" id="req_pengembalian" name="req_pengembalian" accept=".xls, .xlsx">
+                                        <label for="suratPengembalianPeserta" class="form-label">Upload Surat Pengembalian Peserta</label>
+                                        <input type="file" class="form-control @error('suratPengembalianPeserta') is-invalid @enderror" id="suratPengembalianPeserta" name="suratPengembalianPeserta" accept=".docx, .pdf, .zip, .rar" value="{{ old('suratPengembalianPeserta') }}">
+                                        <div class="invalid-feedback">
+                                            @error('suratPengembalianPeserta')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
-                                    <p>Download template berikut untuk mengisi requirement: 
-                                        <a href="{{ route('download-template', ['file' => 'req_suratPengembalianPeserta']) }}">Unduh template</a>
-                                    </p>
+                                    <br>
                                     <br>
                                     <div class="mb-4">
                                         <button class="btn btn-success float-end" type="submit">Cetak surat</button>

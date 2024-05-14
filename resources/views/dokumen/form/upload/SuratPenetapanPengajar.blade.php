@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="suratPenetapanPengajar" class="form-label">Upload Surat Penetapan Pengajar</label>
-                                        <input type="file" class="form-control" id="suratPenetapanPengajar" name="suratPenetapanPengajar" accept=".pdf, .docx">
+                                        <input type="file" class="form-control @error('suratPenetapanPengajar') is-invalid @enderror" id="suratPenetapanPengajar" name="suratPenetapanPengajar" accept=".pdf, .docx" value="{{ old('suratPenetapanPengajar') }}">
+                                        <div class="invalid-feedback">
+                                            @error('suratPenetapanPengajar')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

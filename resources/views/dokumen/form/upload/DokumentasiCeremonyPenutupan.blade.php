@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="dokumentasiCeremony" class="form-label">Upload Dokumentasi Ceremony Penutupan</label>
-                                        <input type="file" class="form-control" id="dokumentasiCeremony" name="dokumentasiCeremony" accept=".jpg,.jpeg,.zip,.rar">
+                                        <input type="file" class="form-control @error('dokumentasiCeremony') is-invalid @enderror" id="dokumentasiCeremony" name="dokumentasiCeremony" accept=".jpg,.jpeg,.zip,.rar" value="{{ old('dokumentasiCeremony') }}">
+                                        <div class="invalid-feedback">
+                                            @error('dokumentasiCeremony')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

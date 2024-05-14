@@ -19,9 +19,13 @@ class JenisPelatihanController extends Controller
     }
     public function jenisPelatihan_insert(Request $request): RedirectResponse
     {
-        $request->validate([
+        if (!$request->validate([
             'nama' => 'required',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nama',
+            ]);
+        }
 
         // Ambil record terakhir dari tabel
         $lastRecord = JenisPelatihanModel::latest('id')->first();
@@ -49,9 +53,13 @@ class JenisPelatihanController extends Controller
     }
     public function jenisPelatihan_update(Request $request)
     {
-        $request->validate([
+        if (!$request->validate([
             'nama' => 'required',
-        ]);
+        ])) {
+            return redirect()->back()->withErrors([
+                'nama',
+            ]);
+        }
 
         $pelatihan = JenisPelatihanModel::find($request->id);
         $pelatihan->update($request->all());

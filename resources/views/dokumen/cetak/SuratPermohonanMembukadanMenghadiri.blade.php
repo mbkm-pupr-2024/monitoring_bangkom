@@ -10,16 +10,26 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
-  <title>Surat Permohonan Membuka dan Menghadiri</title>
+  
+  <title>Surat Undangan Membuka dan Menghadiri</title>
 </head>
 
 <style>
   * {
     font-family: 'Roboto', sans-serif;
   }
-  p{
-    text-align: justify
+  td{
+    word-wrap: break-word;
   }
+  /* @media print {
+    td {
+      word-wrap: break-word;
+      vertical-align: top !important;
+    }
+  } */
+  p,li{
+      text-align: justify
+    }
 </style>
 
 <body>
@@ -77,52 +87,53 @@
     @endphp
 @endif
   <div class="container">
-    <div class="kopsurat"
-      style="display: flex; align-items: center; justify-content: center; border-bottom: 1px solid black;">
-      <img style="text-align:left" src="{{ $logo }}" alt="" width="100" height="100">
-      <div class="heading" style="text-align: center; margin-left: 10px;">
-        <h4 style="margin-top: 20px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
-        <h4 style="margin-top: -20px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
-        <h4 style="margin-top: -20px;">BALAI PENGEMBANGAN KOMPETENSI PUPR WILAYAH IV SURABAYA</h4>
-        <h6 style="margin-top: -20px;font-weight:normal">Jalan Gayung Kebonsari 48, Gayungan, Surabaya 60234, Telepon (031) 8291040, 8286501 Faksimili 8275847</h6>
+    <div class="kopsurat" style="border-bottom: 1px solid black;">
+      <div class="wrapper">
+        <img style="background-color: blue;" src="{{ $logo }}" alt="pupr" width="100" height="100">
+        <div class="heading" style="text-align: center; width: 80%; float: right;">
+          <h4 style="margin-top: 5px;margin-left: -80px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
+          <h4 style="margin-top: -20px;margin-left: -80px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
+          <h4 style="margin-top: -20px;margin-left: -80px;">BALAI PENGEMBANGAN KOMPETENSI PUPR WILAYAH IV SURABAYA</h4>
+          <h6 style="margin-top: -20px;margin-left: -80px;font-weight:normal">Jalan Gayung Kebonsari 48, Gayungan, Surabaya 60234, Telepon (031) 8291040, 8286501 Faksimili 8275847</h6>
+        </div>
       </div>
     </div>
+    <br>
     <div class="isi">
       <div class="judul">
-        <p style="margin-bottom: 20px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
+        <p style="margin-bottom: 20px; margin-top: -5px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
         </p>
-        <table>
-            <tr>
-                <td>Nomor</td>
-                <td>:</td>
-                <td>{{ $request->nomor_surat }}</td>
-            </tr>
-            <tr>
-                <td>Sifat</td>
-                <td>:</td>
-                <td>Biasa</td>
-            </tr>
-            <tr>
-                <td>Lampiran</td>
-                <td>:</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Hal</td>
-                <td>:</td>
-                <td style="word-wrap: break-word;vertical-align:middle">Permohonan Memberikan Sambutan dan
-                    Membuka Pelatihan {{ $pelatihan->nama }}</td>
-            </tr>
+        <table style="margin-top: -30px;">
+          <tr>
+            <td>Nomor</td>
+            <td>:</td>
+            <td>{{ $request->nomor_surat }}</td>
+          </tr>
+          <tr>
+              <td>Sifat</td>
+              <td>:</td>
+              <td>Biasa</td>
+          </tr>
+          <tr>
+              <td>Lampiran</td>
+              <td>:</td>
+              <td>-</td>
+          </tr>
+          <tr>
+              <td>Hal</td>
+              <td>:</td>
+              <td style="word-wrap: break-word;vertical-align:middle">Permohonan Memberikan Sambutan dan
+                  Membuka Pelatihan {{ $pelatihan->nama }}</td>
+          </tr>
         </table>
       </div>
       <div class="isi-surat">
         <p>Yth. <b>{{ $request->nama_yth }} <br>di {{ $request->lokasi }}</p>
-
         <p style="text-indent: 50px; line-height: 1.5;">
           Menindaklanjuti Surat Kepala Pusat Pengembangan Kompetensi Sumber Daya Air dan Permukiman Nomor {{ $request->nomor_surat_terkait }} {{ $request->tanggal_surat_terkait }} Hal Penetapan Calon Peserta Pelatihan {{ $pelatihan->nama }}, kami akan menyelenggarakan Pelatihan {{ $pelatihan->nama }} pada tanggal {{ rentang_tgl($pelatihan->tanggal_mulai, $pelatihan->tanggal_selesai) }} secara {{ $pelatihan->model_pelatihan->nama }}. Sehubungan hal tersebut, kami memohon dengan hormat perkenan {{ $request->kata_ganti }} untuk memberikan <b>Sambutan</b> dan <b>Membuka</b> Pelatihan {{ $pelatihan->nama }} dimaksud pada:</p>
-        <table style="text-indent: 10px;line-height: 1.5;">
+        <table style="margin-left: 20px;">
           <tr>
-            <td width="200px" >Hari/tanggal</td>
+            <td width="120px" >Hari/tanggal</td>
             <td>:</td>
             <td>{{ hari_indo($pelatihan->tanggal_mulai) }}/ {{ tanggal_indo($pelatihan->tanggal_mulai) }}</td>
           </tr>
@@ -149,8 +160,8 @@
         <p style="text-indent: 50px;line-height: 1.5;">Demikian kami sampaikan, atas perhatian dan perkenan {{ $request->kata_ganti }}, kami mengucapkan terimakasih.</p>
       </div>
     </div>
-    <div class="ttd" style="display: flex; justify-content: flex-end;">
-      <div class="ttd-koprodi" style="position: relative;">
+    <div class="ttd" style="position: relative; margin-bottom: 250px;">
+      <div class="ttd-koprodi" style="position: absolute; width: 50%; right: 0; top: 20px;">
         <p style="margin-top: -20px; text-align:center;"><b>Kepala Balai Pengembangan Kompetensi PUPR 
             <br>Wilayah VI Surabaya,</b>
         </p>
@@ -159,12 +170,16 @@
         <p style="margin-top: -10px;text-align:center;"><i style="color:rgb(151, 149, 149)">Ditandatangani secara elektronik</i></p>
       </div>
     </div>
-    <p><b>Tembusan:</b></p>
-    <ol>
-        @foreach ($data as $item)
-            <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
-        @endforeach
-    </ol>
+    <div style="page-break-inside: avoid">
+      <p><b>Tembusan:</b></p>
+      <ol>
+          @foreach ($data as $item)
+            @if (!$item['tembusan'] == null)
+              <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
+            @endif
+          @endforeach
+      </ol>
+    </div>
   </div>
 </body>
 <script>

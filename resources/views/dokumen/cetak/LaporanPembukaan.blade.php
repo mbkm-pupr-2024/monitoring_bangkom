@@ -36,7 +36,7 @@
     ul{
         list-style-type: hyphen;
     }
-    p{
+    p,li{
         text-align: justify;
     
     }
@@ -44,57 +44,57 @@
 
 <body>
     @if (!function_exists('tanggal_indo'))
-    @php
-    function tanggal_indo($tanggal){
-        $bulan = array (
-        1 =>'Januari',
-        'Februari',
-        'Maret',
-        'April',
-        'Mei',
-        'Juni',
-        'Juli',
-        'Agustus',
-        'September',
-        'Oktober',
-        'November',
-        'Desember'
-        );
-        $pecahkan = explode('-', $tanggal);
+        @php
+        function tanggal_indo($tanggal){
+            $bulan = array (
+            1 =>'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
 
-        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
-    }
-
-    function rentang_tgl($tgl_mulai, $tgl_selesai){
-        $tgl_mulai = tanggal_indo($tgl_mulai);
-        $tgl_selesai = tanggal_indo($tgl_selesai);
-        $tgl_mulai_pecah = explode(' ', $tgl_mulai);
-        $tgl_selesai_pecah = explode(' ', $tgl_selesai);
-        if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
-            return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
         }
-        return $tgl_mulai . ' s.d ' . $tgl_selesai;
-    }
 
-    function hari_indo($tanggal){
-        if (date('l', strtotime($tanggal)) == 'Sunday') {
-            return 'Minggu';
-        } elseif (date('l', strtotime($tanggal)) == 'Monday') {
-            return 'Senin';
-        } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
-            return 'Selasa';
-        } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
-            return 'Rabu';
-        } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
-            return 'Kamis';
-        } elseif (date('l', strtotime($tanggal)) == 'Friday') {
-            return 'Jumat';
-        } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
-            return 'Sabtu';
+        function rentang_tgl($tgl_mulai, $tgl_selesai){
+            $tgl_mulai = tanggal_indo($tgl_mulai);
+            $tgl_selesai = tanggal_indo($tgl_selesai);
+            $tgl_mulai_pecah = explode(' ', $tgl_mulai);
+            $tgl_selesai_pecah = explode(' ', $tgl_selesai);
+            if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
+                return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+            }
+            return $tgl_mulai . ' s.d ' . $tgl_selesai;
         }
-        return date('l', strtotime($tanggal));
-    }
-    @endphp
+
+        function hari_indo($tanggal){
+            if (date('l', strtotime($tanggal)) == 'Sunday') {
+                return 'Minggu';
+            } elseif (date('l', strtotime($tanggal)) == 'Monday') {
+                return 'Senin';
+            } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
+                return 'Selasa';
+            } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
+                return 'Rabu';
+            } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
+                return 'Kamis';
+            } elseif (date('l', strtotime($tanggal)) == 'Friday') {
+                return 'Jumat';
+            } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
+                return 'Sabtu';
+            }
+            return date('l', strtotime($tanggal));
+        }
+        @endphp
 @endif
   <div class="container">
     <div class="isi">
@@ -105,7 +105,8 @@
         <h4 style="text-align: center;">=============================================================================</h4>
       </div>
       <div class="isi-surat">
-        <p style="margin-bottom: 20px; text-align:right;">Surabaya, {{ hari_indo($request->tanggal) }} {{ tanggal_indo($request->tanggal) }}
+
+        <p style="margin-bottom: 20px; margin-top: -5px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
         </p>
         <p>
             <b>Kepada yang selalu kami banggakan Plt. Kepala Badan Pengembangan SDM:</b>

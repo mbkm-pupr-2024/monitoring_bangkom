@@ -21,24 +21,18 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="pedomanPelatihan" class="form-label">Upload Pedoman Pelatihan</label>
-                                        <input type="file" class="form-control" id="pedomanPelatihan" name="pedomanPelatihan" accept=".pdf, .docx">
+                                        <input type="file" class="form-control @error('pedomanPelatihan') is-invalid @enderror" id="pedomanPelatihan" name="pedomanPelatihan" accept=".pdf, .docx" value="{{ old('pedomanPelatihan') }}">
+                                        <div class="invalid-feedback">
+                                            @error('pedomanPelatihan')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">
                                         <button class="btn btn-success float-end" type="submit">Upload dokumen</button>
                                     </div>
                                 </form>
-                                {{-- <form action="{{ route('fill-'. $nama_fungsi, ['id_pl' => $pelatihan->id, 'id_kthp' => $kegiatan->id]) }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="mb-4">
-                                        <label for="daftar_peserta" class="form-label">Upload Daftar Peserta</label>
-                                        <input type="file" class="form-control" id="daftar_peserta" name="daftar_peserta" accept=".xls, .xlsx">
-                                    </div>
-                                    <br>
-                                    <div class="mb-4">
-                                        <button class="btn btn-success float-end" type="submit">Cetak surat</button>
-                                    </div>
-                                </form> --}}
                             </div>
                         </div>
                     </div>

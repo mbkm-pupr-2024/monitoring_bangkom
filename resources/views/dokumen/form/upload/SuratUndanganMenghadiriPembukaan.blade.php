@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="suratUndangan" class="form-label">Upload Surat Undangan Menghadiri Pembukaan</label>
-                                        <input type="file" class="form-control" id="suratUndangan" name="suratUndangan" accept=".docx, .pdf, .zip, .rar">
+                                        <input type="file" class="form-control @error('suratUndangan') is-invalid @enderror" id="suratUndangan" name="suratUndangan" accept=".docx, .pdf, .zip, .rar" value="{{ old('suratUndangan') }}">
+                                        <div class="invalid-feedback">
+                                            @error('suratUndangan')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

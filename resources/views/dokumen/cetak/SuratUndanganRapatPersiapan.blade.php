@@ -27,7 +27,7 @@
       vertical-align: top !important;
     }
   } */
-  p{
+  p,li{
       text-align: justify
     }
 </style>
@@ -90,19 +90,20 @@
     <div class="kopsurat" style="border-bottom: 1px solid black;">
       <div class="wrapper">
         <img style="background-color: blue;" src="{{ $logo }}" alt="pupr" width="100" height="100">
-        <div class="heading" style="text-align: center; margin-left: 10px; width: 80%; float: right;">
-          <h4 style="margin-top: 20px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
-          <h4 style="margin-top: -20px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
-          <h4 style="margin-top: -20px;">BALAI PENGEMBANGAN KOMPETENSI PUPR WILAYAH IV SURABAYA</h4>
-          <h6 style="margin-top: -20px;font-weight:normal">Jalan Gayung Kebonsari 48, Gayungan, Surabaya 60234, Telepon (031) 8291040, 8286501 Faksimili 8275847</h6>
+        <div class="heading" style="text-align: center; width: 80%; float: right;">
+          <h4 style="margin-top: 5px;margin-left: -80px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
+          <h4 style="margin-top: -20px;margin-left: -80px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
+          <h4 style="margin-top: -20px;margin-left: -80px;">BALAI PENGEMBANGAN KOMPETENSI PUPR WILAYAH IV SURABAYA</h4>
+          <h6 style="margin-top: -20px;margin-left: -80px;font-weight:normal">Jalan Gayung Kebonsari 48, Gayungan, Surabaya 60234, Telepon (031) 8291040, 8286501 Faksimili 8275847</h6>
         </div>
       </div>
     </div>
+    <br>
     <div class="isi">
       <div class="judul">
-        <p style="margin-bottom: 20px; margin-top: 20px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
+        <p style="margin-bottom: 20px; margin-top: -5px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
         </p>
-        <table>
+        <table style="margin-top: -30px;">
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
@@ -162,14 +163,16 @@
         <p style="margin-top: -10px;text-align:center;"><i style="color:rgb(151, 149, 149)">Ditandatangani secara elektronik</i></p>
       </div>
     </div>
-    <p><b>Tembusan:</b></p>
-    <ol>
-      @foreach($data as $item)
-        @if (!$loop->first && $item['tembusan'] != null)
-          <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
-        @endif
-      @endforeach
-    </ol>
+    <div style="page-break-inside: avoid">
+      <p><b>Tembusan:</b></p>
+      <ol>
+        @foreach($data as $item)
+          @if (!$loop->first && $item['tembusan'] != null)
+            <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
+          @endif
+        @endforeach
+      </ol>
+    </div>
 
     {{-- Lampiran 1 --}}
     <div class="wrapper" style="width: 50%; float: right;">

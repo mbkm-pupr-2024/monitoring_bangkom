@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="laporanBahanTayangSeminar" class="form-label">Upload Laporan Bahan Tayang Seminar Peserta</label>
-                                        <input type="file" class="form-control" id="laporanBahanTayangSeminar" name="laporanBahanTayangSeminar" accept=".pdf,.docx,.zip,.rar">
+                                        <input type="file" class="form-control @error('laporanBahanTayangSeminar') is-invalid @enderror" id="laporanBahanTayangSeminar" name="laporanBahanTayangSeminar" accept=".pdf,.docx,.zip,.rar" value="{{ old('laporanBahanTayangSeminar') }}">
+                                        <div class="invalid-feedback">
+                                            @error('laporanBahanTayangSeminar')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

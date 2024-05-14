@@ -48,7 +48,7 @@ class LoginController extends Controller
     }
     else
     {
-        return redirect('/login')->with('error', 'Invalid nip or password')->withInput($request->except('password'));
+        return redirect('/login')->with('error', 'Invalid NIP or Password')->withInput($request->except('password'));
     }
 }
 

@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="biodataPengajar" class="form-label">Upload Biodata Pengajar</label>
-                                        <input type="file" class="form-control" id="biodataPengajar" name="biodataPengajar" accept=".pdf,.docx,.zip,.rar">
+                                        <input type="file" class="form-control @error('biodataPengajar') is-invalid @enderror" id="biodataPengajar" name="biodataPengajar" accept=".pdf,.docx,.zip,.rar" value="{{ old('biodataPengajar') }}">
+                                        <div class="invalid-feedback">
+                                            @error('biodataPengajar')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

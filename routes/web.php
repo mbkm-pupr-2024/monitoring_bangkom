@@ -32,6 +32,7 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
+
 Route::middleware(['tamu'])->group(function () {
     Route::redirect('/', '/login');
     Route::get('/login', [LoginController::class, 'login'])->name('login')->middleware('revalidate');  
@@ -118,6 +119,7 @@ Route::middleware('petugasSupervisi')->group(function () {
             Route::post('/upload-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [FillDokumenController::class, 'upload_'.$nama_fungsi])->name('upload-'.$nama_fungsi);
         }
     }
+    Route::get('re-fill-dokumen-pelatihan-{id_pl}/{id_kthp}', [FillDokumenController::class, 'recreate_dokumen'])->name('recreate-dokumen-pelatihan');
     Route::get('/unduh-requirement-dokumen-{file}-pelatihan', [FillDokumenController::class, 'download_requirement'])->name('download-requirement');
 });
 

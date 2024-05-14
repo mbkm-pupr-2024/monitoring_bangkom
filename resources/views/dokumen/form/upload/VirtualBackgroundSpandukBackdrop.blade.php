@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="virtualBg" class="form-label">Upload Virtual Background, Spanduk, Backdrop</label>
-                                        <input type="file" class="form-control" id="virtualBg" name="virtualBg" accept=".jpg, .jpeg, .zip, .rar">
+                                        <input type="file" class="form-control @error('virtualBg') is-invalid @enderror" id="virtualBg" name="virtualBg" accept=".jpg, .jpeg, .zip, .rar" value="{{ old('virtualBg') }}">
+                                        <div class="invalid-feedback">
+                                            @error('virtualBg')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="skPelatihan" class="form-label">Upload SK Pelatihan</label>
-                                        <input type="file" class="form-control" id="skPelatihan" name="skPelatihan" accept=".pdf, .docx">
+                                        <input type="file" class="form-control @error('skPelatihan') is-invalid @enderror" id="skPelatihan" name="skPelatihan" accept=".pdf, .docx" value="{{ old('skPelatihan') }}">
+                                        <div class="invalid-feedback">
+                                            @error('skPelatihan')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

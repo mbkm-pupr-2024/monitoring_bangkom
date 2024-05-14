@@ -59,11 +59,13 @@
                                     @if ($ext == 'pdf')
                                         <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
                                     @elseif($ext == 'doc' || $ext == 'docx')
-                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
-                                    @elseif($ext == 'xlxs' || $ext == 'xls')
-                                        <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
+                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">description</i>
+                                    @elseif($ext == 'xlsx' || $ext == 'xls')
+                                        <i class="material-icons-outlined text-success align-middle m-r-sm">description</i>
+                                    @elseif($ext == 'rar' || $ext == 'zip')
+                                        <i class="material-icons-outlined text-info align-middle m-r-sm">description</i>
                                     @endif
-                                    <a href="{{ asset('assets/dokumen/'. $belum->status->pelatihan->id . '_' .$belum->id_kegiatan_tahapan . '.pdf') }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $belum->kegiatan_tahapan->dokumen }}</a>
+                                    <a href="{{ asset('assets/dokumen/'. $belum->status->pelatihan->id . '_' .$belum->id_kegiatan_tahapan . '.' . $ext) }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $belum->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $belum->status->pelatihan->nama }}</span>
                                     <a class="dropdown-toggle file-manager-recent-file-actions" id="file-manager-recent-10" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="file-manager-recent-10">
@@ -124,21 +126,52 @@
                                 <div class="d-flex align-items-center">
                                     @php
                                         $split = explode('.', $telah->file);
-                                        $ext = $split[1]
+                                        $ext = $split[1];
                                     @endphp
                                     @if ($ext == 'pdf')
                                         <i class="material-icons-outlined text-danger align-middle m-r-sm">description</i>
                                     @elseif($ext == 'doc' || $ext == 'docx')
-                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">image</i>
-                                    @elseif($ext == 'xlxs' || $ext == 'xls')
-                                        <i class="material-icons-outlined text-success align-middle m-r-sm">code</i>
+                                        <i class="material-icons-outlined text-primary align-middle m-r-sm">description</i>
+                                    @elseif($ext == 'xlsx' || $ext == 'xls')
+                                        <i class="material-icons-outlined text-success align-middle m-r-sm">description</i>
+                                    @elseif($ext == 'rar' || $ext == 'zip')
+                                        <i class="material-icons-outlined text-info align-middle m-r-sm">description</i>
                                     @endif
-                                    <a href="#" class="file-manager-recent-item-title flex-fill">{{ $telah->kegiatan_tahapan->dokumen }}</a>
+                                    <a href="{{ asset('assets/dokumen/'. $telah->status->pelatihan->id . '_' .$telah->id_kegiatan_tahapan . '.' . $ext) }}" class="file-manager-recent-item-title flex-fill">{{ $telah->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $telah->status->pelatihan->nama }}</span>
                                     <span class="p-h-sm text-muted"><span class="badge badge-{{ $telah->keterangan == 'Disetujui' ? 'success' : 'danger' }}">{{ $telah->keterangan }}</span></span>
                                     <a class="dropdown-toggle file-manager-recent-file-actions" id="file-manager-recent-10" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="file-manager-recent-10">
-                                        <li><a class="dropdown-item" href="/tinjau-dokumen/unduh-{{ $telah->id }}">Unduh</a></li>
+                                        @if ($telah->keterangan == 'Disetujui')
+                                            <li><a class="dropdown-item" href="/tinjau-dokumen/unduh-{{ $telah->id }}">Unduh</a></li>
+                                        @elseif($telah->keterangan == 'Ditolak')
+                                            @php
+                                                $split_dokumen = explode('.', $telah->file);
+                                                $split_dokumen2 = explode('_', $split_dokumen[0]);
+                                                $pelatihan_id = $split_dokumen2[0];
+                                                $kegiatan_id = $split_dokumen2[1];
+                                            @endphp
+                                            <script>
+                                                function recreate_button_{{ $telah->id }}() {
+                                                    Swal.fire({
+                                                    title: "Konfirmasi Pembuatan Ulang Dokumen",
+                                                    text: "Jika Anda membuat ulang, maka file ini akan dihapus otomatis oleh sistem. Apakah Anda yakin ingin membuat ulang dokumen ini? ",
+                                                    icon: "warning",
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: "#3085d6",
+                                                    cancelButtonText: "Batal",
+                                                    cancelButtonColor: "#d33",
+                                                    confirmButtonText: "Buat ulang"
+                                                    }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        window.location.href = "re-fill-dokumen-pelatihan-{{ $pelatihan_id }}/{{ $kegiatan_id }}";
+                                                    }
+                                                    });
+                                                }
+                                            </script>
+                                            <li><a class="dropdown-item" onclick="recreate_button_{{ $telah->id }}();">Buat ulang</a></li>
+                                        @endif
+                                        
                                     </ul>
                                 </div>
                             </div>

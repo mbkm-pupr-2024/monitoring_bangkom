@@ -23,7 +23,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="nama_jenis" class="form-label">Nama Jenis Pelatihan</label>
-                                        <input type="text" class="form-control" id="nama_jenis" name="nama" value="{{ $jenis->nama }}">
+                                        <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama_jenis" name="nama" value="{{ old('nama') ? old('nama') : $jenis->nama }}">
+                                        <div class="invalid-feedback">
+                                            @error('nama')
+                                                Nama jenis pelatihan harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="mb-4">
                                         <button class="btn btn-primary float-end" type="submit">Edit</button>

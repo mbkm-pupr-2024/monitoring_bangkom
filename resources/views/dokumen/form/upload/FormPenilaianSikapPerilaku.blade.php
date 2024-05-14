@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="formPenilaian" class="form-label">Upload Form Penilaian Sikap Perilaku</label>
-                                        <input type="file" class="form-control" id="formPenilaian" name="formPenilaian" accept=".xls,.xlsx">
+                                        <input type="file" class="form-control @error('formPenilaian') is-invalid @enderror" id="formPenilaian" name="formPenilaian" accept=".xls,.xlsx" value="{{ old('formPenilaian') }}">
+                                        <div class="invalid-feedback">
+                                            @error('formPenilaian')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="laporanAkhir" class="form-label">Upload Laporan Akhir Pelatihan</label>
-                                        <input type="file" class="form-control" id="laporanAkhir" name="laporanAkhir" accept=".pdf, .docx">
+                                        <input type="file" class="form-control @error('laporanAkhir') is-invalid @enderror" id="laporanAkhir" name="laporanAkhir" accept=".pdf, .docx" value="{{ old('laporanAkhir') }}">
+                                        <div class="invalid-feedback">
+                                            @error('laporanAkhir')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

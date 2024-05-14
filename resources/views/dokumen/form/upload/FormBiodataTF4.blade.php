@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="formBiodata" class="form-label">Upload Form Biodata TF4</label>
-                                        <input type="file" class="form-control" id="formBiodata" name="formBiodata" accept=".xls, .xlsx, .zip, .rar">
+                                        <input type="file" class="form-control @error('formBiodata') is-invalid @enderror" id="formBiodata" name="formBiodata" accept=".xls, .xlsx, .zip, .rar" value="{{ old('formBiodata') }}">
+                                        <div class="invalid-feedback">
+                                            @error('formBiodata')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

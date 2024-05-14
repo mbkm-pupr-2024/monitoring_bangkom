@@ -20,15 +20,15 @@
   td{
     word-wrap: break-word;
   }
-  @media print {
+  /* @media print {
     td {
       word-wrap: break-word;
       vertical-align: top !important;
     }
-  }
-  p{
-    text-align: justify
-  }
+  } */
+  p,li{
+      text-align: justify
+    }
 </style>
 
 <body>
@@ -86,21 +86,23 @@
     @endphp
 @endif
   <div class="container">
-    <div class="kopsurat"
-      style="display: flex; align-items: center; justify-content: center; border-bottom: 1px solid black;">
-      <img style="text-align:left" src="{{ $logo }}" alt="pupr" width="100" height="100">
-      <div class="heading" style="text-align: center; margin-left: 10px;">
-        <h4 style="margin-top: 20px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
-        <h4 style="margin-top: -20px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
-        <h4 style="margin-top: -20px;">BALAI PENGEMBANGAN KOMPETENSI PUPR WILAYAH IV SURABAYA</h4>
-        <h6 style="margin-top: -20px;font-weight:normal">Jalan Gayung Kebonsari 48, Gayungan, Surabaya 60234, Telepon (031) 8291040, 8286501 Faksimili 8275847</h6>
+    <div class="kopsurat" style="border-bottom: 1px solid black;">
+      <div class="wrapper">
+        <img style="background-color: blue;" src="{{ $logo }}" alt="pupr" width="100" height="100">
+        <div class="heading" style="text-align: center; width: 80%; float: right;">
+          <h4 style="margin-top: 5px;margin-left: -80px;">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</h4>
+          <h4 style="margin-top: -20px;margin-left: -80px;font-weight:normal">BADAN PENGEMBANGAN SUMBER DAYA MANUSIA</h4>
+          <h4 style="margin-top: -20px;margin-left: -80px;">BALAI PENGEMBANGAN KOMPETENSI PUPR WILAYAH IV SURABAYA</h4>
+          <h6 style="margin-top: -20px;margin-left: -80px;font-weight:normal">Jalan Gayung Kebonsari 48, Gayungan, Surabaya 60234, Telepon (031) 8291040, 8286501 Faksimili 8275847</h6>
+        </div>
       </div>
     </div>
+    <br>
     <div class="isi">
       <div class="judul">
-        <p style="margin-bottom: 20px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
+        <p style="margin-bottom: 20px; margin-top: -5px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
         </p>
-        <table>
+        <table style="margin-top: -30px;">
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
@@ -129,9 +131,9 @@
 
         <p style="text-indent: 50px; line-height: 1.5;">
           Berdasarkan Surat Edaran Kepala Badan Pengembangan Sumber Daya Manusia Kementerian PUPR nomor 04/SE/KM/2023 tentang Pedoman Umum Penyelenggaraan Pengembangan Kompetensi dalam Bentuk Pelatihan di Kementerian Pekerjaan Umum dan Perumahan Rakyat, hasil evaluasi peserta digunakan sebagai dasar penentuan kelulusan. Sehubungan dengan hal tersebut, dengan hormat kami mohon perkenan Bapak/Ibu untuk menghadiri rapat evaluasi kelulusan peserta <b>Pelatihan {{ ucwords($pelatihan->nama) }}</b> yang akan diselenggarakan pada:</p>
-        <table style="text-indent: 10px;line-height: 1.5;">
+        <table style="margin-left: 20px;">
           <tr>
-            <td width="200px" >Hari/tanggal</td>
+            <td style="width: 120px;">Hari/tanggal</td>
             <td>:</td>
             <td>{{ hari_indo($request->tanggal) }}/ {{ tanggal_indo($request->tanggal) }}</td>
           </tr>
@@ -151,8 +153,8 @@
         <p style="text-indent: 50px;line-height: 1.5;">Demikian kami sampaikan, atas perkenan Bapak/Ibu, kami mengucapkan terima kasih.</p>
       </div>
     </div>
-    <div class="ttd" style="display: flex; justify-content: flex-end;">
-      <div class="ttd-koprodi" style="position: relative;">
+    <div class="ttd" style="position: relative; margin-bottom: 250px;">
+      <div class="ttd-koprodi" style="position: absolute; width: 50%; right: 0; top: 20px;">
         <p style="margin-top: -20px; text-align:center;"><b>Kepala Balai Pengembangan Kompetensi PUPR 
             <br>Wilayah VI Surabaya,</b>
         </p>
@@ -161,31 +163,35 @@
         <p style="margin-top: -10px;text-align:center;"><i style="color:rgb(151, 149, 149)">Ditandatangani secara elektronik</i></p>
       </div>
     </div>
-    <p><b>Tembusan:</b></p>
-    <ol>
-      @foreach($data as $item)
-        @if (!$loop->first && $item['tembusan'] != null)
-          <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
-        @endif
-    @endforeach
-    </ol>
+    <div style="page-break-inside: avoid">
+      <p><b>Tembusan:</b></p>
+      <ol>
+        @foreach($data as $item)
+          @if (!$loop->first && $item['tembusan'] != null)
+            <li>{{ $item['tembusan'] }}{{ $loop->last? '.' : ';' }}</li>
+          @endif
+        @endforeach
+      </ol>
+    </div>
 
     {{-- Lampiran 1 --}}
-    <p style="text-align: right;page-break-before: always;">
-      Lampiran I Surat Kepala Balai Pengembangan
-       Kompetensi PUPR Wilayah VI Surabaya</p>
-    <div style="text-align: right;margin-bottom:90px;margin-top:-15px">
-      <table style="float:right">
-        <tr>
-            <td>Nomor</td>
-            <td>:</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Tanggal</td>
-            <td>:</td>
-            <td></td>
-      </table>
+    <div class="wrapper" style="width: 50%; float: right;">
+      <p style="text-align: left; page-break-before: always;">
+        Lampiran I Surat Kepala Balai Pengembangan
+         Kompetensi PUPR Wilayah VI Surabaya</p>
+      <div style="text-align: right;margin-bottom:30px;margin-top:-15px">
+        <table style="">
+          <tr>
+              <td>Nomor</td>
+              <td>:</td>
+              <td></td>
+          </tr>
+          <tr>
+              <td>Tanggal</td>
+              <td>:</td>
+              <td></td>
+        </table>
+      </div>
     </div>
   <h3 style="text-align:center;clear:right;">Daftar Undangan</h3>
   <p>Yth.</p>

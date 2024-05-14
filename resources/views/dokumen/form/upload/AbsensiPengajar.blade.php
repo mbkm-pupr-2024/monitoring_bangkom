@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="absensiPengajar" class="form-label">Upload Absensi Pengajar</label>
-                                        <input type="file" class="form-control" id="absensiPengajar" name="absensiPengajar" accept=".pdf,.docx,.zip,.rar">
+                                        <input type="file" class="form-control @error('absensiPengajar') is-invalid @enderror" id="absensiPengajar" name="absensiPengajar" accept=".pdf,.docx,.zip,.rar" value="{{ old('absensiPengajar') }}">
+                                        <div class="invalid-feedback">
+                                            @error('absensiPengajar')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

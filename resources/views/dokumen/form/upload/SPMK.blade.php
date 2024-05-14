@@ -21,7 +21,12 @@
                                     @csrf
                                     <div class="mb-4">
                                         <label for="spmk" class="form-label">Upload SPMK</label>
-                                        <input type="file" class="form-control" id="spmk" name="spmk" accept=".docx, .pdf">
+                                        <input type="file" class="form-control @error('spmk') is-invalid @enderror" id="spmk" name="spmk" accept=".docx, .pdf" value="{{ old('spmk') }}">
+                                        <div class="invalid-feedback">
+                                            @error('spmk')
+                                                Dokumen harus diisi
+                                            @enderror
+                                        </div>
                                     </div>
                                     <br>
                                     <div class="mb-4">

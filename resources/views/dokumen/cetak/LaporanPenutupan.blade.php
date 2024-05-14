@@ -18,80 +18,64 @@
   * {
     font-family: 'Roboto', sans-serif;
   }
-    /* .peserta{
-        border-collapse: collapse;
-        
+    p,li{
+    text-align: justify;
     }
-    .peserta th {
-        border: 1px solid black;
-        padding: 15px;
-    }
-    .peserta td {
-        border: 1px solid black;
-        padding: 15px;
-    }
-    .peserta th{
-        background-color: aqua;
-    }
-     */
-     p{
-        text-align: justify;
-     }
 </style>
 
 <body>
     @if (!function_exists('tanggal_indo'))
-    @php
-    function tanggal_indo($tanggal){
-        $bulan = array (
-        1 =>'Januari',
-        'Februari',
-        'Maret',
-        'April',
-        'Mei',
-        'Juni',
-        'Juli',
-        'Agustus',
-        'September',
-        'Oktober',
-        'November',
-        'Desember'
-        );
-        $pecahkan = explode('-', $tanggal);
+        @php
+        function tanggal_indo($tanggal){
+            $bulan = array (
+            1 =>'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
 
-        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
-    }
-
-    function rentang_tgl($tgl_mulai, $tgl_selesai){
-        $tgl_mulai = tanggal_indo($tgl_mulai);
-        $tgl_selesai = tanggal_indo($tgl_selesai);
-        $tgl_mulai_pecah = explode(' ', $tgl_mulai);
-        $tgl_selesai_pecah = explode(' ', $tgl_selesai);
-        if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
-            return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+            return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
         }
-        return $tgl_mulai . ' s.d ' . $tgl_selesai;
-    }
 
-    function hari_indo($tanggal){
-        if (date('l', strtotime($tanggal)) == 'Sunday') {
-            return 'Minggu';
-        } elseif (date('l', strtotime($tanggal)) == 'Monday') {
-            return 'Senin';
-        } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
-            return 'Selasa';
-        } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
-            return 'Rabu';
-        } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
-            return 'Kamis';
-        } elseif (date('l', strtotime($tanggal)) == 'Friday') {
-            return 'Jumat';
-        } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
-            return 'Sabtu';
+        function rentang_tgl($tgl_mulai, $tgl_selesai){
+            $tgl_mulai = tanggal_indo($tgl_mulai);
+            $tgl_selesai = tanggal_indo($tgl_selesai);
+            $tgl_mulai_pecah = explode(' ', $tgl_mulai);
+            $tgl_selesai_pecah = explode(' ', $tgl_selesai);
+            if ($tgl_mulai_pecah[1] == $tgl_selesai_pecah[1]) {
+                return $tgl_mulai_pecah[0] . ' s.d ' . $tgl_selesai_pecah[0] . ' ' . $tgl_mulai_pecah[1] . ' ' . $tgl_mulai_pecah[2];
+            }
+            return $tgl_mulai . ' s.d ' . $tgl_selesai;
         }
-        return date('l', strtotime($tanggal));
-    }
-    @endphp
+
+        function hari_indo($tanggal){
+            if (date('l', strtotime($tanggal)) == 'Sunday') {
+                return 'Minggu';
+            } elseif (date('l', strtotime($tanggal)) == 'Monday') {
+                return 'Senin';
+            } elseif (date('l', strtotime($tanggal)) == 'Tuesday') {
+                return 'Selasa';
+            } elseif (date('l', strtotime($tanggal)) == 'Wednesday') {
+                return 'Rabu';
+            } elseif (date('l', strtotime($tanggal)) == 'Thursday') {
+                return 'Kamis';
+            } elseif (date('l', strtotime($tanggal)) == 'Friday') {
+                return 'Jumat';
+            } elseif (date('l', strtotime($tanggal)) == 'Saturday') {
+                return 'Sabtu';
+            }
+            return date('l', strtotime($tanggal));
+        }
+        @endphp
 @endif
   <div class="container">
     <div class="isi">
@@ -100,8 +84,9 @@
         <h3 style="text-align: center;margin-top:-25px;">PELATIHAN {{ strtoupper($pelatihan->nama) }}</h3>
         <h3 style="text-align: center;margin-top:-20px;">SECARA {{ strtoupper($pelatihan->model_pelatihan->nama) }}</h3>
       </div>
+      <br>
       <div class="isi-surat">
-        <p style="margin-bottom: 20px; text-align:right;">Surabaya, {{ hari_indo($request->tanggal) }} {{ tanggal_indo($request->tanggal) }}
+        <p style="margin-bottom: 20px; margin-top: -5px; text-align:right;">Surabaya, {{ tanggal_indo(now()->toDateString()) }}
         </p>
         <p>
             <b>Kepada yang selalu kami banggakan Plt. Kepala Badan Pengembangan SDM:</b>
@@ -150,7 +135,7 @@
                 <ol type="a">
                     <li style="font-weight: bold">Kehadiran Peserta</li>
                         <p>Peserta yang hadir mengikuti pelatihan dari awal sampai akhir sebanyak {{ $request->jumlah_peserta_hadir }} orang yang terdiri dari {{ $request->peserta_male }} orang laki-laki dan {{ $request->peserta_female }} orang Perempuan. Keseluruhan peserta berasal dari Lingkungan Kementerian PUPR.</p>
-                    @if ($pelatihan->model_pelatihan->id == 'MP002' || $pelatihan->model_pelatihan->id == 'MP003')
+                    @if ($pelatihan->model_pelatihan->id == 'MP001' || $pelatihan->model_pelatihan->id == 'MP002')
                         <li style="font-weight: bold">Evaluasi Pembelajaran Jarak Jauh (E-Learning): </li>
                         <p>Evaluasi terhadap e-learning dilakukan untuk mengetahui tingkat keberhasilan pembelajaran yang dilaksanakan oleh penyelenggara secara e-learning. Rekap hasil evaluasi e-learning sebagai berikut: </p>
                         <ol type="1">
