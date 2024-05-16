@@ -86,7 +86,7 @@ class PelatihanBerlangsungController extends Controller
 
     public function pelatihan_arsip($id){
         $status = StatusModel::where('id_pelatihan', $id)->first();
-        $status->keterangan = 'Selesai';
+        $status->ket_status = 'Selesai';
         $status->save();
 
         return redirect('/pelatihan-berlangsung')->with(['success' => 'Status pelatihan selesai', 'popUp_title' => 'Updated!']);
@@ -132,8 +132,6 @@ class PelatihanBerlangsungController extends Controller
             'noTHP' => $no_thp
        ]);
     }
-
-
 
 
     public function pelatihan_slides()

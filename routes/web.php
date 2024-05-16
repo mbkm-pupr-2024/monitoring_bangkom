@@ -113,6 +113,7 @@ Route::middleware('petugasSupervisi')->group(function () {
         if ($aksi_dokumen == 'upload') {
             Route::post('/upload-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [FillDokumenController::class, 'upload_'.$nama_fungsi])->name('upload-'.$nama_fungsi);
         } else {
+            // Route::get('/create-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [FillDokumenController::class, 'create_'.$nama_fungsi])->name('create-'.$nama_fungsi);
             Route::post('/create-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [FillDokumenController::class, 'create_'.$nama_fungsi])->name('create-'.$nama_fungsi);
             Route::post('/print-dokumen-pelatihan-{id_pl}/{id_kthp}-'.$nama_url, [PrintDokumenController::class, 'print_'.$nama_fungsi])->name('print-'.$nama_fungsi);
 

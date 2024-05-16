@@ -17,10 +17,6 @@
     @endif
     <div class="content-wrapper">
         <div class="container">
-            {{-- <div class="section-description">
-                    <h1>Recent Files</h1>
-                </div> --}}
-
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="belum-ditinjau-tab" data-bs-toggle="tab" data-bs-target="#belum-ditinjau" type="button" role="tab" aria-controls="belum-ditinjau" aria-selected="false">Belum ditinjau</button>
@@ -137,7 +133,7 @@
                                     @elseif($ext == 'rar' || $ext == 'zip')
                                         <i class="material-icons-outlined text-info align-middle m-r-sm">description</i>
                                     @endif
-                                    <a href="{{ asset('assets/dokumen/'. $telah->status->pelatihan->id . '_' .$telah->id_kegiatan_tahapan . '.' . $ext) }}" class="file-manager-recent-item-title flex-fill">{{ $telah->kegiatan_tahapan->dokumen }}</a>
+                                    <a href="{{ asset('assets/dokumen/'. $telah->status->pelatihan->id . '_' .$telah->id_kegiatan_tahapan . '.' . $ext) }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $telah->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $telah->status->pelatihan->nama }}</span>
                                     <span class="p-h-sm text-muted"><span class="badge badge-{{ $telah->keterangan == 'Disetujui' ? 'success' : 'danger' }}">{{ $telah->keterangan }}</span></span>
                                     <a class="dropdown-toggle file-manager-recent-file-actions" id="file-manager-recent-10" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>

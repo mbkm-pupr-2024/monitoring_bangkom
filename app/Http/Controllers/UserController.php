@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\UserModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
@@ -32,6 +33,8 @@ class UserController extends Controller
                 'password',
             ]);
         }
+
+        $request->merge(['password' => Hash::make($request->password)]);
 
         // Ambil record terakhir dari tabel
         $lastRecord = userModel::latest('id')->first();
@@ -90,10 +93,12 @@ class UserController extends Controller
             ]);
         }
 
+        $hashedPassword = Hash::make($request->password);
+
+        // Temukan user berdasarkan ID
         $user = UserModel::find($request->id);
 
-        $user->password = bcrypt($request->password);
-
+        $user->password = $hashedPassword;
         $user->save();
 
         return redirect('/kelola-pengguna')->with(['success' => 'Reset password berhasil', 'popUp_title' => 'Updated!']);
@@ -103,7 +108,7 @@ class UserController extends Controller
     {
         UserModel::find($id)->delete();
 
-        return redirect('/kelola-model-pelatihan')->with(['success' => 'Data pengguna berhasil dihapus', 'popUp_title' => 'Deleted!']);
+        return redirect('/kelola-pengguna')->with(['success' => 'Data pengguna berhasil dihapus', 'popUp_title' => 'Deleted!']);
     }
 
 }

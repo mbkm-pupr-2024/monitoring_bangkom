@@ -154,9 +154,9 @@ function hari_indo($tanggal){
                                                 });
                                             }
                                         </script>
-                                        <a onclick="mulai_button_{{ $jadwal->id }}();" class="btn btn-primary btn-sm"><i class="material-icons-outlined center" sty>add_box</i></a> 
-                                        <a onclick="view_button_{{ $jadwal->id }}();" class="btn btn-warning btn-sm"><i class="material-icons-outlined center" sty>visibility</i></a> 
-                                        <a onclick="hapus_button_{{ $jadwal->id }}();" class="btn btn-danger btn-sm"><i class="material-icons-outlined center" sty>delete</i></a>
+                                        <a onclick="mulai_button_{{ $jadwal->id }}();" class="btn btn-primary btn-sm mt-1"><i class="material-icons-outlined center" sty>add_box</i></a> 
+                                        <a onclick="view_button_{{ $jadwal->id }}();" class="btn btn-warning btn-sm mt-1"><i class="material-icons-outlined center" sty>visibility</i></a> 
+                                        <a onclick="hapus_button_{{ $jadwal->id }}();" class="btn btn-danger btn-sm mt-1"><i class="material-icons-outlined center" sty>delete</i></a>
                                     </td>
                                     @endcan
                                 </tr>

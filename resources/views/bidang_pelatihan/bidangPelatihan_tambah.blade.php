@@ -33,8 +33,8 @@
                                     <div class="mb-4">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="gambar_bidang" class="form-label">Gambar Bidang Pelatihan</label>
-                                                <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar_bidang" name="gambar" value="{{ old('gambar') }}">
+                                                <label for="gambar_bidang" class="form-label">Gambar Bidang Pelatihan (1 : 1)</label>
+                                                <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar_bidang" name="gambar">
                                                 <div class="invalid-feedback">
                                                     @error('gambar')
                                                         Gambar bidang pelatihan harus diisi
@@ -44,7 +44,7 @@
                                             <div class="col-sm-6">
                                                 <label>Preview Foto</label>
                                                 <div class="form-group">
-                                                    <img id="gambar_load" src="{{ asset('assets/images/blank.png') }}" width="350px" height="200px">
+                                                    <img id="gambar_load" src="{{ asset('assets/images/blank.png') }}" width="200px" height="200px">
                                                 </div>
                                             </div>
                                         </div>

@@ -29,12 +29,12 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label for="gambar_bidang" class="form-label">Gambar Bidang Pelatihan</label>
-                                                <input type="file" class="form-control" id="gambar_bidang" name="gambar" value="{{ old('gambar') ? old('gambar') : $bidang->gambar }}">
+                                                <input type="file" class="form-control" id="gambar_bidang" name="gambar">
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>Preview Foto</label>
                                                 <div class="form-group">
-                                                    <img id="gambar_load" src="{{ asset('assets/images/bidang_pelatihan/{{ $bidang->gambar }}') }}" width="350px" height="200px">
+                                                    <img id="gambar_load" src="{{ asset('assets/images/bidang_pelatihan/'. $bidang->gambar ) }}" width="200px" height="200px">
                                                 </div>
                                             </div>
                                         </div>

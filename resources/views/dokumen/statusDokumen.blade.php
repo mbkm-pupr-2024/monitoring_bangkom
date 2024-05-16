@@ -109,11 +109,11 @@
                                     @elseif($ext == 'rar' || $ext == 'zip')
                                         <i class="material-icons-outlined text-info align-middle m-r-sm">description</i>
                                     @endif
-                                    <a href="{{ asset('assets/dokumen/'. $disetujui->status->pelatihan->id . '_' .$disetujui->id_kegiatan_tahapan . '.' . $ext) }}" class="file-manager-recent-item-title flex-fill">{{ $disetujui->kegiatan_tahapan->dokumen }}</a>
+                                    <a href="{{ asset('assets/dokumen/'. $disetujui->status->pelatihan->id . '_' .$disetujui->id_kegiatan_tahapan . '.' . $ext) }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $disetujui->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $disetujui->status->pelatihan->nama }}</span>
                                     <a class="dropdown-toggle file-manager-recent-file-actions" id="file-manager-recent-10" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="file-manager-recent-10">
-                                        <li><a class="dropdown-item" href="#">Download</a></li>
+                                        <li><a class="dropdown-item" href="#">Unduh</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                                     @elseif($ext == 'rar' || $ext == 'zip')
                                         <i class="material-icons-outlined text-info align-middle m-r-sm">description</i>
                                     @endif
-                                    <a href="#" class="file-manager-recent-item-title flex-fill">{{ $ditolak->kegiatan_tahapan->dokumen }}</a>
+                                    <a href="{{ asset('assets/dokumen/'. $ditolak->status->pelatihan->id . '_' .$ditolak->id_kegiatan_tahapan . '.' . $ext) }}" target="_blank" class="file-manager-recent-item-title flex-fill">{{ $ditolak->kegiatan_tahapan->dokumen }}</a>
                                     <span class="p-h-sm text-muted">{{ $ditolak->status->pelatihan->nama }}</span>
                                     
                                 </div>

@@ -10,8 +10,8 @@ class UserModel extends Authenticatable
     use HasFactory;
 
     protected $table = 'user';
-    protected $guarded = ['id'];
-    protected $fillable=['role','nip','nama_lengkap', 'password'];
+    // protected $guarded = ['id'];
+    protected $fillable=['id','role','nip','nama_lengkap', 'password'];
     protected $keyType = 'string';
     public $incrementing = false;
     public $timestamps = true;
