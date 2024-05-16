@@ -3,7 +3,7 @@
   <div class="logo">
     {{-- <a href="/dashboard" class="logo-icon"><span class="logo-text">Monitoring Bangkom</span></a> --}}
     <div class="sidebar-user-switcher user-activity-online">
-      <a href="/dashboard">
+      <a href="/reset-password/{{ Auth::user()->id }}">
         <img src="{{ asset('assets/images/logo.jpg') }}" width="50">
         <span class="activity-indicator"></span>
         @php

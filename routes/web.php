@@ -134,6 +134,8 @@ Route::middleware('supervisi')->group(function () {
 
 Route::middleware(['all-role'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/reset-password/{user_id}', [DashboardController::class, 'reset_password'])->name('reset-password');
+    Route::post('/reset-password/{user_id}', [DashboardController::class, 'update_password'])->name('update-password');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/sop-pelatihan', [SopPelatihanController::class, 'sopPelatihan'])->name('sop-pelatihan');
