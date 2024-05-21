@@ -100,6 +100,7 @@
     <div class="app menu-off-canvas align-content-stretch d-flex flex-wrap">
         <div class="app-container">
             <div class="example-container">
+                <a href="{{ route('login') }}" class="floating-login-btn"><i class="material-icons" style="vertical-align: middle">login</i> Login</a>
                     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
                             @foreach ($pelatihans as $pelatihan)
@@ -123,7 +124,7 @@
                                                             <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
                                                         </div>
                                                         <br>
-                                                        <h1 class="badge text-center badge-dark" style="width:80%">RINGKASAN - Monitoring Pelaksanaan</h1>
+                                                        <h1 class="badge text-center badge-dark badge-ringkasan mt-auto">RINGKASAN - Monitoring Pelaksanaan Pelatihan</h1>
                                                     </div>
                                                     <ul class="col-md-3 mt-3" style="list-style: none;font-size:0.9em">
                                                         <li><b>Keterangan: </b></li>
@@ -137,6 +138,11 @@
                                             
 
                                             <div class="main-timeline-slides">
+                                                <div class="caption-top-slides text-center mt-3 bg-light text-sm-center">
+                                                    <h5>{{ $pelatihan->nama }}</h5>
+                                                    <p>{{ $pelatihan->model_pelatihan->nama }}.</p>
+                                                    <p class="badge badge-info badge-style-light" style="font-size:0.9rem"><b>{{ rentang_tgl($pelatihan->tanggal_mulai,$pelatihan->tanggal_selesai) }}</b></p>
+                                                </div>
                                                 <ul class="ul-timeline-slides">
                                                     @foreach ($tahapans as $tahapan)
                                                         @if ($loop->first)
@@ -169,7 +175,6 @@
                                                                 <a class="progress-timeline-slides {{ $tahapan->id }}-timeline" style="background-color:#7e848d">
                                                                     <p class="p-timeline-slides">{{ $loop->iteration }}</p>
                                                             @endif
-                                                                    {{-- <i class="uil-timeline-slides uil-check"></i> --}}
                                                                 </a>
                                                             <p class="text-timeline-slides">{{ $tahapan->judul }}</p>
                                                         </li>
@@ -179,7 +184,7 @@
                                             </div>
                                         
                                             <br><br><br><br><br><br>
-                                            <div class="carousel-caption d-none d-md-block">
+                                            <div class="carousel-caption d-md-block caption-bottom-slides">
                                                 <h5>{{ $pelatihan->nama }}</h5>
                                                 <p>{{ $pelatihan->model_pelatihan->nama }}.</p>
                                                 <p class="badge badge-info badge-style-light" style="font-size:0.9rem"><b>{{ rentang_tgl($pelatihan->tanggal_mulai,$pelatihan->tanggal_selesai) }}</b></p>
@@ -196,7 +201,7 @@
                                                                 <a>Balai Pengembangan Kompetensi PUPR Wilayah VI Surabaya</a>
                                                             </div>
                                                             <br>
-                                                            <h1 class="badge text-center badge-dark" style="width:80%">RINGKASAN - Monitoring Pelaksanaan</h1>
+                                                            <h1 class="badge text-center badge-dark badge-ringkasan">RINGKASAN - Monitoring Pelaksanaan</h1>
                                                         </div>
                                                         <ul class="col-md-3 mt-3" style="list-style: none;font-size:0.9em">
                                                             <li><b>Keterangan: </b></li>
@@ -208,6 +213,11 @@
                                                 </div>
 
                                             <div class="main-timeline-slides">
+                                                <div class="caption-top-slides text-center mt-3 bg-light text-sm-center">
+                                                    <h5>{{ $pelatihan->nama }}</h5>
+                                                    <p>{{ $pelatihan->model_pelatihan->nama }}.</p>
+                                                    <p class="badge badge-info badge-style-light" style="font-size:0.9rem"><b>{{ rentang_tgl($pelatihan->tanggal_mulai,$pelatihan->tanggal_selesai) }}</b></p>
+                                                </div>
                                                 <ul class="ul-timeline-slides">
                                                     @foreach ($tahapans as $tahapan)
                                                         @if ($loop->first)
@@ -250,12 +260,10 @@
                                             </div>
                                             {{-- <br><br><br><br><br><br><br> --}}
                                             <br><br><br><br><br><br>
-                                            <div class="carousel-caption">
-                                                <div class="d-none d-md-block">
-                                                    <h5>{{ $pelatihan->nama }}</h5>
-                                                    <p>{{ $pelatihan->model_pelatihan->nama }}</p>
-                                                    <p class="badge badge-info badge-style-light" style="font-size:0.9rem"><b>{{ rentang_tgl($pelatihan->tanggal_mulai,$pelatihan->tanggal_selesai) }}</b></p>
-                                                </div>
+                                            <div class="carousel-caption d-md-block caption-bottom-slides">
+                                                <h5>{{ $pelatihan->nama }}</h5>
+                                                <p>{{ $pelatihan->model_pelatihan->nama }}.</p>
+                                                <p class="badge badge-info badge-style-light" style="font-size:0.9rem"><b>{{ rentang_tgl($pelatihan->tanggal_mulai,$pelatihan->tanggal_selesai) }}</b></p>
                                             </div>
                                         </div>
                                         
@@ -273,21 +281,9 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
-                    
-                </div>
-                {{-- <div class="card">
-                    <div class="settings-security-two-factor">
-                            <h5>Keterangan</h5>
-                        <div style="float: left;margin-left: -200px;">
-                            <p><span class="text-danger">&#x25CF;</span>: Tahap belum dimulai</p>
-                            <p><span class="text-warning">&#x25CF;</span>: Tahap proses</p>
-                            <p><span class="text-success">&#x25CF;</span>: Tahap selesai</p>
-                        </div>
                     </div>
-                </div> --}}
-                        
-                  
-            
+                </div>
+            </div>
         </div>
     </div>
 

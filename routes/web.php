@@ -34,14 +34,19 @@ use App\Http\Controllers\ProfileController;
 
 
 Route::middleware(['tamu'])->group(function () {
-    Route::redirect('/', '/login');
+    // Route::redirect('/', '/login');
+     
     Route::get('/login', [LoginController::class, 'login'])->name('login')->middleware('revalidate');  
     Route::post('/login', [LoginController::class, 'signin']);
     
 });
 
+Route::get('/', [PelatihanBerlangsungController::class, 'pelatihan_slides'])->name('pelatihan-berlangsung-slide-show'); 
 
-Route::get('/pelatihan-berlangsung/slide-show', [PelatihanBerlangsungController::class, 'pelatihan_slides'])->name('pelatihan-berlangsung-slide-show');
+// Route::get('/pelatihan-berlangsung/slide-show', [PelatihanBerlangsungController::class, 'pelatihan_slides'])->name('pelatihan-berlangsung-slide-show');
+
+
+
 
 
 Route::middleware(['admin'])->group(function () {
